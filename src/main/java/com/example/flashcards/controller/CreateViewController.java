@@ -4,7 +4,12 @@ import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-public class CreateViewController implements Observer{
+import javafx.fxml.Initializable;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class CreateViewController implements Observer, Initializable {
     private DeckContainer app;
     private ViewState ViewState;
 
@@ -12,6 +17,11 @@ public class CreateViewController implements Observer{
         this.app=app;
         this.ViewState=ViewState;
     }
+
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
     public void update(){
 
     }
