@@ -6,11 +6,11 @@ import com.example.flashcards.controller.SceneController;
 import com.example.flashcards.controller.SelectionViewController;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.ViewState;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class Main extends Application {
 
 
         /**
-         * Deck selection view.
+         * Deck learning view.
          */
         FXMLLoader learningViewLoader = new FXMLLoader();
         learningViewLoader.setLocation(getClass().getResource("aaa.fxml"));
@@ -47,7 +47,7 @@ public class Main extends Application {
 
 
         /**
-         * Deck selection view.g
+         * Deck creation view.
          */
         FXMLLoader createViewLoader = new FXMLLoader();
         createViewLoader.setLocation(getClass().getResource("aaa.fxml"));
@@ -57,8 +57,8 @@ public class Main extends Application {
         controller.addScene(createScene);
 
 
-        stage.setTitle("Hello!");
-        stage.setScene(learningScene); // pour l'instant.
+        stage.setTitle("TELECOM Nancy FlashCard");
+        stage.setScene(selectionScene);
         stage.show();
     }
 
