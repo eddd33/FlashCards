@@ -31,7 +31,7 @@ public class Main extends Application {
         selectionViewLoader.setLocation(getClass().getResource("SelectionView.fxml"));
         selectionViewLoader.setControllerFactory(iC->new SelectionViewController(container,state));
         Parent selectionView = selectionViewLoader.load();
-        Scene selectionScene = new Scene(selectionView, 320, 240);
+        Scene selectionScene = new Scene(selectionView);
         controller.addScene(selectionScene);
 
 
@@ -42,7 +42,7 @@ public class Main extends Application {
         learningViewLoader.setLocation(getClass().getResource("LearningView.fxml"));
         learningViewLoader.setControllerFactory(iC->new LearningViewController(container,state));
         Parent learningView = learningViewLoader.load();
-        Scene learningScene = new Scene(learningView, 320, 240);
+        Scene learningScene = new Scene(learningView);
         controller.addScene(learningScene);
 
 
@@ -53,7 +53,7 @@ public class Main extends Application {
         createViewLoader.setLocation(getClass().getResource("CreateView.fxml"));
         createViewLoader.setControllerFactory(iC->new CreateViewController(container,state));
         Parent createView = createViewLoader.load();
-        Scene createScene = new Scene(createView, 320, 240);
+        Scene createScene = new Scene(createView);
         controller.addScene(createScene);
 
 

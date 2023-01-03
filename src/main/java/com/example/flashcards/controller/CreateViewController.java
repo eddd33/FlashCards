@@ -34,4 +34,8 @@ public class CreateViewController implements Observer, Initializable {
         ViewState.changeScene(etat);
     }
 
+    public void searchByTag(){
+
+    }
+
 }
