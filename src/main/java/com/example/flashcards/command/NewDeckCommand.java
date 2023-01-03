@@ -2,14 +2,11 @@ package com.example.flashcards.command;
 
 import com.example.flashcards.models.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-
-public class NewDeck implements Command{
-    String name;
-    String description;
-    DeckContainer deckContainer;
-    public NewDeck(String name, String description){
+public class NewDeckCommand implements Command{
+    private String name;
+    private String description;
+    private DeckContainer deckContainer;
+    public NewDeckCommand(String name, String description){
         this.name=name;
         this.description=description;
     }

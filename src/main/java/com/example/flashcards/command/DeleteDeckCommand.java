@@ -1,11 +1,10 @@
 package com.example.flashcards.command;
 
-import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
 
-public class DeleteDeck {
+public class DeleteDeckCommand implements Command{
     DeckContainer deckContainer;
-    public DeleteDeck(String name, String description){
+    public DeleteDeckCommand(String name, String description){
     }
     public void execute(){
         deckContainer.DeleteDeck();
