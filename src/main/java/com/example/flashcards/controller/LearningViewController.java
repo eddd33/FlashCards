@@ -1,5 +1,6 @@
 package com.example.flashcards.controller;
 
+import com.example.flashcards.command.ChangeSceneCommand;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
 import javafx.application.Platform;
@@ -12,7 +13,7 @@ import java.util.ResourceBundle;
 
 public class LearningViewController implements Observer, Initializable {
     private DeckContainer app;
-    private ViewState ViewState;
+    private ViewState viewState;
 
     @FXML
     private Button affiche_reponse;
@@ -21,7 +22,7 @@ public class LearningViewController implements Observer, Initializable {
 
     public LearningViewController(DeckContainer app, ViewState ViewState){
         this.app=app;
-        this.ViewState=ViewState;
+        this.viewState=ViewState;
     }
 
     @Override
@@ -35,10 +36,12 @@ public class LearningViewController implements Observer, Initializable {
     public void Leave(){
         Platform.exit();
     }
+
     @FXML
-    public void changeScene(int etat){
-        ViewState.changeScene(etat);
+    public void changeToSelecCmd() {
+        new ChangeSceneCommand(viewState,0).execute();
     }
+
 
     public void reveal(){
 

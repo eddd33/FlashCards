@@ -1,5 +1,6 @@
 package com.example.flashcards.controller;
 
+import com.example.flashcards.command.ChangeSceneCommand;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
 import javafx.application.Platform;
@@ -31,9 +32,15 @@ public class SelectionViewController implements Observer, Initializable {
         Platform.exit();
     }
 
+
     @FXML
-    public void changeScene(int etat){
-        viewState.changeScene(etat);
+    public void changeToLearnCmd() {
+        new ChangeSceneCommand(viewState,1).execute();
+    }
+
+    @FXML
+    public void changeToCreateCmd() {
+        new ChangeSceneCommand(viewState,2).execute();
     }
 
 }
