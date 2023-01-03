@@ -37,5 +37,6 @@ public class ViewState implements SubjectObserver {
 
     public void changeScene(int state){
         controller.changeScene(state);
+        this.state=state;
     }
 }
