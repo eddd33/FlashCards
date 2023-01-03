@@ -1,18 +1,18 @@
 package com.example.flashcards.view;
 
 import com.example.flashcards.controller.SceneController;
-import javafx.scene.Scene;
 
 import java.util.ArrayList;
 
 public class ViewState implements SubjectObserver {
 
     private int state;
-
+    private SceneController controller;
     public ArrayList<Observer> observers = new ArrayList<Observer>();
 
-    public ViewState(SceneController scene) {
+    public ViewState(SceneController controller) {
         state = 0;
+        this.controller = controller;
     }
 
     @Override
@@ -35,5 +35,7 @@ public class ViewState implements SubjectObserver {
         return state;
     }
 
-    public static void changeScene(int state){}
+    public void changeScene(int state){
+        controller.changeScene(state);
+    }
 }

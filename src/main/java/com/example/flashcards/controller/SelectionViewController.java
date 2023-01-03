@@ -6,11 +6,13 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 public class SelectionViewController implements Observer{
     private DeckContainer app;
-    private ViewState ViewState;
+    private ViewState viewState;
 
     public SelectionViewController(DeckContainer app,ViewState ViewState){
         this.app=app;
-        this.ViewState=ViewState;
+        this.viewState=ViewState;
+        app.addObserver(this);
+        viewState.addObserver(this);
     }
     public void update(){
 
@@ -19,9 +21,10 @@ public class SelectionViewController implements Observer{
     public void Leave(){
         Platform.exit();
     }
+
     @FXML
     public void changeScene(int etat){
-        ViewState.changeScene(etat);
+        viewState.changeScene(etat);
     }
 
 }
