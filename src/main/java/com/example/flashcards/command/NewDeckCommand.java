@@ -6,7 +6,7 @@ public class NewDeckCommand implements Command{
     private String name;
     private String description;
     private DeckContainer deckContainer;
-    public NewDeckCommand(String name, String description){
+    public NewDeckCommand(DeckContainer deckContainer, String name, String description){
         this.name=name;
         this.description=description;
     }
