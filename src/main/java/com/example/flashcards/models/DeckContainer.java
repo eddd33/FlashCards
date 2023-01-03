@@ -34,7 +34,7 @@ public class DeckContainer implements SubjectObserver {
         }
     }
 
-    
+
 
     /**
      * Getter :
