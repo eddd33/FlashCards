@@ -7,6 +7,6 @@ public class DeleteDeckCommand implements Command{
     public DeleteDeckCommand(String name, String description){
     }
     public void execute(){
-        deckContainer.DeleteDeck();
+        //deckContainer.DeleteDeck();
     }
 }

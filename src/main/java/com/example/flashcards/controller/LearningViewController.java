@@ -4,9 +4,14 @@ import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+
 public class LearningViewController implements Observer{
     private DeckContainer app;
     private ViewState ViewState;
+
+    @FXML
+    private Button affiche_reponse;
 
     public LearningViewController(DeckContainer app, ViewState ViewState){
         this.app=app;
@@ -22,5 +27,9 @@ public class LearningViewController implements Observer{
     @FXML
     public void changeScene(int etat){
         ViewState.changeScene(etat);
+    }
+
+    public void reveal(){
+
     }
 }

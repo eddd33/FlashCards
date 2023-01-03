@@ -71,5 +71,7 @@ public class DeckContainer implements SubjectObserver {
         cards.add(card);
     }
 
-
+    /*public void deleteDeck(Deck deck) {
+        decks.remove(deck);
+    }*/
 }

@@ -21,14 +21,14 @@ public class Main extends Application {
 
         SceneController controller = new SceneController(stage);
         DeckContainer container = new DeckContainer();
-        ViewState state = new ViewState();
+        ViewState state = new ViewState(controller);
 
 
         /**
          * Deck selection view.
          */
         FXMLLoader selectionViewLoader = new FXMLLoader();
-        selectionViewLoader.setLocation(getClass().getResource("aaa.fxml"));
+        selectionViewLoader.setLocation(getClass().getResource("SelectionView.fxml"));
         selectionViewLoader.setControllerFactory(iC->new SelectionViewController(container,state));
         Parent selectionView = selectionViewLoader.load();
         Scene selectionScene = new Scene(selectionView, 320, 240);
@@ -39,7 +39,7 @@ public class Main extends Application {
          * Deck learning view.
          */
         FXMLLoader learningViewLoader = new FXMLLoader();
-        learningViewLoader.setLocation(getClass().getResource("aaa.fxml"));
+        learningViewLoader.setLocation(getClass().getResource("LearningView.fxml"));
         learningViewLoader.setControllerFactory(iC->new LearningViewController(container,state));
         Parent learningView = learningViewLoader.load();
         Scene learningScene = new Scene(learningView, 320, 240);
@@ -50,7 +50,7 @@ public class Main extends Application {
          * Deck creation view.
          */
         FXMLLoader createViewLoader = new FXMLLoader();
-        createViewLoader.setLocation(getClass().getResource("aaa.fxml"));
+        createViewLoader.setLocation(getClass().getResource("CreateView.fxml"));
         createViewLoader.setControllerFactory(iC->new CreateViewController(container,state));
         Parent createView = createViewLoader.load();
         Scene createScene = new Scene(createView, 320, 240);
