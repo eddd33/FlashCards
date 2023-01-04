@@ -147,6 +147,9 @@ public class CreateViewController implements Observer, Initializable {
         String newTag = tagAddTextField.getText();
         Card card = app.getCards().get(0);
         card.getTagList().add(newTag);
+        addTagListView.getItems().add(newTag);
+        tagAddTextField.clear();
+        System.out.println(card.getTagList());
     }
 
 }
