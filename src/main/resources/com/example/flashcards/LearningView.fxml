@@ -118,7 +118,7 @@
                               </SplitPane>
                            </children>
                         </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: grey;">
+                      <AnchorPane fx:id="buttonContainer" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: grey;">
                            <children>
                               <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#reveal" prefHeight="47.0" prefWidth="638.0" style="-fx-background-color: grey; -fx-border-color: transparent;" text="Afficher la réponse" textFill="WHITE">
                                  <font>
