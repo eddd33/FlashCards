@@ -154,7 +154,7 @@ public class SelectionViewController implements Observer, Initializable {
 
     @FXML
     public void duplicateDeckCmd(Deck deck) {
-        new DuplicateDeckCommand(deck,app).execute();
+        new DuplicateDeckCommand(app,viewState,deck).execute();
     }
 
 }
