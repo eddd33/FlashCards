@@ -1,6 +1,8 @@
 package com.example.flashcards.controller;
 
 import com.example.flashcards.command.ChangeSceneCommand;
+import com.example.flashcards.command.Command;
+import com.example.flashcards.command.NewCardCommand;
 import com.example.flashcards.models.Card;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
@@ -16,6 +18,8 @@ public class CreateViewController implements Observer, Initializable {
     private DeckContainer app;
     private ViewState viewState;
 
+    private NewCardCommand newCardCommand;
+
     /**
      * @param app
      * The DeckContainer that is used to control decks and cards.
@@ -26,6 +30,7 @@ public class CreateViewController implements Observer, Initializable {
     public CreateViewController(DeckContainer app, ViewState viewState){
         this.app=app;
         this.viewState=viewState;
+
     }
 
 
@@ -41,7 +46,10 @@ public class CreateViewController implements Observer, Initializable {
      * The resources used to localize the root object, or {@code null} if
      * the root object was not localized.
      */
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+        this.newCardCommand = new NewCardCommand(app);
+        newCardCommand.execute();
+    }
 
 
 
@@ -78,10 +86,11 @@ public class CreateViewController implements Observer, Initializable {
             }
         }
     }
-    /*
+
     public void newTag(){
         String newTag = "tag"; //TODO : get the tag from the textfield
+        Card card = app.getCards().get(0);
         card.getTagList().add(newTag);
-    }*/
+    }
 
 }
