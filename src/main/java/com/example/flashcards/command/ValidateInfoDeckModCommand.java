@@ -26,7 +26,9 @@ public class ValidateInfoDeckModCommand implements Command{
 
     @Override
     public void execute() {
-        container.getActiveDeck().setName(container.getUniqueName(name));
+        if (!container.getActiveDeck().getName().equals(name)) {
+            container.getActiveDeck().setName(container.getUniqueName(name));
+        }
         container.getActiveDeck().setAuthor(author);
         container.getActiveDeck().setDescription(description);
         for (String t : tags) {

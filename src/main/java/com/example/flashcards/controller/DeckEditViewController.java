@@ -85,6 +85,7 @@ public class DeckEditViewController implements Initializable, Observer {
         deckNameTextField.setText(deck.getName());
         deckAuthorTextField.setText(deck.getAuthor());
         deckDescTextArea.setText( deck.getDescription());
+        tags = container.getActiveDeck().getTagList();
 
         deckTagListView.getItems().clear();
         deckTagListView.getItems().addAll(tags);

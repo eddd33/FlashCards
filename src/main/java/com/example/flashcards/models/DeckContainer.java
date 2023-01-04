@@ -25,8 +25,7 @@ public class DeckContainer implements SubjectObserver {
         deckTags = new HashSet<>();
         cardTags = new HashSet<>();
 
-        newDeck();      // temp
-        activeDeck.addTag("lol");
+        newDeck();
     }
 
     /*
@@ -260,9 +259,11 @@ public class DeckContainer implements SubjectObserver {
 
     public void setActiveDeck(Deck activeDeck) {
         this.activeDeck = activeDeck;
+        notifyObserver();                                               //notifyObserver
     }
 
     public void setActiveCard(Card activeCard) {
         this.activeCard = activeCard;
+        notifyObserver();                                               //notifyObserver
     }
 }

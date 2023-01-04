@@ -134,7 +134,7 @@ public class SelectionViewController implements Observer, Initializable {
             description.setText(d.getDescription());
 
             modify.setText("Modifier");
-            modify.setOnAction(event -> changeToLearnCmd(d));
+            modify.setOnAction(event -> changeToCreateCmd(d));
 
             bikini.setText("Dupliquer");
             bikini.setOnAction(event -> duplicateDeckCmd(d));
@@ -167,8 +167,9 @@ public class SelectionViewController implements Observer, Initializable {
     }
 
     @FXML
-    public void changeToCreateCmd() {
-        new ChangeSceneCommand(viewState,2).execute();
+    public void changeToCreateCmd(Deck deck) {
+        app.setActiveDeck(deck);
+        new ChangeSceneCommand(viewState,3).execute();
     }
 
     @FXML
