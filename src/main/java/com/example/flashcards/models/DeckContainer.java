@@ -10,6 +10,7 @@ public class DeckContainer implements SubjectObserver {
     private ArrayList<Deck> decks;
     private ArrayList<Card> cards;
     private ArrayList<Observer> listObs;
+    private Deck activeDeck;
 
     public DeckContainer() {
         decks = new ArrayList<>();
@@ -17,7 +18,7 @@ public class DeckContainer implements SubjectObserver {
         listObs = new ArrayList<>();
     }
 
-    /**
+    /*
      * SubjectObserver :
      * The following methods are used implementing the SubjectObserver interface.
      */
@@ -34,9 +35,34 @@ public class DeckContainer implements SubjectObserver {
         }
     }
 
-    
+
 
     /**
+     * Method newCard is used to create a new card
+     * and put it into the list cards
+     * and call the addCard method of the activeDeck
+     */
+    public void newCard() {
+        if (activeDeck != null) {
+            Card card = new Card();
+            cards.add(card);
+            activeDeck.addCard(card);
+        }
+    }
+
+    public void supprCard(Card card) {
+        if (activeDeck != null) {
+            // ...
+        }
+
+        for (Deck deck : decks) {
+            // ...
+        }
+    }
+
+
+
+    /*
      * Getter :
      * The following methods are used for returning component value.
      */
@@ -51,27 +77,8 @@ public class DeckContainer implements SubjectObserver {
 
 
 
-    /**
+    /*
      * Setter :
      * The following methods are used for setting component value.
      */
-
-
-
-    /**
-     * Add :
-     * The following methods are used for adding element to deck and card list.
-     */
-
-    public void addDeck(Deck deck) {
-        decks.add(deck);
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
-    }
-
-    /*public void deleteDeck(Deck deck) {
-        decks.remove(deck);
-    }*/
 }
