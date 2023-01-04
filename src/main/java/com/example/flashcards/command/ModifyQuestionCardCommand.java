@@ -1,10 +1,10 @@
 package com.example.flashcards.command;
 
 import com.example.flashcards.models.*;
-public class modifyQuestionCardCommand implements Command{
+public class ModifyQuestionCardCommand implements Command{
     private Card card;
     private String question;
-    public modifyQuestionCardCommand(Card card, String question){
+    public ModifyQuestionCardCommand(Card card, String question){
         this.question=question;
         this.card=card;
     }
