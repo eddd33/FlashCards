@@ -4,6 +4,8 @@ import com.example.flashcards.view.Observer;
 import com.example.flashcards.view.SubjectObserver;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DeckContainer implements SubjectObserver {
 
@@ -12,12 +14,19 @@ public class DeckContainer implements SubjectObserver {
     private ArrayList<Observer> listObs;
     private Deck activeDeck;
     private Card activeCard;
+    private Set<String> deckTags;
+    private Set<String> cardTags;
+
 
     public DeckContainer() {
         decks = new ArrayList<>();
         cards = new ArrayList<>();
         listObs = new ArrayList<>();
+        deckTags = new HashSet<>();
+        cardTags = new HashSet<>();
+
         newDeck();      // temp
+        activeDeck.addTag("lol");
     }
 
     /*
@@ -169,6 +178,7 @@ public class DeckContainer implements SubjectObserver {
     }
 
 
+
     /**
      * Method is used to know if activeDeck is empty of cards
      *
@@ -178,6 +188,38 @@ public class DeckContainer implements SubjectObserver {
      */
     public boolean activeDeckIsEmpty() {
         return activeDeck.getCards().isEmpty();
+    }
+
+
+
+    /**
+     * Method is used to add a tag to a deck,
+     * and put it in the set of tag for decks.
+     *
+     * @param tag
+     * The string is the tag you want to add to the set.
+     *
+     * @param deck
+     * The deck is where you want to add the tag.
+     */
+    public void addDeckTag(String tag, Deck deck) {
+        deckTags.add(tag);
+    }
+
+
+
+    /**
+     * Method is used to add a tag to a card,
+     * and put it in the set of tag for cards.
+     *
+     * @param tag
+     * The string is the tag you want to add to the set.
+     *
+     * @param card
+     * The deck is where you want to add the tag.
+     */
+    public void addCardTag(String tag, Card card) {
+        deckTags.add(tag);
     }
 
 
@@ -201,6 +243,14 @@ public class DeckContainer implements SubjectObserver {
 
     public Card getActiveCard() {
         return activeCard;
+    }
+
+    public Set<String> getDeckTags() {
+        return deckTags;
+    }
+
+    public Set<String> getCardTags() {
+        return cardTags;
     }
 
     /*

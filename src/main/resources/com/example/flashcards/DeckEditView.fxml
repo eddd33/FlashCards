@@ -96,8 +96,8 @@
                      <children>
                         <HBox spacing="5.0">
                            <children>
-                              <TextField fx:id="addTagTextField" promptText="Ajouter un tag" />
-                              <Button mnemonicParsing="false" text="Ajouter" />
+                              <TextField fx:id="addTagTextField" promptText="Ajouter un tag" onAction="#ajouterTagCmd" />
+                              <Button mnemonicParsing="false" text="Ajouter" onAction="#ajouterTagCmd" />
                            </children>
                         </HBox>
                         <ListView fx:id="deckTagListView" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="134.0" prefWidth="300.0" />

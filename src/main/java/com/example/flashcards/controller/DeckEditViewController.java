@@ -8,21 +8,28 @@ import com.example.flashcards.view.Observer;
 import com.example.flashcards.view.ViewState;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class DeckEditViewController implements Initializable, Observer {
 
     private DeckContainer container;
     private ViewState viewState;
+    private ArrayList<String> tags;
 
 
     @FXML private TextField deckNameTextField;
     @FXML private TextField deckAuthorTextField;
     @FXML private TextArea deckDescTextArea;
+    @FXML private TextField addTagTextField;
+    @FXML private ListView<String> deckTagListView;
 
 
 
@@ -36,6 +43,9 @@ public class DeckEditViewController implements Initializable, Observer {
     public DeckEditViewController(DeckContainer container, ViewState viewState){
         this.container = container;
         this.viewState = viewState;
+        this.container.addObserver(this);
+        this.viewState.addObserver(this);
+        tags = container.getActiveDeck().getTagList();
     }
 
 
@@ -57,6 +67,11 @@ public class DeckEditViewController implements Initializable, Observer {
         deckNameTextField.setText(deck.getName());
         deckAuthorTextField.setText(deck.getAuthor());
         deckDescTextArea.setText( deck.getDescription());
+
+        deckTagListView.setOnKeyPressed(this::handle);
+
+        deckTagListView.getItems().clear();
+        deckTagListView.getItems().addAll(tags);
     }
 
 
@@ -70,6 +85,9 @@ public class DeckEditViewController implements Initializable, Observer {
         deckNameTextField.setText(deck.getName());
         deckAuthorTextField.setText(deck.getAuthor());
         deckDescTextArea.setText( deck.getDescription());
+
+        deckTagListView.getItems().clear();
+        deckTagListView.getItems().addAll(tags);
     }
 
 
@@ -78,14 +96,35 @@ public class DeckEditViewController implements Initializable, Observer {
      * Implementation of methods for the Command pattern.
      */
 
+    public void ajouterTagCmd() {
+        String tag = addTagTextField.getText();
+        tags.add(tag);
+        deckTagListView.getItems().add(tag);
+        addTagTextField.clear();
+    }
+
     public void validateCmd() {
         String name = deckNameTextField.getText();
         String auth = deckAuthorTextField.getText();
         String desc = deckDescTextArea.getText();
-        new ValidateInfoDeckModCommand(container,viewState,name,auth,desc).execute();
+        new ValidateInfoDeckModCommand(container,viewState,name,auth,desc,tags).execute();
     }
 
     public void exitApplicationCmd() {
         new ExitCommand().execute();
+    }
+
+
+    public void handle(KeyEvent event) {
+        if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+            if(event.getCode() == KeyCode.BACK_SPACE) {
+                int selectedIndex = deckTagListView.getSelectionModel().getSelectedIndex();
+                if (selectedIndex >= 0 && selectedIndex < deckTagListView.getItems().size()) {
+                    String toRemove = deckTagListView.getSelectionModel().getSelectedItem();
+                    tags.remove(toRemove);
+                    update();
+                }
+            }
+        }
     }
 }
