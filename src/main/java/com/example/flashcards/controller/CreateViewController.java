@@ -1,15 +1,15 @@
 package com.example.flashcards.controller;
 
-import com.example.flashcards.command.ChangeSceneCommand;
-import com.example.flashcards.command.Command;
-import com.example.flashcards.command.NewCardCommand;
+import com.example.flashcards.command.*;
 import com.example.flashcards.models.Card;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -26,6 +26,15 @@ public class CreateViewController implements Observer, Initializable {
 
     @FXML
     private TextField tagAddTextField;
+
+    @FXML
+    private TextArea questionTextArea;
+
+    @FXML
+    private TextArea answerTextArea;
+
+    @FXML
+    private CheckBox twoSidedCheckBox;
 
     /**
      * @param app
@@ -76,8 +85,27 @@ public class CreateViewController implements Observer, Initializable {
         new ChangeSceneCommand(viewState,0).execute();
     }
 
+    public void change() {
+        ModifyAnswerCardCommand modifyAnswerCardCommand = new ModifyAnswerCardCommand(app.getCards().get(0), answerTextArea.getText());
+        modifyAnswerCardCommand.execute();
+        ModifyQuestionCardCommand modifyQuestionCardCommand = new ModifyQuestionCardCommand(app.getCards().get(0), questionTextArea.getText());
+        modifyQuestionCardCommand.execute();
+    }
+
+    public void changeSide(){
+        ModifyTwoSidedCardCommand modifyTwoSidedCardCommand;
+        if (twoSidedCheckBox.isSelected()){
+            modifyTwoSidedCardCommand = new ModifyTwoSidedCardCommand(app.getCards().get(0), true);
+            modifyTwoSidedCardCommand.execute();
+        }
+        else{
+            modifyTwoSidedCardCommand = new ModifyTwoSidedCardCommand(app.getCards().get(0), false);
+            modifyTwoSidedCardCommand.execute();
+        }
+    }
+
     public void searchByTag(){
-        String searchTag = S_tag.getText(); //TODO : get the tag from the textfield
+        String searchTag = S_tag.getText();
         boolean isFound = false;
         ListView<Card> result = new ListView<>();
         for (Card card : app.getCards()) {
@@ -95,7 +123,7 @@ public class CreateViewController implements Observer, Initializable {
     }
 
     public void newTag(){
-        String newTag = tagAddTextField.getText(); //TODO : get the tag from the textfield
+        String newTag = tagAddTextField.getText();
         Card card = app.getCards().get(0);
         card.getTagList().add(newTag);
     }
