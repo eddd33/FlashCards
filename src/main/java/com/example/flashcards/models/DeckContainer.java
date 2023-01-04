@@ -62,6 +62,67 @@ public class DeckContainer implements SubjectObserver {
 
 
 
+    /**
+     * Method newDeck is used to create a new deck,
+     * check if it can be defined beforehand and
+     * add it to the deck list.
+     *
+     * @param name
+     * The name used to define a new deck, it must be unique
+     * 
+     * @param description
+     * The description used to define the deck, it has no other purpose than
+     * provide information for the user.
+     */
+    public void newDeck(String name, String description) {
+        boolean testExist = false;
+        for (Deck deck : decks) {
+            if (deck.getName().equals(name)) testExist = true;
+        }
+        if (testExist) {
+            recNewDeck(name, description, 1);
+        } else {
+            Deck deck = new Deck(name, description);
+            decks.add(deck);
+            setActiveDeck(deck);
+        }
+    }
+
+
+
+    /**
+     * Method recNewDeck is a recursive method,
+     * used to create a new deck if the name exist already,
+     * add it to the deck list.
+     *
+     * @param name
+     * The name used to define a new deck, it must be unique
+     *
+     * @param description
+     * The description used to define the deck, it has no other purpose than
+     * provide information for the user.
+     *
+     * @param i
+     * The integer used to change the name that's already used,
+     * with this model : <name> (i)
+     */
+    public void recNewDeck(String name, String description, int i) {
+        String newName = name + " (" + i + ")";
+        boolean testExist = false;
+        for (Deck deck : decks) {
+            if (deck.getName().equals(newName)) testExist = true;
+        }
+        if (testExist) {
+            recNewDeck(name, description, i+1);
+        } else {
+            Deck deck = new Deck(newName, description);
+            decks.add(deck);
+            setActiveDeck(deck);
+        }
+    }
+
+
+
     /*
      * Getter :
      * The following methods are used for returning component value.
@@ -75,10 +136,18 @@ public class DeckContainer implements SubjectObserver {
         return cards;
     }
 
+    public Deck getActiveDeck() {
+        return activeDeck;
+    }
+
 
 
     /*
      * Setter :
      * The following methods are used for setting component value.
      */
+
+    public void setActiveDeck(Deck activeDeck) {
+        this.activeDeck = activeDeck;
+    }
 }
