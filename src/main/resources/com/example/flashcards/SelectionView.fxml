@@ -51,7 +51,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" onAction="#changeToCreateCmd" />
+            <MenuItem mnemonicParsing="false" onAction="#changeToCreateCmd" text="New" />
             <MenuItem mnemonicParsing="false" text="Open…" />
             <Menu mnemonicParsing="false" text="Open Recent" />
             <SeparatorMenuItem mnemonicParsing="false" />
@@ -89,62 +89,58 @@
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
             <ScrollPane prefHeight="373.0" prefWidth="640.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+               <content>
+                  <VBox fx:id="deckList" spacing="5.0">
                      <children>
-                        <VBox fx:id="deckList" spacing="5.0">
+                        <HBox>
                            <children>
-                              <HBox>
-                                 <children>
-                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true" onAction="#changeToLearnCmd">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <padding>
-                                          <Insets left="5.0" right="5.0" />
-                                       </padding>
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                    </Button>
-                                    <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="480.0" text="Vous trouverez ci-joint la decription du dit Deck dans l'optique de bien en cerner le contenu afin de réviser vos partiels dans les meilleurs conditions" wrapText="true">
-                                       <padding>
-                                          <Insets left="5.0" right="5.0" />
-                                       </padding>
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox layoutX="10.0" layoutY="10.0">
-                                 <children>
-                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true" onAction="#changeToLearnCmd">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <padding>
-                                          <Insets left="5.0" right="5.0" />
-                                       </padding>
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                    </Button>
-                                    <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="480.0" text="Vous trouverez ci-joint la decription du dit Deck dans l'optique de bien en cerner le contenu afin de réviser vos partiels dans les meilleurs conditions" wrapText="true">
-                                       <padding>
-                                          <Insets left="5.0" right="5.0" />
-                                       </padding>
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                 </children>
-                              </HBox>
+                              <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#changeToLearnCmd" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Button>
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="480.0" text="Vous trouverez ci-joint la decription du dit Deck dans l'optique de bien en cerner le contenu afin de réviser vos partiels dans les meilleurs conditions" wrapText="true">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
                            </children>
-                        </VBox>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="10.0">
+                           <children>
+                              <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#changeToLearnCmd" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Button>
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="480.0" text="Vous trouverez ci-joint la decription du dit Deck dans l'optique de bien en cerner le contenu afin de réviser vos partiels dans les meilleurs conditions" wrapText="true">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
                      </children>
-                  </AnchorPane>
-              </content>
+                  </VBox>
+               </content>
             </ScrollPane>
          </children>
     </AnchorPane>
