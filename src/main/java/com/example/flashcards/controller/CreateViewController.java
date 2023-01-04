@@ -2,13 +2,10 @@ package com.example.flashcards.controller;
 
 import com.example.flashcards.command.*;
 import com.example.flashcards.models.Card;
-import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
 
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -18,41 +15,32 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class CreateViewController implements Observer, Initializable {
+
     private DeckContainer app;
     private ViewState viewState;
-
     private NewCardCommand newCardCommand;
-
     private ModifyTwoSidedCardCommand modifyTwoSidedCardCommand;
 
     @FXML
     private TextField S_tag;
-
     @FXML
     private TextField tagAddTextField;
-
     @FXML
     private TextArea questionTextArea;
-
     @FXML
     private TextArea answerTextArea;
-
     @FXML
     private CheckBox twoSidedCheckBox;
-
     @FXML
     private ListView<String> selectedCardListView; //liste des decks
-
     @FXML
     private ListView<String> newCardListView; //cartes créés mais pas dans un deck
-
     @FXML
     private ListView<String> addTagListView; //liste des tags
-    private NewDeckCommand newDeckCommand;
+
 
     /**
      * @param app
@@ -107,6 +95,7 @@ public class CreateViewController implements Observer, Initializable {
     }
 
 
+
     /*
      * Implementation of different methods for the pattern Command
      */
@@ -122,6 +111,8 @@ public class CreateViewController implements Observer, Initializable {
 
     }
 
+
+
     public void nouvelleCarte() {
         //int taille_deck = app.getActiveDeck().getCards().size();
         this.newCardCommand = new NewCardCommand(app);
@@ -133,6 +124,8 @@ public class CreateViewController implements Observer, Initializable {
         tagAddTextField.clear();
         addTagListView.getItems().clear();
     }
+
+
 
     public void change() {
         int nb_cartes = app.getActiveDeck().getCards().size();
@@ -158,6 +151,8 @@ public class CreateViewController implements Observer, Initializable {
         }
     }
 
+
+
     public void changeSide(){
         if (twoSidedCheckBox.isSelected()){
             modifyTwoSidedCardCommand = new ModifyTwoSidedCardCommand(app.getCards().get(0), true);
@@ -168,6 +163,8 @@ public class CreateViewController implements Observer, Initializable {
             modifyTwoSidedCardCommand.execute();
         }
     }
+
+
 
     public void searchByTag(){
         String searchTag = S_tag.getText();
@@ -187,6 +184,8 @@ public class CreateViewController implements Observer, Initializable {
         }
     }
 
+
+
     public void newTag(){
         if (tagAddTextField.getText().equals("")){
             System.out.println("Veuillez entrer un tag");
@@ -199,8 +198,9 @@ public class CreateViewController implements Observer, Initializable {
             tagAddTextField.clear();
             //System.out.println(card.getTagList());
         }
-
     }
+
+
 
     public void starDnd(MouseEvent event) {
         System.out.println("Début du drag");
@@ -212,6 +212,8 @@ public class CreateViewController implements Observer, Initializable {
         db.setContent(content);
         event.consume();
     }
+
+
 
     public void endDnD(DragEvent event) {
         System.out.println("Début du drop");
@@ -226,5 +228,4 @@ public class CreateViewController implements Observer, Initializable {
         event.consume();
         app.notifyObserver();
     }
-
 }

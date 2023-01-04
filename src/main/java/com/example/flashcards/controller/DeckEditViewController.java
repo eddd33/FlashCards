@@ -6,6 +6,7 @@ import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.Observer;
 import com.example.flashcards.view.ViewState;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
@@ -116,6 +117,13 @@ public class DeckEditViewController implements Initializable, Observer {
     }
 
 
+
+    /**
+     * Method used to delete a selected tag element when the BackSpace key is pressed
+     *
+     * @param event
+     * Key Event, need to be of KeyCode : BACK_SPACE
+     */
     public void handle(KeyEvent event) {
         if (event.getEventType() == KeyEvent.KEY_PRESSED) {
             if(event.getCode() == KeyCode.BACK_SPACE) {

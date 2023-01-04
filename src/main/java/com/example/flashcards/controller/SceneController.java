@@ -36,6 +36,7 @@ public class SceneController{
      * 0 -> SelectionView
      * 1 -> LearningView
      * 2 -> CreateView
+     * 3 -> DeckEditView
      */
     public void changeScene(int i) {
         stage.setScene(scenes.get(i));

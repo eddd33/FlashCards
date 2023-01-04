@@ -4,39 +4,33 @@ import com.example.flashcards.command.ChangeSceneCommand;
 import com.example.flashcards.command.DuplicateDeckCommand;
 import com.example.flashcards.command.ExitCommand;
 import com.example.flashcards.command.NewDeckCommand;
-import com.example.flashcards.models.Card;
 import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SelectionViewController implements Observer, Initializable {
+
     private DeckContainer app;
     private ViewState viewState;
 
-    @FXML
-    private ArrayList<Deck> deckListTag; //liste des tags
+    @FXML private ArrayList<Deck> deckListTag; //liste des tags
     @FXML private VBox deckList;
+    @FXML private HBox buttonContainer;
 
 
-    @FXML
-    private HBox buttonContainer;
     /**
      * @param app
      * The DeckContainer that is used to control decks and cards.
@@ -206,5 +200,4 @@ public class SelectionViewController implements Observer, Initializable {
         deckListTag = app.getDecks();
         update();
     }
-
 }

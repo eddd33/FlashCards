@@ -19,21 +19,16 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class LearningViewController implements Observer, Initializable {
+
     private DeckContainer app;
     private ViewState viewState;
     private Deck deck;
     private ArrayList<Card> studyList;
 
-    @FXML
-    private Button affiche_reponse;
-    @FXML
-    private Label answerLabel;
-    @FXML
-    private Label questionLabel;
-
-    @FXML
-    private AnchorPane buttonContainer;
-
+    @FXML private Button affiche_reponse;
+    @FXML private Label answerLabel;
+    @FXML private Label questionLabel;
+    @FXML private AnchorPane buttonContainer;
 
 
     /**
@@ -136,6 +131,4 @@ public class LearningViewController implements Observer, Initializable {
         }
         buttonContainer.getChildren().add(answerBut);
     }
-
-
 }

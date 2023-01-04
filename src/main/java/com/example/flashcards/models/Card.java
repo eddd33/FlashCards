@@ -12,12 +12,12 @@ public class Card {
 
     public Card() {
         tagList = new ArrayList<>();
-        this.difficulty=1;
+        this.difficulty = 1;
     }
 
 
 
-    /**
+    /*
      * Getter :
      * The following methods are used for returning component value.
      */
@@ -43,7 +43,7 @@ public class Card {
 
 
 
-    /**
+    /*
      * Setter :
      * The following methods are used for setting component value.
      */
@@ -66,9 +66,9 @@ public class Card {
 
 
 
-    /**
+    /*
      * Add :
-     * The following methods are used for adding element to tag and card list.
+     * The following methods are used for adding element to list.
      */
 
     public void addTag(String tag) {

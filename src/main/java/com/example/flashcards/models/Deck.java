@@ -23,7 +23,7 @@ public class Deck {
 
 
 
-    /**
+    /*
      * Getter :
      * The following methods are used for returning component value.
      */
@@ -54,7 +54,7 @@ public class Deck {
 
 
 
-    /**
+    /*
      * Setter :
      * The following methods are used for setting component value.
      */
@@ -80,9 +80,9 @@ public class Deck {
         this.tagList.addAll(tagList);
     }
 
-    /**
+    /*
      * Add :
-     * The following methods are used for adding element to tag and card list.
+     * The following methods are used for adding element to list.
      */
 
     public void addCard(Card card) {

@@ -14,6 +14,7 @@ public class ValidateInfoDeckModCommand implements Command{
     private String description;
     private ArrayList<String> tags;
 
+
     public ValidateInfoDeckModCommand(DeckContainer container, ViewState viewState, String name, String author, String description, ArrayList<String> tags) {
         this.container = container;
         this.viewState = viewState;
@@ -23,6 +24,8 @@ public class ValidateInfoDeckModCommand implements Command{
         this.tags = new ArrayList<>();
         this.tags.addAll(tags);
     }
+
+
 
     @Override
     public void execute() {
