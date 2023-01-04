@@ -2,6 +2,7 @@ package com.example.flashcards.controller;
 
 import com.example.flashcards.command.*;
 import com.example.flashcards.models.Card;
+import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
 
@@ -14,6 +15,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class CreateViewController implements Observer, Initializable {
@@ -47,6 +49,7 @@ public class CreateViewController implements Observer, Initializable {
 
     @FXML
     private ListView<String> addTagListView; //liste des tags
+    private NewDeckCommand newDeckCommand;
 
     /**
      * @param app
@@ -58,7 +61,10 @@ public class CreateViewController implements Observer, Initializable {
     public CreateViewController(DeckContainer app, ViewState viewState){
         this.app=app;
         this.viewState=viewState;
-
+        app.addObserver(this);
+        viewState.addObserver(this);
+        //this.newCardCommand = new NewCardCommand(app);
+        //newCardCommand.execute();
     }
 
 
@@ -75,8 +81,7 @@ public class CreateViewController implements Observer, Initializable {
      * the root object was not localized.
      */
     public void initialize(URL location, ResourceBundle resources) {
-        this.newCardCommand = new NewCardCommand(app);
-        newCardCommand.execute();
+
         this.modifyTwoSidedCardCommand = new ModifyTwoSidedCardCommand(app.getCards().get(0), false);
         modifyTwoSidedCardCommand.execute();
         newCardListView.getItems().add(app.getCards().get(0).getQuestion());
@@ -87,8 +92,10 @@ public class CreateViewController implements Observer, Initializable {
     /**
      * Implementation of update() method for Observer interface
      */
-    public void update(){}
-
+    public void update(){
+        //this.newCardCommand = new NewCardCommand(app);
+        //newCardCommand.execute();
+    }
 
 
     /*
@@ -107,9 +114,8 @@ public class CreateViewController implements Observer, Initializable {
     }
 
     public void nouvelleCarte() {
-        new NewCardCommand(app).execute();
-        Card card = app.getCards().get(0);
-        newCardListView.getItems().add(0,null);
+        this.newCardCommand = new NewCardCommand(app);
+        newCardCommand.execute();
         questionTextArea.clear();
         answerTextArea.clear();
         twoSidedCheckBox.setSelected(false);
@@ -118,22 +124,25 @@ public class CreateViewController implements Observer, Initializable {
     }
 
     public void change() {
-        ModifyAnswerCardCommand modifyAnswerCardCommand = new ModifyAnswerCardCommand(app.getCards().get(0), answerTextArea.getText());
+        ModifyAnswerCardCommand modifyAnswerCardCommand = new ModifyAnswerCardCommand(app.getActiveDeck().getCards().get(0), answerTextArea.getText());
         modifyAnswerCardCommand.execute();
-        ModifyQuestionCardCommand modifyQuestionCardCommand = new ModifyQuestionCardCommand(app.getCards().get(0), questionTextArea.getText());
+        ModifyQuestionCardCommand modifyQuestionCardCommand = new ModifyQuestionCardCommand(app.getActiveDeck().getCards().get(0), questionTextArea.getText());
         modifyQuestionCardCommand.execute();
-        System.out.println(app.getCards().get(0).getAnswer());
-        System.out.println(app.getCards().get(0).getQuestion());
-        System.out.println(app.getCards().get(0).getTwoSided());
-        System.out.println(app.getCards().get(0).getTagList());
-        System.out.println(app.getCards().get(0).getDifficulty());
-        app.getActiveDeck().addCard(app.getCards().get(0));
+
+        System.out.println(app.getActiveDeck().getCards().get(0).getAnswer());
+        System.out.println(app.getActiveDeck().getCards().get(0).getQuestion());
+        System.out.println(app.getActiveDeck().getCards().get(0).getTwoSided());
+        System.out.println(app.getActiveDeck().getCards().get(0).getTagList());
+        System.out.println(app.getActiveDeck().getCards().get(0).getDifficulty());
+
+        //app.getActiveDeck().addCard(app.getCards().get(0));
         ObservableList<String> items = newCardListView.getItems();
         items.set(0, app.getCards().get(0).getQuestion());
         /*newCardListView.getItems().add(app.getCards().get(0).getQuestion());
         selectedCardListView.getItems().add(app.getCards().get(0).getQuestion());*/
-        for (int i = 0; i < app.getActiveDeck().getCards().size()-1; i++) {
-            System.out.println("liste de cartes du deck:"+app.getCards().get(i).getQuestion());
+        System.out.println("taille du deck"+app.getActiveDeck().getCards().size());
+        for (int i = 0; i < app.getActiveDeck().getCards().size(); i++) {
+            System.out.println("liste de cartes du deck:"+app.getActiveDeck().getCards().get(i).getQuestion());
         }
     }
 
