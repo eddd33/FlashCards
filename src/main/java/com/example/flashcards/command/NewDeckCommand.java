@@ -18,6 +18,6 @@ public class NewDeckCommand implements Command{
 
     public void execute(){
         deckContainer.newDeck();
-        viewState.changeScene(4);
+        viewState.changeScene(2);
     }
 }

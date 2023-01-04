@@ -89,6 +89,7 @@ public class DeckContainer implements SubjectObserver {
             Deck deck = new Deck(name);
             decks.add(deck);
             setActiveDeck(deck);
+            notifyObserver();
         }
     }
 
@@ -122,6 +123,7 @@ public class DeckContainer implements SubjectObserver {
             Deck deck = new Deck(newName);
             decks.add(deck);
             setActiveDeck(deck);
+            notifyObserver();
         }
     }
 

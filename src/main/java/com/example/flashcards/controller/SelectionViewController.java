@@ -2,6 +2,7 @@ package com.example.flashcards.controller;
 
 import com.example.flashcards.command.ChangeSceneCommand;
 import com.example.flashcards.command.ExitCommand;
+import com.example.flashcards.command.NewDeckCommand;
 import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
@@ -66,7 +67,7 @@ public class SelectionViewController implements Observer, Initializable {
             title.setTextAlignment(TextAlignment.CENTER);
             title.setTextFill(Color.WHITE);
             title.setWrapText(true);
-            title.setOnAction(this::changeToLearnCmd);
+            title.setOnAction(event -> changeToLearnCmd(d));
 
             description.setPrefSize(480.0,100.0);
             description.setWrapText(true);
@@ -82,7 +83,30 @@ public class SelectionViewController implements Observer, Initializable {
     /**
      * Implementation of update() method for Observer interface
      */
-    public void update(){}
+    public void update(){
+        ArrayList<Deck> decks = app.getDecks();
+        deckList.getChildren().clear();
+        for (Deck d : decks) {
+            HBox newBox = new HBox();
+            Button title = new Button();
+            Label description = new Label();
+
+            title.setPrefSize(150.0,100.0);
+            title.setStyle("-fx-background-color: grey;");
+            title.setText(d.getName());
+            title.setTextAlignment(TextAlignment.CENTER);
+            title.setTextFill(Color.WHITE);
+            title.setWrapText(true);
+            title.setOnAction(event -> changeToLearnCmd(d));
+
+            description.setPrefSize(480.0,100.0);
+            description.setWrapText(true);
+            description.setText(d.getDescription());
+
+            newBox.getChildren().addAll(title,description);
+            deckList.getChildren().add(newBox);
+        }
+    }
 
 
 
@@ -96,7 +120,13 @@ public class SelectionViewController implements Observer, Initializable {
     }
 
     @FXML
-    public void changeToLearnCmd(ActionEvent event) {
+    public void newDeckCmd() {
+        new NewDeckCommand(app, viewState).execute();
+    }
+
+    @FXML
+    public void changeToLearnCmd(Deck deck) {
+        app.setActiveDeck(deck);
         new ChangeSceneCommand(viewState,1).execute();
     }
 

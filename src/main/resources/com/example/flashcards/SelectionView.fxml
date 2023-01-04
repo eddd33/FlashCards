@@ -51,7 +51,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="Deck">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#changeToCreateCmd" text="Créer" />
+            <MenuItem mnemonicParsing="false" onAction="#newDeckCmd" text="Créer" />
             <MenuItem mnemonicParsing="false" text="Ouvrir" />
                   <MenuItem mnemonicParsing="false" text="Dupliquer" />
             <SeparatorMenuItem mnemonicParsing="false" />
@@ -73,7 +73,7 @@
                      <children>
                         <HBox>
                            <children>
-                              <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#changeToLearnCmd" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                              <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -96,7 +96,7 @@
                         </HBox>
                         <HBox layoutX="10.0" layoutY="10.0">
                            <children>
-                              <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#changeToLearnCmd" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                              <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
