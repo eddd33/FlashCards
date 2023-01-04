@@ -16,11 +16,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
-
+import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -33,8 +34,9 @@ public class SelectionViewController implements Observer, Initializable {
     private ArrayList<Deck> deckListTag; //liste des tags
     @FXML private VBox deckList;
 
+
     @FXML
-    private TextField S_tag;
+    private HBox buttonContainer;
     /**
      * @param app
      * The DeckContainer that is used to control decks and cards.
@@ -65,6 +67,14 @@ public class SelectionViewController implements Observer, Initializable {
      */
     public void initialize(URL location, ResourceBundle resources) {
         deckListTag=app.getDecks();
+        buttonContainer.getChildren().clear();
+        HBox buttonBox = new HBox();
+        Button byTagButton = new Button();
+        byTagButton.setText("Recherche");
+        TextField tag = new TextField();
+        byTagButton.setOnAction(event -> searchByTag(tag.getText()));
+        buttonBox.getChildren().addAll(byTagButton,tag);
+        buttonContainer.getChildren().add(buttonBox);
         for (Deck d : deckListTag) {
             HBox newBox = new HBox();
             Button title = new Button();
@@ -91,6 +101,8 @@ public class SelectionViewController implements Observer, Initializable {
             bikini.setOnAction(event -> duplicateDeckCmd(d));
 
             newBox.getChildren().addAll(title,description,modify,bikini);
+
+
             deckList.getChildren().add(newBox);
         }
     }
@@ -163,22 +175,34 @@ public class SelectionViewController implements Observer, Initializable {
     public void duplicateDeckCmd(Deck deck) {
         new DuplicateDeckCommand(app,viewState,deck).execute();
     }
+    public void searchByTag(String tag) {
+        deckListTag =new ArrayList<Deck>();
 
-    public void searchByTag(){
-        deckListTag.clear();
-        String searchTag = S_tag.getText();
-        if (S_tag.getText()!=null) {
-            for (Deck deck : app.getDecks()) {
-                for (String tag : deck.getTagList()) {
-                    if (tag.equals(searchTag)) {
-                        deckListTag.add(deck);
-                    }
+        buttonContainer.getChildren().clear();
+        Button withoutTagButton = new Button();
+        withoutTagButton.setText("Recherche");
+        withoutTagButton.setOnAction(event -> withoutTag());
+        buttonContainer.getChildren().add(withoutTagButton);
+        for (Deck deck : app.getDecks()) {
+            for (String tagFromList : deck.getTagList()) {
+                if (tagFromList.equals(tag)) {
+                    deckListTag.add(deck);
                 }
             }
         }
-        else {
-            deckListTag = app.getDecks();
-        }
         update();
     }
+    public void withoutTag() {
+        buttonContainer.getChildren().clear();
+        HBox buttonBox = new HBox();
+        Button byTagButton = new Button();
+        byTagButton.setText("Recherche");
+        TextField tag = new TextField();
+        byTagButton.setOnAction(event -> searchByTag(tag.getText()));
+        buttonBox.getChildren().addAll(byTagButton,tag);
+        buttonContainer.getChildren().add(buttonBox);
+        deckListTag = app.getDecks();
+        update();
+    }
+
 }

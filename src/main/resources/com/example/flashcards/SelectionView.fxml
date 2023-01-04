@@ -67,18 +67,7 @@
     </MenuBar>
       <AnchorPane>
       <children>
-          <HBox layoutX="189.0" layoutY="2.0" spacing="10.0">
-              <children>
-                  <TextField fx:id="S_tag" promptText="Rechercher un tag">
-                      <HBox.margin>
-                          <Insets top="1.0" />
-                      </HBox.margin>
-                  </TextField>
-                  <Button mnemonicParsing="false" onAction="#searchByTag" text="Rechercher" />
-              </children>
-              <padding>
-                  <Insets left="5.0" right="5.0" />
-              </padding>
+          <HBox fx:id="buttonContainer" minWidth="640" minHeight="30" prefHeight="30" prefWidth="0" style="-fx-background-color: grey;">
           </HBox>
       </children>
   </AnchorPane>
