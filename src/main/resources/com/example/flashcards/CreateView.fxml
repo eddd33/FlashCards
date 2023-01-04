@@ -119,7 +119,7 @@
                                                 <Insets top="1.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <Button mnemonicParsing="false" onAction="#searchByTag" text="Rechercher" />
+                                          <Button mnemonicParsing="false" onAction="#searchByTag" text="Rechercher"/>
                                        </children>
                                        <padding>
                                           <Insets left="5.0" right="5.0" />
@@ -152,7 +152,7 @@
                                                                               <HBox spacing="5.0">
                                                                                  <children>
                                                                                     <TextField fx:id="tagAddTextField" promptText="Ajouter un tag" />
-                                                                                    <Button fx:id="tagAddButton" mnemonicParsing="false" text="Ajouter" />
+                                                                                    <Button fx:id="tagAddButton" mnemonicParsing="false" text="Ajouter" onAction="#newTag"/>
                                                                                  </children>
                                                                               </HBox>
                                                                               <ListView fx:id="addTagListView" prefHeight="138.0" prefWidth="242.0" />
