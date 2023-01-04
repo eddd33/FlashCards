@@ -21,6 +21,8 @@ public class CreateViewController implements Observer, Initializable {
 
     private NewCardCommand newCardCommand;
 
+    private ModifyTwoSidedCardCommand modifyTwoSidedCardCommand;
+
     @FXML
     private TextField S_tag;
 
@@ -74,6 +76,8 @@ public class CreateViewController implements Observer, Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.newCardCommand = new NewCardCommand(app);
         newCardCommand.execute();
+        this.modifyTwoSidedCardCommand = new ModifyTwoSidedCardCommand(app.getCards().get(0), false);
+        modifyTwoSidedCardCommand.execute();
     }
 
 
@@ -91,7 +95,13 @@ public class CreateViewController implements Observer, Initializable {
 
     @FXML
     public void changeToSelecCmd() {
+        questionTextArea.clear();
+        answerTextArea.clear();
+        twoSidedCheckBox.setSelected(false);
+        tagAddTextField.clear();
+        addTagListView.getItems().clear();
         new ChangeSceneCommand(viewState,0).execute();
+
     }
 
     public void nouvelleCarte() {
@@ -110,11 +120,15 @@ public class CreateViewController implements Observer, Initializable {
         ModifyQuestionCardCommand modifyQuestionCardCommand = new ModifyQuestionCardCommand(app.getCards().get(0), questionTextArea.getText());
         modifyQuestionCardCommand.execute();
         System.out.println(app.getCards().get(0).getAnswer());
+        System.out.println(app.getCards().get(0).getQuestion());
+        System.out.println(app.getCards().get(0).getTwoSided());
+        System.out.println(app.getCards().get(0).getTagList());
+        System.out.println(app.getCards().get(0).getDifficulty());
         newCardListView.getItems().add(app.getCards().get(0).getQuestion());
+        selectedCardListView.getItems().add(app.getCards().get(0).getQuestion());
     }
 
     public void changeSide(){
-        ModifyTwoSidedCardCommand modifyTwoSidedCardCommand;
         if (twoSidedCheckBox.isSelected()){
             modifyTwoSidedCardCommand = new ModifyTwoSidedCardCommand(app.getCards().get(0), true);
             modifyTwoSidedCardCommand.execute();
@@ -149,7 +163,7 @@ public class CreateViewController implements Observer, Initializable {
         card.getTagList().add(newTag);
         addTagListView.getItems().add(newTag);
         tagAddTextField.clear();
-        System.out.println(card.getTagList());
+        //System.out.println(card.getTagList());
     }
 
 }
