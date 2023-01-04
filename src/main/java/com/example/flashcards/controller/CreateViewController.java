@@ -7,12 +7,15 @@ import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -85,7 +88,9 @@ public class CreateViewController implements Observer, Initializable {
         this.modifyTwoSidedCardCommand = new ModifyTwoSidedCardCommand(app.getCards().get(0), false);
         modifyTwoSidedCardCommand.execute();
         newCardListView.getItems().add(app.getCards().get(0).getQuestion());
+        newCardListView.setOnDragDetected(this::starDnd);
         selectedCardListView.getItems().add(app.getCards().get(0).getQuestion());
+        selectedCardListView.setOnDragEntered(this::endDnD);
     }
 
 
@@ -94,6 +99,9 @@ public class CreateViewController implements Observer, Initializable {
      * Implementation of update() method for Observer interface
      */
     public void update(){
+        for (Card card : app.getCards()){
+            selectedCardListView.getItems().add(card.getQuestion());
+        }
         //this.newCardCommand = new NewCardCommand(app);
         //newCardCommand.execute();
     }
@@ -192,6 +200,31 @@ public class CreateViewController implements Observer, Initializable {
             //System.out.println(card.getTagList());
         }
 
+    }
+
+    public void starDnd(MouseEvent event) {
+        System.out.println("Début du drag");
+        Dragboard db = newCardListView.startDragAndDrop(TransferMode.ANY);
+
+        ClipboardContent content = new ClipboardContent();
+        content.putString(newCardListView.getSelectionModel().getSelectedItem());
+        System.out.println(newCardListView.getSelectionModel().getSelectedItem());
+        db.setContent(content);
+        event.consume();
+    }
+
+    public void endDnD(DragEvent event) {
+        System.out.println("Début du drop");
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            String cardName = db.getString();
+            Card draggedCard = app.getCard(cardName);
+            if (draggedCard.getQuestion() != null) {
+                app.getActiveDeck().addCard(draggedCard);
+            }
+        }
+        event.consume();
+        app.notifyObserver();
     }
 
 }

@@ -248,6 +248,15 @@ public class DeckContainer implements SubjectObserver {
         return cardTags;
     }
 
+    public Card getCard(String name) {
+        for (Card card : cards) {
+            if (card.getQuestion() != null && card.getQuestion().equals(name)) {
+                return card;
+            }
+        }
+        return new Card();
+    }
+
     /*
      * Setter :
      * The following methods are used for setting component value.
