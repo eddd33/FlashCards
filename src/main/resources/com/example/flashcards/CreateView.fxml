@@ -60,7 +60,7 @@
             <MenuItem mnemonicParsing="false" text="Enregistrer" />
             <MenuItem mnemonicParsing="false" text="Open…" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#changeToSelecCmd" text="Quitter l'application" />
+            <MenuItem mnemonicParsing="false" onAction="#changeToSelecCmd" text="Retour au menu" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Carte">
