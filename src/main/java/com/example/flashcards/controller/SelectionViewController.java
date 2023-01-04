@@ -4,6 +4,7 @@ import com.example.flashcards.command.ChangeSceneCommand;
 import com.example.flashcards.command.DuplicateDeckCommand;
 import com.example.flashcards.command.ExitCommand;
 import com.example.flashcards.command.NewDeckCommand;
+import com.example.flashcards.models.Card;
 import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
@@ -13,6 +14,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -26,8 +29,12 @@ public class SelectionViewController implements Observer, Initializable {
     private DeckContainer app;
     private ViewState viewState;
 
+    @FXML
+    private ArrayList<Deck> deckListTag; //liste des tags
     @FXML private VBox deckList;
 
+    @FXML
+    private TextField S_tag;
     /**
      * @param app
      * The DeckContainer that is used to control decks and cards.
@@ -38,6 +45,7 @@ public class SelectionViewController implements Observer, Initializable {
     public SelectionViewController(DeckContainer app,ViewState viewState){
         this.app=app;
         this.viewState=viewState;
+        this.deckListTag=new ArrayList<>();
         app.addObserver(this);
         viewState.addObserver(this);
     }
@@ -56,8 +64,8 @@ public class SelectionViewController implements Observer, Initializable {
      * the root object was not localized.
      */
     public void initialize(URL location, ResourceBundle resources) {
-        ArrayList<Deck> decks = app.getDecks();
-        for (Deck d : decks) {
+        deckListTag=app.getDecks();
+        for (Deck d : deckListTag) {
             HBox newBox = new HBox();
             Button title = new Button();
             Button modify = new Button();
@@ -93,16 +101,15 @@ public class SelectionViewController implements Observer, Initializable {
      * Implementation of update() method for Observer interface
      */
     public void update(){
-        ArrayList<Deck> decks = app.getDecks();
         deckList.getChildren().clear();
-        for (Deck d : decks) {
+        for (Deck d : deckListTag) {
             HBox newBox = new HBox();
             Button title = new Button();
             Button modify = new Button();
             Button bikini = new Button();
             Label description = new Label();
 
-            title.setPrefSize(150.0,100.0);
+            title.setPrefSize(150.0, 100.0);
             title.setStyle("-fx-background-color: grey;");
             title.setText(d.getName());
             title.setTextAlignment(TextAlignment.CENTER);
@@ -110,7 +117,7 @@ public class SelectionViewController implements Observer, Initializable {
             title.setWrapText(true);
             title.setOnAction(event -> changeToLearnCmd(d));
 
-            description.setPrefSize(480.0,100.0);
+            description.setPrefSize(480.0, 100.0);
             description.setWrapText(true);
             description.setText(d.getDescription());
 
@@ -120,7 +127,7 @@ public class SelectionViewController implements Observer, Initializable {
             bikini.setText("Dupliquer");
             bikini.setOnAction(event -> duplicateDeckCmd(d));
 
-            newBox.getChildren().addAll(title,description,modify,bikini);
+            newBox.getChildren().addAll(title, description, modify, bikini);
             deckList.getChildren().add(newBox);
         }
     }
@@ -157,4 +164,21 @@ public class SelectionViewController implements Observer, Initializable {
         new DuplicateDeckCommand(app,viewState,deck).execute();
     }
 
+    public void searchByTag(){
+        deckListTag.clear();
+        String searchTag = S_tag.getText();
+        if (S_tag.getText()!=null) {
+            for (Deck deck : app.getDecks()) {
+                for (String tag : deck.getTagList()) {
+                    if (tag.equals(searchTag)) {
+                        deckListTag.add(deck);
+                    }
+                }
+            }
+        }
+        else {
+            deckListTag = app.getDecks();
+        }
+        update();
+    }
 }
