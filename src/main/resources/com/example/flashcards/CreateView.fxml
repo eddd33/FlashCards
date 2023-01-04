@@ -33,17 +33,23 @@
 -->
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flashcards.controller.CreateViewController">
   <children>
@@ -62,7 +68,7 @@
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Preferences…" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" onAction="#changeToSelecCmd" />
+            <MenuItem mnemonicParsing="false" onAction="#changeToSelecCmd" text="Quit" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
@@ -102,13 +108,13 @@
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      <children>
-                        <SplitPane dividerPositions="0.07859078590785908" orientation="VERTICAL" prefHeight="371.0" prefWidth="475.0">
+                        <SplitPane dividerPositions="0.08401084010840108" orientation="VERTICAL" prefHeight="371.0" prefWidth="475.0">
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <HBox spacing="10.0">
+                                    <HBox layoutX="189.0" layoutY="2.0" spacing="10.0">
                                        <children>
-                                          <TextField>
+                                          <TextField promptText="Rechercher un tag">
                                              <HBox.margin>
                                                 <Insets top="1.0" />
                                              </HBox.margin>
@@ -116,18 +122,85 @@
                                           <Button mnemonicParsing="false" onAction="#searchByTag" text="Rechercher" />
                                        </children>
                                        <padding>
-                                          <Insets left="5.0" />
+                                          <Insets left="5.0" right="5.0" />
                                        </padding>
                                     </HBox>
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <ListView fx:id="newCardListView" prefHeight="337.0" prefWidth="473.0">
-                                       <padding>
-                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                       </padding>
-                                    </ListView>
+                                    <SplitPane dividerPositions="0.6667" prefHeight="337.0" prefWidth="473.0">
+                                      <items>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                             <children>
+                                                <VBox alignment="TOP_CENTER" prefWidth="311.0" spacing="10.0">
+                                                   <children>
+                                                      <Accordion prefHeight="286.0" prefWidth="311.0">
+                                                        <panes>
+                                                          <TitledPane animated="false" text="Proriétés">
+                                                            <content>
+                                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                     <children>
+                                                                        <VBox alignment="TOP_CENTER" spacing="5.0">
+                                                                           <children>
+                                                                              <CheckBox fx:id="twoSidedCheckBox" mnemonicParsing="false" text="Peut etre inversée" />
+                                                                              <Label text="Tags">
+                                                                                 <font>
+                                                                                    <Font name="System Bold" size="13.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                              <HBox spacing="5.0">
+                                                                                 <children>
+                                                                                    <TextField fx:id="tagAddTextField" promptText="Ajouter un tag" />
+                                                                                    <Button fx:id="tagAddButton" mnemonicParsing="false" text="Ajouter" />
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <ListView fx:id="addTagListView" prefHeight="138.0" prefWidth="242.0" />
+                                                                           </children>
+                                                                           <padding>
+                                                                              <Insets top="5.0" />
+                                                                           </padding>
+                                                                        </VBox>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                            </content>
+                                                          </TitledPane>
+                                                          <TitledPane animated="false" text="Question">
+                                                            <content>
+                                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                     <children>
+                                                                        <TextArea fx:id="questionTextArea" prefHeight="200.0" prefWidth="311.0" promptText="Entrer la question ici" />
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                            </content>
+                                                          </TitledPane>
+                                                          <TitledPane animated="false" prefHeight="169.0" prefWidth="311.0" text="Réponse">
+                                                            <content>
+                                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                     <children>
+                                                                        <TextArea fx:id="answerTextArea" prefHeight="200.0" prefWidth="311.0" promptText="Entrer la réponse ici" />
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                            </content>
+                                                          </TitledPane>
+                                                        </panes>
+                                                      </Accordion>
+                                                      <Button mnemonicParsing="false" text="Valider" />
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                             <children>
+                                                <ListView fx:id="newCardListView" prefHeight="337.0" prefWidth="154.0">
+                                                   <padding>
+                                                      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                   </padding>
+                                                </ListView>
+                                             </children>
+                                          </AnchorPane>
+                                      </items>
+                                    </SplitPane>
                                  </children>
                               </AnchorPane>
                           </items>
