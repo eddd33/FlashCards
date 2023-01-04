@@ -76,6 +76,7 @@ public class Deck {
     }
 
     public void setTagList(ArrayList<String> tagList) {
+        this.tagList.clear();
         this.tagList.addAll(tagList);
     }
 
