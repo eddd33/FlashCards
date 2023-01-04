@@ -81,7 +81,7 @@ public class CreateViewController implements Observer, Initializable {
      * the root object was not localized.
      */
     public void initialize(URL location, ResourceBundle resources) {
-
+        //int taille_deck = app.getActiveDeck().getCards().size();
         this.modifyTwoSidedCardCommand = new ModifyTwoSidedCardCommand(app.getCards().get(0), false);
         modifyTwoSidedCardCommand.execute();
         newCardListView.getItems().add(app.getCards().get(0).getQuestion());
@@ -114,8 +114,10 @@ public class CreateViewController implements Observer, Initializable {
     }
 
     public void nouvelleCarte() {
+        //int taille_deck = app.getActiveDeck().getCards().size();
         this.newCardCommand = new NewCardCommand(app);
         newCardCommand.execute();
+        newCardListView.getItems().add(null);
         questionTextArea.clear();
         answerTextArea.clear();
         twoSidedCheckBox.setSelected(false);
@@ -124,9 +126,10 @@ public class CreateViewController implements Observer, Initializable {
     }
 
     public void change() {
-        ModifyAnswerCardCommand modifyAnswerCardCommand = new ModifyAnswerCardCommand(app.getActiveDeck().getCards().get(0), answerTextArea.getText());
+        int taille_deck = app.getActiveDeck().getCards().size();
+        ModifyAnswerCardCommand modifyAnswerCardCommand = new ModifyAnswerCardCommand(app.getActiveDeck().getCards().get(taille_deck-1), answerTextArea.getText());
         modifyAnswerCardCommand.execute();
-        ModifyQuestionCardCommand modifyQuestionCardCommand = new ModifyQuestionCardCommand(app.getActiveDeck().getCards().get(0), questionTextArea.getText());
+        ModifyQuestionCardCommand modifyQuestionCardCommand = new ModifyQuestionCardCommand(app.getActiveDeck().getCards().get(taille_deck-1), questionTextArea.getText());
         modifyQuestionCardCommand.execute();
 
         System.out.println(app.getActiveDeck().getCards().get(0).getAnswer());
@@ -137,12 +140,12 @@ public class CreateViewController implements Observer, Initializable {
 
         //app.getActiveDeck().addCard(app.getCards().get(0));
         ObservableList<String> items = newCardListView.getItems();
-        items.set(0, app.getCards().get(0).getQuestion());
-        /*newCardListView.getItems().add(app.getCards().get(0).getQuestion());
-        selectedCardListView.getItems().add(app.getCards().get(0).getQuestion());*/
-        System.out.println("taille du deck"+app.getActiveDeck().getCards().size());
+        items.set(0, app.getCards().get(taille_deck).getQuestion());
+        //newCardListView.getItems().add(app.getActiveDeck().getCards().get(0).getQuestion());
+        //selectedCardListView.getItems().add(app.getActiveDeck().getCards().get(taille_deck-1).getQuestion());
+        System.out.println("taille du deck "+app.getActiveDeck().getCards().size());
         for (int i = 0; i < app.getActiveDeck().getCards().size(); i++) {
-            System.out.println("liste de cartes du deck:"+app.getActiveDeck().getCards().get(i).getQuestion());
+            System.out.println("liste de cartes du deck : "+app.getActiveDeck().getCards().get(i).getQuestion());
         }
     }
 
