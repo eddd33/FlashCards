@@ -60,15 +60,20 @@ public class SelectionViewController implements Observer, Initializable {
      * the root object was not localized.
      */
     public void initialize(URL location, ResourceBundle resources) {
-        deckListTag=app.getDecks();
-        buttonContainer.getChildren().clear();
-        HBox buttonBox = new HBox();
+
+        // creation du bouton pour effectuer la demande de recherche.
         Button byTagButton = new Button();
         byTagButton.setText("Recherche");
+        // creation d'un TextField permettant d'entrer la demande de la recherche.
         TextField tag = new TextField();
+        // Un event du bouton entraînera l'appel de la méthode searchByTag sur le texte du TexteField.
         byTagButton.setOnAction(event -> searchByTag(tag.getText()));
-        buttonBox.getChildren().addAll(byTagButton,tag);
-        buttonContainer.getChildren().add(buttonBox);
+        // ajout des éléments dans la HBox, défini dans le .fxml
+        buttonContainer.getChildren().clear();
+        buttonContainer.getChildren().addAll(byTagButton,tag);
+
+        // on récupère la liste des decks à afficher, par défaut, il s'agit de tous.
+        deckListTag = app.getDecks();
         for (Deck d : deckListTag) {
             HBox newBox = new HBox();
             Button title = new Button();
@@ -76,6 +81,7 @@ public class SelectionViewController implements Observer, Initializable {
             Button bikini = new Button();
             Label description = new Label();
 
+            // settings du titre.
             title.setPrefSize(150.0,100.0);
             title.setStyle("-fx-background-color: grey;");
             title.setText(d.getName());
@@ -84,19 +90,21 @@ public class SelectionViewController implements Observer, Initializable {
             title.setWrapText(true);
             title.setOnAction(event -> changeToLearnCmd(d));
 
+            // settings de la description.
             description.setPrefSize(480.0,100.0);
             description.setWrapText(true);
             description.setText(d.getDescription());
 
+            // settings du bouton Modifier qui envoie sur la page de gestion du deck.
             modify.setText("Modifier");
             modify.setOnAction(event -> changeToLearnCmd(d));
 
+            // settings du bouton Dupliquer qui duplique le deck et envoie sur la page de gestion de la copie.
             bikini.setText("Dupliquer");
             bikini.setOnAction(event -> duplicateDeckCmd(d));
 
+            // Ajout de tous les éléments à la HBox, puis à la VBox global.
             newBox.getChildren().addAll(title,description,modify,bikini);
-
-
             deckList.getChildren().add(newBox);
         }
     }
@@ -106,7 +114,9 @@ public class SelectionViewController implements Observer, Initializable {
     /**
      * Implementation of update() method for Observer interface
      */
-    public void update(){
+    public void update() {
+
+        // on vide la VBox qui contient l'affichage des decks
         deckList.getChildren().clear();
         for (Deck d : deckListTag) {
             HBox newBox = new HBox();
@@ -115,6 +125,7 @@ public class SelectionViewController implements Observer, Initializable {
             Button bikini = new Button();
             Label description = new Label();
 
+            // settings du titre.
             title.setPrefSize(150.0, 100.0);
             title.setStyle("-fx-background-color: grey;");
             title.setText(d.getName());
@@ -123,16 +134,20 @@ public class SelectionViewController implements Observer, Initializable {
             title.setWrapText(true);
             title.setOnAction(event -> changeToLearnCmd(d));
 
+            // settings de la description.
             description.setPrefSize(480.0, 100.0);
             description.setWrapText(true);
             description.setText(d.getDescription());
 
+            // settings du bouton Modifier qui envoie sur la page de gestion du deck.
             modify.setText("Modifier");
             modify.setOnAction(event -> changeToCreateCmd(d));
 
+            // settings du bouton Dupliquer qui duplique le deck et envoie sur la page de gestion de la copie.
             bikini.setText("Dupliquer");
             bikini.setOnAction(event -> duplicateDeckCmd(d));
 
+            // Ajout de tous les éléments à la HBox, puis à la VBox global.
             newBox.getChildren().addAll(title, description, modify, bikini);
             deckList.getChildren().add(newBox);
         }
@@ -170,14 +185,32 @@ public class SelectionViewController implements Observer, Initializable {
     public void duplicateDeckCmd(Deck deck) {
         new DuplicateDeckCommand(app,viewState,deck).execute();
     }
-    public void searchByTag(String tag) {
-        deckListTag =new ArrayList<Deck>();
 
-        buttonContainer.getChildren().clear();
+
+
+    /*
+     * Implementation of methods for the search by tag
+     */
+
+    /**
+     * Method used when the search button is pressed.
+     * Create an empty list of deck that will be filled only with deck with corresponding tag.
+     *
+     * @param tag
+     * The tag that is research.
+     * WARNING : No spelling error are accepted.
+     */
+    public void searchByTag(String tag) {
+        deckListTag = new ArrayList<>();
+
+        // creating a new button that will replace the research button and will reset the search when pressed.
         Button withoutTagButton = new Button();
         withoutTagButton.setText("Voir tout");
         withoutTagButton.setOnAction(event -> withoutTag());
+        buttonContainer.getChildren().clear();
         buttonContainer.getChildren().add(withoutTagButton);
+
+        // loop to check if each deck as the research tag.
         for (Deck deck : app.getDecks()) {
             for (String tagFromList : deck.getTagList()) {
                 if (tagFromList.equals(tag)) {
@@ -188,16 +221,24 @@ public class SelectionViewController implements Observer, Initializable {
         }
         update();
     }
+
+
+
+    /**
+     * Method used when the reset search button is pressed.
+     * Puts back the complete list of deck to be display.
+     */
     public void withoutTag() {
-        buttonContainer.getChildren().clear();
-        HBox buttonBox = new HBox();
-        Button byTagButton = new Button();
-        byTagButton.setText("Recherche");
-        TextField tag = new TextField();
-        byTagButton.setOnAction(event -> searchByTag(tag.getText()));
-        buttonBox.getChildren().addAll(byTagButton,tag);
-        buttonContainer.getChildren().add(buttonBox);
         deckListTag = app.getDecks();
+
+        // creation of the research Button and TextField;
+        Button byTagButton = new Button();
+        TextField tag = new TextField();
+        byTagButton.setText("Recherche");
+        byTagButton.setOnAction(event -> searchByTag(tag.getText()));
+        buttonContainer.getChildren().clear();
+        buttonContainer.getChildren().addAll(byTagButton,tag);
+
         update();
     }
 }
