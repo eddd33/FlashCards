@@ -109,7 +109,7 @@ public class CreateViewController implements Observer, Initializable {
     public void nouvelleCarte() {
         new NewCardCommand(app).execute();
         Card card = app.getCards().get(0);
-        newCardListView.getItems().add(app.getCards().get(0).getQuestion());
+        newCardListView.getItems().add(0,null);
         questionTextArea.clear();
         answerTextArea.clear();
         twoSidedCheckBox.setSelected(false);
@@ -132,7 +132,7 @@ public class CreateViewController implements Observer, Initializable {
         items.set(0, app.getCards().get(0).getQuestion());
         /*newCardListView.getItems().add(app.getCards().get(0).getQuestion());
         selectedCardListView.getItems().add(app.getCards().get(0).getQuestion());*/
-        for (int i = 0; i < app.getActiveDeck().getCards().size(); i++) {
+        for (int i = 0; i < app.getActiveDeck().getCards().size()-1; i++) {
             System.out.println("liste de cartes du deck:"+app.getCards().get(i).getQuestion());
         }
     }
@@ -167,12 +167,18 @@ public class CreateViewController implements Observer, Initializable {
     }
 
     public void newTag(){
-        String newTag = tagAddTextField.getText();
-        Card card = app.getCards().get(0);
-        card.getTagList().add(newTag);
-        addTagListView.getItems().add(newTag);
-        tagAddTextField.clear();
-        //System.out.println(card.getTagList());
+        if (tagAddTextField.getText().equals("")){
+            System.out.println("Veuillez entrer un tag");
+        }
+        else{
+            String newTag = tagAddTextField.getText();
+            Card card = app.getCards().get(0);
+            card.getTagList().add(newTag);
+            addTagListView.getItems().add(newTag);
+            tagAddTextField.clear();
+            //System.out.println(card.getTagList());
+        }
+
     }
 
 }
