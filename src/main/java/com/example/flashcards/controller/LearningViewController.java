@@ -100,31 +100,37 @@ public class LearningViewController implements Observer, Initializable {
 
     @FXML
     public void reveal(ActionEvent e) {
-        answerLabel.setOpacity(1);
-        buttonContainer.getChildren().clear();
-        HBox buttonBox = new HBox();
-        Button easyButton = new Button();
-        easyButton.setText("Facile");
-        easyButton.setOnAction(event -> nextCard());
-        Button midButton = new Button();
-        midButton.setText("Moyen");
-        Button hardButton = new Button();
-        hardButton.setText("Difficile");
-        Button lostButton = new Button();
-        lostButton.setText("Impossible");
-        buttonBox.getChildren().addAll(easyButton,midButton,hardButton,lostButton);
-        buttonContainer.getChildren().add(buttonBox);
+            answerLabel.setOpacity(1);
+            buttonContainer.getChildren().clear();
+            HBox buttonBox = new HBox();
+            Button easyButton = new Button();
+            easyButton.setText("Facile");
+            easyButton.setOnAction(event -> nextCard());
+            Button midButton = new Button();
+            midButton.setText("Moyen");
+            Button hardButton = new Button();
+            hardButton.setText("Difficile");
+            Button lostButton = new Button();
+            lostButton.setText("Impossible");
+            buttonBox.getChildren().addAll(easyButton,midButton,hardButton,lostButton);
+            buttonContainer.getChildren().add(buttonBox);
     }
 
     public void nextCard() {
-        questionLabel.setText(studyList.get(0).getQuestion());
-        answerLabel.setText(studyList.get(0).getAnswer());
-        studyList.remove(0);
-        answerLabel.setOpacity(0);
         buttonContainer.getChildren().clear();
         Button answerBut = new Button();
+        if (deck.getCards().size() != 0) {
+            questionLabel.setText(studyList.get(0).getQuestion());
+            answerLabel.setText(studyList.get(0).getAnswer());
+            studyList.remove(0);
+            answerLabel.setOpacity(0);
+            answerBut.setOnAction(event -> reveal(event));
+        }
+        else {
+            questionLabel.setText("Révision terminée");
+            answerLabel.setText("Félicitation Shinji! :clap:");
+        }
         answerBut.setText("Afficher la réponse");
-        answerBut.setOnAction(event -> reveal(event));
         buttonContainer.getChildren().add(answerBut);
     }
 
