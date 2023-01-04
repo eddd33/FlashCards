@@ -24,7 +24,7 @@ public class Main extends Application {
         ViewState state = new ViewState(controller);
 
 
-        /**
+        /*
          * Deck selection view.
          */
         FXMLLoader selectionViewLoader = new FXMLLoader();
@@ -35,7 +35,7 @@ public class Main extends Application {
         controller.addScene(selectionScene);
 
 
-        /**
+        /*
          * Deck learning view.
          */
         FXMLLoader learningViewLoader = new FXMLLoader();
@@ -46,7 +46,7 @@ public class Main extends Application {
         controller.addScene(learningScene);
 
 
-        /**
+        /*
          * Deck creation view.
          */
         FXMLLoader createViewLoader = new FXMLLoader();
