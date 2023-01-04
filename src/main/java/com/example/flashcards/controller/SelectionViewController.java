@@ -6,6 +6,7 @@ import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -65,7 +66,7 @@ public class SelectionViewController implements Observer, Initializable {
             title.setTextAlignment(TextAlignment.CENTER);
             title.setTextFill(Color.WHITE);
             title.setWrapText(true);
-            //title.setOnAction();
+            title.setOnAction(this::changeToLearnCmd);
 
             description.setPrefSize(480.0,100.0);
             description.setWrapText(true);
@@ -95,7 +96,7 @@ public class SelectionViewController implements Observer, Initializable {
     }
 
     @FXML
-    public void changeToLearnCmd() {
+    public void changeToLearnCmd(ActionEvent event) {
         new ChangeSceneCommand(viewState,1).execute();
     }
 

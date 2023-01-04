@@ -16,8 +16,9 @@ public class DeckContainer implements SubjectObserver {
         decks = new ArrayList<>();
         cards = new ArrayList<>();
         listObs = new ArrayList<>();
-        newDeck();
-        newDeck();
+        newDeck();      // temp
+        newDeck();      // temp
+        newDeck();      // temp
     }
 
     /*
