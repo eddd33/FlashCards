@@ -73,52 +73,11 @@ public class DeckContainer implements SubjectObserver {
      * add it to the deck list.
      */
     public void newDeck() {
-        String name = "New deck";
-        boolean testExist = false;
-        for (Deck deck : decks) {
-            if (deck.getName().equals(name)) {
-                testExist = true;
-                break;
-            }
-        }
-        if (testExist) {
-            recNewDeck(1);
-        } else {
-            Deck deck = new Deck(name);
-            decks.add(deck);
-            setActiveDeck(deck);
-            notifyObserver();                                               //notifyObserver
-        }
-    }
-
-
-
-    /**
-     * Method recNewDeck is a recursive method,
-     * used to create a new deck if the name exist already,
-     * add it to the deck list.
-     *
-     * @param i
-     * The integer used to change the name that's already used,
-     * with this model : <name> (i)
-     */
-    private void recNewDeck(int i) {
-        String newName = "New deck (" + i + ")";
-        boolean testExist = false;
-        for (Deck deck : decks) {
-            if (deck.getName().equals(newName)) {
-                testExist = true;
-                break;
-            }
-        }
-        if (testExist) {
-            recNewDeck(i+1);
-        } else {
-            Deck deck = new Deck(newName);
-            decks.add(deck);
-            setActiveDeck(deck);
-            notifyObserver();                                               //notifyObserver
-        }
+        String name = getUniqueName("New deck");
+        Deck deck = new Deck(name);
+        decks.add(deck);
+        setActiveDeck(deck);
+        notifyObserver();                                               //notifyObserver
     }
 
 
@@ -132,63 +91,76 @@ public class DeckContainer implements SubjectObserver {
      * The deck used to duplicate from.
      */
     public void dupDeck(Deck deck) {
-        String name = "Copy of " + deck.getName();
+        String name = getUniqueName("Copy of " + deck.getName());
+        Deck newDeck = new Deck(name);
+        newDeck.setDescription(deck.getDescription());
+        for (Card c : deck.getCards()) {
+            newDeck.addCard(c);
+        }
+        decks.add(newDeck);
+        setActiveDeck(newDeck);
+        notifyObserver();                                               //notifyObserver
+    }
+
+
+
+    /**
+     * Method getUniqueName is a used to check
+     * if a name is already used.
+     *
+     * @param name
+     * The name is the name proposed for the deck that need to be checked
+     *
+     * @return
+     * Type de retour : String
+     * String modified or not to be unique.
+     */
+    public String getUniqueName(String name) {
         boolean testExist = false;
-        for (Deck d : decks) {
-            if (d.getName().equals(name)) {
+        for (Deck newDeck : decks) {
+            if (newDeck.getName().equals(name)) {
                 testExist = true;
                 break;
             }
         }
         if (testExist) {
-            recDupDeck(deck,1);
+            return recGetUniqueName(name,1);
         } else {
-            Deck d = new Deck(name);
-            d.setDescription(deck.getDescription());
-            for (Card c : deck.getCards()) {
-                d.addCard(c);
-            }
-            decks.add(d);
-            setActiveDeck(d);
-            notifyObserver();                                               //notifyObserver
+            return name;
         }
     }
 
 
 
     /**
-     * Method recDupDeck is a recursive method,
-     * used to duplicate a deck,
-     * check if it can be defined beforehand and
-     * add it to the deck list.
+     * Method getUniqueName is a recursive method
+     * used to check if a name is already used.
+     * The method is called by getUniqueName.
      *
-     * @param deck
-     * The deck used to duplicate from.
+     * @param name
+     * The name is the name proposed for the deck that need to be checked
      *
      * @param i
      * The integer used to change the name that's already used,
-     * with this model : Copy of <name> (i)
+     * with this model : <proposed name> (i)
+     *
+     * @return
+     * Type de retour : String
+     * String modified or not to be unique.
      */
-    private void recDupDeck(Deck deck,int i) {
-        String name = "Copy of " + deck.getName() + " (" + i + ")";
+    private String recGetUniqueName(String name, int i) {
+        String newName = name + " (" + i + ")";
         boolean testExist = false;
-        for (Deck d : decks) {
-            if (d.getName().equals(name)) {
+        for (Deck newDeck : decks) {
+            if (newDeck.getName().equals(newName)) {
                 testExist = true;
                 break;
             }
         }
         if (testExist) {
-            recDupDeck(deck,i+1);
+            return recGetUniqueName(name,i+1);
         } else {
-            Deck d = new Deck(name);
-            d.setDescription(deck.getDescription());
-            for (Card c : deck.getCards()) {
-                d.addCard(c);
-            }
-            decks.add(d);
-            setActiveDeck(d);
-            notifyObserver();                                               //notifyObserver
+            return newName;
         }
     }
 
