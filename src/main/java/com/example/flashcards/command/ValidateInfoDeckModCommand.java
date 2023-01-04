@@ -32,9 +32,9 @@ public class ValidateInfoDeckModCommand implements Command{
         container.getActiveDeck().setAuthor(author);
         container.getActiveDeck().setDescription(description);
         for (String t : tags) {
-            container.getActiveDeck().addTag(t);
-            container.addDeckTag(t,container.getActiveDeck());
+            container.addDeckTag(t);
         }
+        container.getActiveDeck().setTagList(tags);
         container.notifyObserver();
         viewState.changeScene(2);
     }

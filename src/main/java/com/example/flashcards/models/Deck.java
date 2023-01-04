@@ -75,16 +75,14 @@ public class Deck {
         this.description = description;
     }
 
-
+    public void setTagList(ArrayList<String> tagList) {
+        this.tagList.addAll(tagList);
+    }
 
     /**
      * Add :
      * The following methods are used for adding element to tag and card list.
      */
-
-    public void addTag(String tag) {
-        tagList.add(tag);
-    }
 
     public void addCard(Card card) {
         cards.add(card);

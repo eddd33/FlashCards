@@ -192,16 +192,12 @@ public class DeckContainer implements SubjectObserver {
 
 
     /**
-     * Method is used to add a tag to a deck,
-     * and put it in the set of tag for decks.
+     * Method is used to put it in the set of tag for decks.
      *
      * @param tag
      * The string is the tag you want to add to the set.
-     *
-     * @param deck
-     * The deck is where you want to add the tag.
      */
-    public void addDeckTag(String tag, Deck deck) {
+    public void addDeckTag(String tag) {
         deckTags.add(tag);
     }
 
