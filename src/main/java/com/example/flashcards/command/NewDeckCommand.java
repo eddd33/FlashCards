@@ -1,16 +1,21 @@
 package com.example.flashcards.command;
 
 import com.example.flashcards.models.*;
+import com.example.flashcards.view.ViewState;
 
 public class NewDeckCommand implements Command{
-    private String name;
-    private String description;
     private DeckContainer deckContainer;
-    public NewDeckCommand(DeckContainer deckContainer, String name, String description){
-        this.name=name;
+    private String titre;
+    private String description;
+    ViewState viewState;
+    public NewDeckCommand(DeckContainer deckContainer,ViewState viewState,String titre,String description){
+        this.deckContainer=deckContainer;
+        this.viewState=viewState;
+        this.titre=titre;
         this.description=description;
     }
     public void execute(){
-        deckContainer.addDeck(new Deck(name,description));
+        deckContainer.newDeck(titre,description);
+        viewState.changeScene(4);
     }
 }
