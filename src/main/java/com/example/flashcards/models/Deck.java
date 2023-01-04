@@ -12,10 +12,10 @@ public class Deck {
     private ArrayList<String> tagList;
     private ArrayList<Card> cards;
 
-    public Deck(String name, String description) {
+    public Deck(String name) {
         this.name = name;
         author = "me";
-        this.description = description;
+        description = "Description";
         last_try = Calendar.getInstance();
         tagList = new ArrayList<>();
         cards = new ArrayList<>();

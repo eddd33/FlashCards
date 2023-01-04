@@ -69,20 +69,21 @@ public class DeckContainer implements SubjectObserver {
      *
      * @param name
      * The name used to define a new deck, it must be unique
-     * 
+     *
      * @param description
      * The description used to define the deck, it has no other purpose than
      * provide information for the user.
      */
-    public void newDeck(String name, String description) {
+    public void newDeck() {
+        String name = "New deck";
         boolean testExist = false;
         for (Deck deck : decks) {
             if (deck.getName().equals(name)) testExist = true;
         }
         if (testExist) {
-            recNewDeck(name, description, 1);
+            recNewDeck(1);
         } else {
-            Deck deck = new Deck(name, description);
+            Deck deck = new Deck(name);
             decks.add(deck);
             setActiveDeck(deck);
         }
@@ -106,20 +107,23 @@ public class DeckContainer implements SubjectObserver {
      * The integer used to change the name that's already used,
      * with this model : <name> (i)
      */
-    public void recNewDeck(String name, String description, int i) {
-        String newName = name + " (" + i + ")";
+    public void recNewDeck(int i) {
+        String newName = "New deck (" + i + ")";
         boolean testExist = false;
         for (Deck deck : decks) {
             if (deck.getName().equals(newName)) testExist = true;
         }
         if (testExist) {
-            recNewDeck(name, description, i+1);
+            recNewDeck(i+1);
         } else {
-            Deck deck = new Deck(newName, description);
+            Deck deck = new Deck(newName);
             decks.add(deck);
             setActiveDeck(deck);
         }
     }
+
+
+    public void dupDeck(Deck deck) {}
 
 
 
