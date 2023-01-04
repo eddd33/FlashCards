@@ -1,6 +1,7 @@
 package com.example.flashcards.controller;
 
 import com.example.flashcards.command.ChangeSceneCommand;
+import com.example.flashcards.command.DuplicateDeckCommand;
 import com.example.flashcards.command.ExitCommand;
 import com.example.flashcards.command.NewDeckCommand;
 import com.example.flashcards.models.Deck;
@@ -60,6 +61,7 @@ public class SelectionViewController implements Observer, Initializable {
             HBox newBox = new HBox();
             Button title = new Button();
             Button modify = new Button();
+            Button bikini = new Button();
             Label description = new Label();
 
             title.setPrefSize(150.0,100.0);
@@ -73,8 +75,14 @@ public class SelectionViewController implements Observer, Initializable {
             description.setPrefSize(480.0,100.0);
             description.setWrapText(true);
             description.setText(d.getDescription());
-            
-            newBox.getChildren().addAll(title,description,modify);
+
+            modify.setText("Modifier");
+            modify.setOnAction(event -> changeToLearnCmd(d));
+
+            bikini.setText("Dupliquer");
+            bikini.setOnAction(event -> duplicateDeckCmd(d));
+
+            newBox.getChildren().addAll(title,description,modify,bikini);
             deckList.getChildren().add(newBox);
         }
     }
@@ -90,6 +98,8 @@ public class SelectionViewController implements Observer, Initializable {
         for (Deck d : decks) {
             HBox newBox = new HBox();
             Button title = new Button();
+            Button modify = new Button();
+            Button bikini = new Button();
             Label description = new Label();
 
             title.setPrefSize(150.0,100.0);
@@ -104,7 +114,13 @@ public class SelectionViewController implements Observer, Initializable {
             description.setWrapText(true);
             description.setText(d.getDescription());
 
-            newBox.getChildren().addAll(title,description);
+            modify.setText("Modifier");
+            modify.setOnAction(event -> changeToLearnCmd(d));
+
+            bikini.setText("Dupliquer");
+            bikini.setOnAction(event -> duplicateDeckCmd(d));
+
+            newBox.getChildren().addAll(title,description,modify,bikini);
             deckList.getChildren().add(newBox);
         }
     }
@@ -134,6 +150,11 @@ public class SelectionViewController implements Observer, Initializable {
     @FXML
     public void changeToCreateCmd() {
         new ChangeSceneCommand(viewState,2).execute();
+    }
+
+    @FXML
+    public void duplicateDeckCmd(Deck deck) {
+        new DuplicateDeckCommand(deck,app).execute();
     }
 
 }
