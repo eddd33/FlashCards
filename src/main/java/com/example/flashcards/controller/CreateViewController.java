@@ -37,7 +37,13 @@ public class CreateViewController implements Observer, Initializable {
     private CheckBox twoSidedCheckBox;
 
     @FXML
-    private ListView<String> selectedCardListView;
+    private ListView<String> selectedCardListView; //liste des decks
+
+    @FXML
+    private ListView<String> newCardListView; //cartes créés mais pas dans un deck
+
+    @FXML
+    private ListView<String> addTagListView; //liste des tags
 
     /**
      * @param app
@@ -91,7 +97,11 @@ public class CreateViewController implements Observer, Initializable {
     public void nouvelleCarte() {
         new NewCardCommand(app).execute();
         Card card = app.getCards().get(0);
-        //selectedCardListView.getItems().add(card);
+        questionTextArea.clear();
+        answerTextArea.clear();
+        twoSidedCheckBox.setSelected(false);
+        tagAddTextField.clear();
+        addTagListView.getItems().clear();
     }
 
     public void change() {
@@ -99,6 +109,8 @@ public class CreateViewController implements Observer, Initializable {
         modifyAnswerCardCommand.execute();
         ModifyQuestionCardCommand modifyQuestionCardCommand = new ModifyQuestionCardCommand(app.getCards().get(0), questionTextArea.getText());
         modifyQuestionCardCommand.execute();
+        System.out.println(app.getCards().get(0).getAnswer());
+        newCardListView.getItems().add(app.getCards().get(0).getQuestion());
     }
 
     public void changeSide(){
