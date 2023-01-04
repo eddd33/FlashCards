@@ -12,6 +12,7 @@ public class Card {
 
     public Card() {
         tagList = new ArrayList<>();
+        this.difficulty=1;
     }
 
 
