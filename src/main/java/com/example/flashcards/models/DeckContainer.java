@@ -71,19 +71,15 @@ public class DeckContainer implements SubjectObserver {
      * Method newDeck is used to create a new deck,
      * check if it can be defined beforehand and
      * add it to the deck list.
-     *
-     *
-     * The name used to define a new deck, it must be unique
-     *
-     *
-     * The description used to define the deck, it has no other purpose than
-     * provide information for the user.
      */
     public void newDeck() {
         String name = "New deck";
         boolean testExist = false;
         for (Deck deck : decks) {
-            if (deck.getName().equals(name)) testExist = true;
+            if (deck.getName().equals(name)) {
+                testExist = true;
+                break;
+            }
         }
         if (testExist) {
             recNewDeck(1);
@@ -102,22 +98,18 @@ public class DeckContainer implements SubjectObserver {
      * used to create a new deck if the name exist already,
      * add it to the deck list.
      *
-     *
-     * The name used to define a new deck, it must be unique
-     *
-     *
-     * The description used to define the deck, it has no other purpose than
-     * provide information for the user.
-     *
      * @param i
      * The integer used to change the name that's already used,
      * with this model : <name> (i)
      */
-    public void recNewDeck(int i) {
+    private void recNewDeck(int i) {
         String newName = "New deck (" + i + ")";
         boolean testExist = false;
         for (Deck deck : decks) {
-            if (deck.getName().equals(newName)) testExist = true;
+            if (deck.getName().equals(newName)) {
+                testExist = true;
+                break;
+            }
         }
         if (testExist) {
             recNewDeck(i+1);
@@ -130,20 +122,74 @@ public class DeckContainer implements SubjectObserver {
     }
 
 
+
+    /**
+     * Method dupDeck is used to duplicate a deck,
+     * check if it can be defined beforehand and
+     * add it to the deck list.
+     *
+     * @param deck
+     * The deck used to duplicate from.
+     */
     public void dupDeck(Deck deck) {
-        String name = deck.getName();
+        String name = "Copy of " + deck.getName();
         boolean testExist = false;
         for (Deck d : decks) {
-            if (d.getName().equals(name)) testExist = true;
+            if (d.getName().equals(name)) {
+                testExist = true;
+                break;
+            }
         }
         if (testExist) {
-            recNewDeck(1);
+            recDupDeck(deck,1);
         } else {
             Deck d = new Deck(name);
-            decks.add(deck);
-            setActiveDeck(deck);
+            d.setDescription(deck.getDescription());
+            for (Card c : deck.getCards()) {
+                d.addCard(c);
+            }
+            decks.add(d);
+            setActiveDeck(d);
+            notifyObserver();                                               //notifyObserver
         }
-        notifyObserver();                                               //notifyObserver
+    }
+
+
+
+    /**
+     * Method recDupDeck is a recursive method,
+     * used to duplicate a deck,
+     * check if it can be defined beforehand and
+     * add it to the deck list.
+     *
+     * @param deck
+     * The deck used to duplicate from.
+     *
+     * @param i
+     * The integer used to change the name that's already used,
+     * with this model : Copy of <name> (i)
+     */
+    private void recDupDeck(Deck deck,int i) {
+        String name = "Copy of " + deck.getName() + " (" + i + ")";
+        boolean testExist = false;
+        for (Deck d : decks) {
+            if (d.getName().equals(name)) {
+                testExist = true;
+                break;
+            }
+        }
+        if (testExist) {
+            recDupDeck(deck,i+1);
+        } else {
+            Deck d = new Deck(name);
+            d.setDescription(deck.getDescription());
+            for (Card c : deck.getCards()) {
+                d.addCard(c);
+            }
+            decks.add(d);
+            setActiveDeck(d);
+            notifyObserver();                                               //notifyObserver
+        }
     }
 
 
