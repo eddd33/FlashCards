@@ -1,9 +1,6 @@
 package com.example.flashcards;
 
-import com.example.flashcards.controller.CreateViewController;
-import com.example.flashcards.controller.LearningViewController;
-import com.example.flashcards.controller.SceneController;
-import com.example.flashcards.controller.SelectionViewController;
+import com.example.flashcards.controller.*;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.ViewState;
 
@@ -55,6 +52,17 @@ public class Main extends Application {
         Parent createView = createViewLoader.load();
         Scene createScene = new Scene(createView);
         controller.addScene(createScene);
+
+
+        /*
+         * Deck creation view.
+         */
+        FXMLLoader editViewLoader = new FXMLLoader();
+        editViewLoader.setLocation(getClass().getResource("DeckEditView.fxml"));
+        editViewLoader.setControllerFactory(iC->new DeckEditViewController(container,state));
+        Parent editView = editViewLoader.load();
+        Scene editScene = new Scene(editView);
+        controller.addScene(editScene);
 
 
         stage.setTitle("TELECOM Nancy FlashCard");
