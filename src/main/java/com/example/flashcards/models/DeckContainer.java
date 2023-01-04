@@ -51,6 +51,7 @@ public class DeckContainer implements SubjectObserver {
             cards.add(card);
             activeDeck.addCard(card);
         }
+        notifyObserver();                                               //notifyObserver
     }
 
     public void supprCard(Card card) {
@@ -61,6 +62,7 @@ public class DeckContainer implements SubjectObserver {
         for (Deck deck : decks) {
             // ...
         }
+        notifyObserver();                                               //notifyObserver
     }
 
 
@@ -89,7 +91,7 @@ public class DeckContainer implements SubjectObserver {
             Deck deck = new Deck(name);
             decks.add(deck);
             setActiveDeck(deck);
-            notifyObserver();
+            notifyObserver();                                               //notifyObserver
         }
     }
 
@@ -123,7 +125,7 @@ public class DeckContainer implements SubjectObserver {
             Deck deck = new Deck(newName);
             decks.add(deck);
             setActiveDeck(deck);
-            notifyObserver();
+            notifyObserver();                                               //notifyObserver
         }
     }
 
@@ -141,6 +143,7 @@ public class DeckContainer implements SubjectObserver {
             decks.add(deck);
             setActiveDeck(deck);
         }
+        notifyObserver();                                               //notifyObserver
     }
 
 

@@ -59,6 +59,7 @@ public class SelectionViewController implements Observer, Initializable {
         for (Deck d : decks) {
             HBox newBox = new HBox();
             Button title = new Button();
+            Button modify = new Button();
             Label description = new Label();
 
             title.setPrefSize(150.0,100.0);
@@ -72,8 +73,8 @@ public class SelectionViewController implements Observer, Initializable {
             description.setPrefSize(480.0,100.0);
             description.setWrapText(true);
             description.setText(d.getDescription());
-
-            newBox.getChildren().addAll(title,description);
+            
+            newBox.getChildren().addAll(title,description,modify);
             deckList.getChildren().add(newBox);
         }
     }
