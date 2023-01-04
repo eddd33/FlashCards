@@ -55,7 +55,7 @@
             <MenuItem mnemonicParsing="false" text="Ouvrir" />
                   <MenuItem mnemonicParsing="false" text="Dupliquer" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quitter l'application" />
+            <MenuItem mnemonicParsing="false" text="Quitter l'application" onAction="#exitCmd" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
