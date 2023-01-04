@@ -181,7 +181,7 @@ public class SelectionViewController implements Observer, Initializable {
 
         buttonContainer.getChildren().clear();
         Button withoutTagButton = new Button();
-        withoutTagButton.setText("Recherche");
+        withoutTagButton.setText("Voir tout");
         withoutTagButton.setOnAction(event -> withoutTag());
         buttonContainer.getChildren().add(withoutTagButton);
         for (Deck deck : app.getDecks()) {
@@ -189,6 +189,7 @@ public class SelectionViewController implements Observer, Initializable {
                 if (tagFromList.equals(tag)) {
                     deckListTag.add(deck);
                 }
+                break;
             }
         }
         update();
