@@ -16,6 +16,8 @@ public class DeckContainer implements SubjectObserver {
         decks = new ArrayList<>();
         cards = new ArrayList<>();
         listObs = new ArrayList<>();
+        newDeck();
+        newDeck();
     }
 
     /*
@@ -67,10 +69,10 @@ public class DeckContainer implements SubjectObserver {
      * check if it can be defined beforehand and
      * add it to the deck list.
      *
-     * @param name
+     *
      * The name used to define a new deck, it must be unique
      *
-     * @param description
+     *
      * The description used to define the deck, it has no other purpose than
      * provide information for the user.
      */
@@ -96,10 +98,10 @@ public class DeckContainer implements SubjectObserver {
      * used to create a new deck if the name exist already,
      * add it to the deck list.
      *
-     * @param name
+     *
      * The name used to define a new deck, it must be unique
      *
-     * @param description
+     *
      * The description used to define the deck, it has no other purpose than
      * provide information for the user.
      *
@@ -123,7 +125,20 @@ public class DeckContainer implements SubjectObserver {
     }
 
 
-    public void dupDeck(Deck deck) {}
+    public void dupDeck(Deck deck) {
+        String name = deck.getName();
+        boolean testExist = false;
+        for (Deck d : decks) {
+            if (d.getName().equals(name)) testExist = true;
+        }
+        if (testExist) {
+            recNewDeck(1);
+        } else {
+            Deck d = new Deck(name);
+            decks.add(deck);
+            setActiveDeck(deck);
+        }
+    }
 
 
 

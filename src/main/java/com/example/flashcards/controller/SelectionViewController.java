@@ -2,18 +2,28 @@ package com.example.flashcards.controller;
 
 import com.example.flashcards.command.ChangeSceneCommand;
 import com.example.flashcards.command.ExitCommand;
+import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SelectionViewController implements Observer, Initializable {
     private DeckContainer app;
     private ViewState viewState;
+
+    @FXML private VBox deckList;
 
     /**
      * @param app
@@ -42,7 +52,29 @@ public class SelectionViewController implements Observer, Initializable {
      * The resources used to localize the root object, or {@code null} if
      * the root object was not localized.
      */
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+        ArrayList<Deck> decks = app.getDecks();
+        for (Deck d : decks) {
+            HBox newBox = new HBox();
+            Button title = new Button();
+            Label description = new Label();
+
+            title.setPrefSize(150.0,100.0);
+            title.setStyle("-fx-background-color: grey;");
+            title.setText(d.getName());
+            title.setTextAlignment(TextAlignment.CENTER);
+            title.setTextFill(Color.WHITE);
+            title.setWrapText(true);
+            //title.setOnAction();
+
+            description.setPrefSize(480.0,100.0);
+            description.setWrapText(true);
+            description.setText(d.getDescription());
+
+            newBox.getChildren().addAll(title,description);
+            deckList.getChildren().add(newBox);
+        }
+    }
 
 
 
