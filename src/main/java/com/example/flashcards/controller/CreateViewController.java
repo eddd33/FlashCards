@@ -10,6 +10,7 @@ import com.example.flashcards.view.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,6 +20,12 @@ public class CreateViewController implements Observer, Initializable {
     private ViewState viewState;
 
     private NewCardCommand newCardCommand;
+
+    @FXML
+    private TextField S_tag;
+
+    @FXML
+    private TextField tagAddTextField;
 
     /**
      * @param app
@@ -70,7 +77,7 @@ public class CreateViewController implements Observer, Initializable {
     }
 
     public void searchByTag(){
-        String searchTag = "tag"; //TODO : get the tag from the textfield
+        String searchTag = S_tag.getText(); //TODO : get the tag from the textfield
         boolean isFound = false;
         ListView<Card> result = new ListView<>();
         for (Card card : app.getCards()) {
@@ -88,7 +95,7 @@ public class CreateViewController implements Observer, Initializable {
     }
 
     public void newTag(){
-        String newTag = "tag"; //TODO : get the tag from the textfield
+        String newTag = tagAddTextField.getText(); //TODO : get the tag from the textfield
         Card card = app.getCards().get(0);
         card.getTagList().add(newTag);
     }

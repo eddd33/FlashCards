@@ -114,7 +114,7 @@
                                  <children>
                                     <HBox layoutX="189.0" layoutY="2.0" spacing="10.0">
                                        <children>
-                                          <TextField promptText="Rechercher un tag">
+                                          <TextField fx:id="S_tag" promptText="Rechercher un tag">
                                              <HBox.margin>
                                                 <Insets top="1.0" />
                                              </HBox.margin>
