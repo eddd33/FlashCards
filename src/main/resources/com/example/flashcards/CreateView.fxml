@@ -55,39 +55,23 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="Deck">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem mnemonicParsing="false" text="Enregistrer" />
             <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#changeToSelecCmd" text="Quit" />
+            <MenuItem mnemonicParsing="false" onAction="#changeToSelecCmd" text="Quitter l'application" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
+        <Menu mnemonicParsing="false" text="Carte">
           <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
+            <MenuItem mnemonicParsing="false" text="Nouvelle" />
+            <MenuItem mnemonicParsing="false" text="Supprimer" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Help">
+        <Menu mnemonicParsing="false" text="Page">
           <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+            <MenuItem mnemonicParsing="false" text="Retour à la sélection des decks" />
           </items>
         </Menu>
       </menus>
@@ -119,7 +103,7 @@
                                                 <Insets top="1.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <Button mnemonicParsing="false" onAction="#searchByTag" text="Rechercher"/>
+                                          <Button mnemonicParsing="false" onAction="#searchByTag" text="Rechercher" />
                                        </children>
                                        <padding>
                                           <Insets left="5.0" right="5.0" />
@@ -143,7 +127,7 @@
                                                                      <children>
                                                                         <VBox alignment="TOP_CENTER" spacing="5.0">
                                                                            <children>
-                                                                              <CheckBox fx:id="twoSidedCheckBox" mnemonicParsing="false" text="Peut etre inversée" onAction="#changeSide"/>
+                                                                              <CheckBox fx:id="twoSidedCheckBox" mnemonicParsing="false" onAction="#changeSide" text="Peut etre inversée" />
                                                                               <Label text="Tags">
                                                                                  <font>
                                                                                     <Font name="System Bold" size="13.0" />
@@ -152,7 +136,7 @@
                                                                               <HBox spacing="5.0">
                                                                                  <children>
                                                                                     <TextField fx:id="tagAddTextField" promptText="Ajouter un tag" />
-                                                                                    <Button fx:id="tagAddButton" mnemonicParsing="false" text="Ajouter" onAction="#newTag"/>
+                                                                                    <Button fx:id="tagAddButton" mnemonicParsing="false" onAction="#newTag" text="Ajouter" />
                                                                                  </children>
                                                                               </HBox>
                                                                               <ListView fx:id="addTagListView" prefHeight="138.0" prefWidth="242.0" />
@@ -185,7 +169,7 @@
                                                           </TitledPane>
                                                         </panes>
                                                       </Accordion>
-                                                      <Button mnemonicParsing="false" text="Valider" onAction="#change"/>
+                                                      <Button mnemonicParsing="false" onAction="#change" text="Valider" />
                                                    </children>
                                                 </VBox>
                                              </children>
