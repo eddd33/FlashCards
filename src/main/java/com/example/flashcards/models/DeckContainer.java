@@ -11,6 +11,7 @@ public class DeckContainer implements SubjectObserver {
     private ArrayList<Card> cards;
     private ArrayList<Observer> listObs;
     private Deck activeDeck;
+    private Card activeCard;
 
     public DeckContainer() {
         decks = new ArrayList<>();
@@ -74,6 +75,11 @@ public class DeckContainer implements SubjectObserver {
         String name = getUniqueName("New deck");
         Deck deck = new Deck(name);
         decks.add(deck);
+
+        Card newCard = new Card();
+        deck.addCard(newCard);
+        cards.add(newCard);
+
         setActiveDeck(deck);
         notifyObserver();                                               //notifyObserver
     }
@@ -193,7 +199,9 @@ public class DeckContainer implements SubjectObserver {
         return activeDeck;
     }
 
-
+    public Card getActiveCard() {
+        return activeCard;
+    }
 
     /*
      * Setter :
@@ -202,5 +210,9 @@ public class DeckContainer implements SubjectObserver {
 
     public void setActiveDeck(Deck activeDeck) {
         this.activeDeck = activeDeck;
+    }
+
+    public void setActiveCard(Card activeCard) {
+        this.activeCard = activeCard;
     }
 }
