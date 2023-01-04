@@ -44,7 +44,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.TextField?>
+
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flashcards.controller.SelectionViewController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
@@ -67,19 +67,19 @@
     </MenuBar>
       <AnchorPane>
       <children>
-          <HBox fx:id="buttonContainer" minWidth="640" minHeight="30" prefHeight="30" prefWidth="0" style="-fx-background-color: grey;">
+          <HBox fx:id="buttonContainer" minHeight="30" minWidth="640" prefHeight="30" prefWidth="0" style="-fx-background-color: grey;">
           </HBox>
       </children>
   </AnchorPane>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <ScrollPane prefHeight="373.0" prefWidth="640.0">
+            <ScrollPane prefHeight="373.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
                   <VBox fx:id="deckList" spacing="5.0">
                      <children>
-                        <HBox>
+                        <HBox VBox.vgrow="ALWAYS">
                            <children>
-                              <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                              <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -90,7 +90,7 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Button>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="480.0" text="Vous trouverez ci-joint la decription du dit Deck dans l'optique de bien en cerner le contenu afin de réviser vos partiels dans les meilleurs conditions" wrapText="true">
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="480.0" text="Vous trouverez ci-joint la decription du dit Deck dans l'optique de bien en cerner le contenu afin de réviser vos partiels dans les meilleurs conditions" wrapText="true" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets left="5.0" right="5.0" />
                                  </padding>
@@ -100,9 +100,9 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox layoutX="10.0" layoutY="10.0">
+                        <HBox layoutX="10.0" layoutY="10.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                              <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -113,7 +113,7 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Button>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="480.0" text="Vous trouverez ci-joint la decription du dit Deck dans l'optique de bien en cerner le contenu afin de réviser vos partiels dans les meilleurs conditions" wrapText="true">
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="480.0" text="Vous trouverez ci-joint la decription du dit Deck dans l'optique de bien en cerner le contenu afin de réviser vos partiels dans les meilleurs conditions" wrapText="true" HBox.hgrow="ALWAYS">
                                  <padding>
                                     <Insets left="5.0" right="5.0" />
                                  </padding>
