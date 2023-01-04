@@ -100,7 +100,7 @@
                      <children>
                         <VBox alignment="CENTER" prefWidth="157.0" spacing="5.0">
                            <children>
-                              <Button alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" text="+" />
+                              <Button alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" text="+" onAction="#nouvelleCarte"/>
                               <ListView fx:id="selectedCardListView" prefHeight="342.0" prefWidth="157.0" />
                            </children>
                         </VBox>

@@ -36,6 +36,9 @@ public class CreateViewController implements Observer, Initializable {
     @FXML
     private CheckBox twoSidedCheckBox;
 
+    @FXML
+    private ListView<String> selectedCardListView;
+
     /**
      * @param app
      * The DeckContainer that is used to control decks and cards.
@@ -83,6 +86,12 @@ public class CreateViewController implements Observer, Initializable {
     @FXML
     public void changeToSelecCmd() {
         new ChangeSceneCommand(viewState,0).execute();
+    }
+
+    public void nouvelleCarte() {
+        new NewCardCommand(app).execute();
+        Card card = app.getCards().get(0);
+        //selectedCardListView.getItems().add(card);
     }
 
     public void change() {
