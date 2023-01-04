@@ -63,21 +63,22 @@ public class LearningViewController implements Observer, Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        deck = new Deck("Le deck de test");
-        Card C1 = new Card();
-        C1.setQuestion("C'est la question 1");
-        C1.setAnswer("C'est la réponse 1");
-        Card C2 = new Card();
-        C2.setQuestion("C'est la question 2");
-        C2.setAnswer("C'est la réponse 2");
-        Card C3 = new Card();
-        C3.setQuestion("C'est la question 3");
-        C3.setAnswer("C'est la réponse 3");
-        deck.addCard(C1);
-        deck.addCard(C2);
-        deck.addCard(C3);
-        studyList = deck.getCards();
-        answerLabel.setOpacity(0);
+        if (deck != null && deck.getCards().size() != 0) {
+            deck = app.getActiveDeck();
+            studyList = deck.getCards();
+            answerLabel.setText(studyList.get(0).getAnswer());
+            questionLabel.setText(studyList.get(0).getQuestion());
+            answerLabel.setOpacity(0);
+        }
+        else {
+            buttonContainer.getChildren().clear();
+            Button answerBut = new Button();
+            questionLabel.setText("Révision terminée");
+            answerLabel.setText("Félicitation Shinji! :clap:");
+            answerBut.setOnAction(event -> changeToSelecCmd());
+            answerBut.setText("Retourner à la selection des paquets");
+            buttonContainer.getChildren().add(answerBut);
+        }
     }
 
 
@@ -100,31 +101,39 @@ public class LearningViewController implements Observer, Initializable {
 
     @FXML
     public void reveal(ActionEvent e) {
-        answerLabel.setOpacity(1);
-        buttonContainer.getChildren().clear();
-        HBox buttonBox = new HBox();
-        Button easyButton = new Button();
-        easyButton.setText("Facile");
-        easyButton.setOnAction(event -> nextCard());
-        Button midButton = new Button();
-        midButton.setText("Moyen");
-        Button hardButton = new Button();
-        hardButton.setText("Difficile");
-        Button lostButton = new Button();
-        lostButton.setText("Impossible");
-        buttonBox.getChildren().addAll(easyButton,midButton,hardButton,lostButton);
-        buttonContainer.getChildren().add(buttonBox);
+            answerLabel.setOpacity(1);
+            buttonContainer.getChildren().clear();
+            HBox buttonBox = new HBox();
+            Button easyButton = new Button();
+            easyButton.setText("Facile");
+            easyButton.setOnAction(event -> nextCard());
+            Button midButton = new Button();
+            midButton.setText("Moyen");
+            Button hardButton = new Button();
+            hardButton.setText("Difficile");
+            Button lostButton = new Button();
+            lostButton.setText("Impossible");
+            buttonBox.getChildren().addAll(easyButton,midButton,hardButton,lostButton);
+            buttonContainer.getChildren().add(buttonBox);
     }
 
     public void nextCard() {
-        questionLabel.setText(studyList.get(0).getQuestion());
-        answerLabel.setText(studyList.get(0).getAnswer());
-        studyList.remove(0);
-        answerLabel.setOpacity(0);
         buttonContainer.getChildren().clear();
         Button answerBut = new Button();
-        answerBut.setText("Afficher la réponse");
-        answerBut.setOnAction(event -> reveal(event));
+        if (deck.getCards().size() != 0) {
+            questionLabel.setText(studyList.get(0).getQuestion());
+            answerLabel.setText(studyList.get(0).getAnswer());
+            studyList.remove(0);
+            answerLabel.setOpacity(0);
+            answerBut.setOnAction(event -> reveal(event));
+            answerBut.setText("Afficher la réponse");
+        }
+        else {
+            questionLabel.setText("Révision terminée");
+            answerLabel.setText("Félicitation Shinji! :clap:");
+            answerBut.setOnAction(event -> changeToSelecCmd());
+            answerBut.setText("Retourner à la selection des paquets");
+        }
         buttonContainer.getChildren().add(answerBut);
     }
 
