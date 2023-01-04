@@ -17,8 +17,6 @@ public class DeckContainer implements SubjectObserver {
         cards = new ArrayList<>();
         listObs = new ArrayList<>();
         newDeck();      // temp
-        newDeck();      // temp
-        newDeck();      // temp
     }
 
     /*
@@ -162,6 +160,18 @@ public class DeckContainer implements SubjectObserver {
         } else {
             return newName;
         }
+    }
+
+
+    /**
+     * Method is used to know if activeDeck is empty of cards
+     *
+     * @return
+     * Type de retour : boolean
+     * the active deck is empty of cards
+     */
+    public boolean activeDeckIsEmpty() {
+        return activeDeck.getCards().isEmpty();
     }
 
 
