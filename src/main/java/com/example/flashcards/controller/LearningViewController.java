@@ -128,6 +128,11 @@ public class LearningViewController implements Observer, Initializable {
             answerBut.setText("Afficher la réponse");
         }
         else {
+            double score = calcScore();
+            if (app.getActiveDeck().getBestScore() > score) {
+                app.getActiveDeck().setBestScore(score);
+            }
+            app.getActiveDeck().setLastScore(score);
             questionLabel.setText("Révision terminée");
             answerLabel.setText("Félicitation Shinji! :clap:");
             answerBut.setOnAction(event -> changeToSelecCmd());
@@ -238,6 +243,11 @@ public class LearningViewController implements Observer, Initializable {
         else {
             List.add(i+1,element);
         }
+    }
+
+    private double calcScore() {
+        int cardNum = app.getActiveDeck().getCards().size();
+        return current_score/cardNum;
     }
 
 
