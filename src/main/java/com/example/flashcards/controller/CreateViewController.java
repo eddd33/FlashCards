@@ -91,10 +91,10 @@ public class CreateViewController implements Observer, Initializable {
             System.out.println(app.getActiveDeck().isInDeck(card));
             if (app.getActiveDeck().isInDeck(card)) {
                 // if there is no name : put a placeholder.
-                selectedCardListView.getItems().add(Objects.requireNonNullElse(name, "<Question>"));
+                selectedCardListView.getItems().add(Objects.requireNonNullElse(name, "New Card"));
             } else {
                 // if there is no name : put a placeholder.
-                newCardListView.getItems().add(Objects.requireNonNullElse(name, "<Question>"));
+                newCardListView.getItems().add(Objects.requireNonNullElse(name, "New Card"));
             }
         }
 
