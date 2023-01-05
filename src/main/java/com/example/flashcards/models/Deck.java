@@ -2,13 +2,14 @@ package com.example.flashcards.models;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 public class Deck {
 
     private String name;
     private String author;
     private String description;
-    private Calendar last_try;
+    private String last_try;
     private ArrayList<String> tagList;
     private ArrayList<Card> cards;
 
@@ -19,7 +20,9 @@ public class Deck {
         this.name = name;
         author = "me";
         description = "Description";
-        last_try = Calendar.getInstance();
+         Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        last_try = dateFormat.format(calendar.getTime());
         tagList = new ArrayList<>();
         cards = new ArrayList<>();
     }
@@ -64,7 +67,7 @@ public class Deck {
         return cards;
     }
 
-    public Calendar getLast_try() {
+    public String getLast_try() {
         return last_try;
     }
 
@@ -85,7 +88,7 @@ public class Deck {
      * The following methods are used for setting component value.
      */
 
-    public void setLast_try(Calendar last_try) {
+    public void setLast_try(String last_try) {
         this.last_try = last_try;
     }
 
