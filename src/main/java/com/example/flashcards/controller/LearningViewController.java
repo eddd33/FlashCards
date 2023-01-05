@@ -70,45 +70,31 @@ public class LearningViewController implements Observer, Initializable {
         if (deck != null && deck.getCards().size() != 0) {
             deck = app.getActiveDeck();
             studyList = deck.getCards();
+            sortByDiff(studyList);
+            int goodNum= 0;
+            int midNum = 0;
+            int hardNum =0;
+            for (Card card :
+                    studyList) {
+                if (card.getDifficulty()<1) {
+                    goodNum++;
+                } else if (card.getDifficulty()<1.7) {
+                    midNum++;
+                }
+                else {
+                    hardNum++;
+                }
+            }
+            goodCards.setText(Integer.toString(goodNum));
+            mehCards.setText(Integer.toString(midNum));
+            badCards.setText(Integer.toString(hardNum));
+            answerLabel.setText(studyList.get(0).getAnswer());
+            questionLabel.setText(studyList.get(0).getQuestion());
+            answerLabel.setOpacity(0);
         }
         else {
             studyList = new ArrayList<Card>();
-            Card C1 = new Card();
-            C1.setQuestion("Question 1");
-            C1.setAnswer("Réponse 1");
-            Card C2 = new Card();
-            C2.setQuestion("Question 2");
-            C2.setAnswer("Réponse 2");
-            Card C3 = new Card();
-            C3.setQuestion("Question 3");
-            C3.setAnswer("Réponse 3");
-            deck = new Deck("Paquet test");
-            studyList.add(C1);
-            studyList.add(C2);
-            studyList.add(C3);
-            deck.getCards().addAll(studyList);
         }
-        sortByDiff(studyList);
-        int goodNum= 0;
-        int midNum = 0;
-        int hardNum =0;
-        for (Card card :
-                studyList) {
-            if (card.getDifficulty()<1) {
-                goodNum++;
-            } else if (card.getDifficulty()<1.7) {
-                midNum++;
-            }
-            else {
-                hardNum++;
-            }
-        }
-        goodCards.setText(Integer.toString(goodNum));
-        mehCards.setText(Integer.toString(midNum));
-        badCards.setText(Integer.toString(hardNum));
-        answerLabel.setText(studyList.get(0).getAnswer());
-        questionLabel.setText(studyList.get(0).getQuestion());
-        answerLabel.setOpacity(0);
     }
 
 
