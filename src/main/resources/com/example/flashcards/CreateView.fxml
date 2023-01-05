@@ -65,7 +65,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Carte">
           <items>
-            <MenuItem mnemonicParsing="false" text="Nouvelle" />
+            <MenuItem mnemonicParsing="false" text="Nouvelle" onAction="#newCardCmd"/>
             <MenuItem mnemonicParsing="false" text="Supprimer" />
           </items>
         </Menu>
@@ -84,7 +84,7 @@
                      <children>
                         <VBox alignment="CENTER" minWidth="157.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#newCardCmd" text="+" VBox.vgrow="ALWAYS" />
+                              <Button alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" text="+" VBox.vgrow="ALWAYS" />
                               <ListView fx:id="selectedCardListView" minHeight="342.0" minWidth="157.0" VBox.vgrow="ALWAYS" />
                            </children>
                         </VBox>
