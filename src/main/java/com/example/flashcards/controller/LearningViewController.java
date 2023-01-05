@@ -1,9 +1,12 @@
 package com.example.flashcards.controller;
 
 import com.example.flashcards.command.ChangeSceneCommand;
+import com.example.flashcards.controller.studystrategy.LearningStrategy;
+import com.example.flashcards.controller.studystrategy.StudyStrategy;
 import com.example.flashcards.models.Card;
 import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
+import com.example.flashcards.models.Study;
 import com.example.flashcards.view.*;
 
 import javafx.event.ActionEvent;
@@ -24,7 +27,7 @@ public class LearningViewController implements Observer, Initializable {
     private DeckContainer app;
     private ViewState viewState;
     private Deck deck;
-    private ArrayList<Card> studyList;
+    private Study study;
 
     private double current_score;
 
@@ -67,15 +70,47 @@ public class LearningViewController implements Observer, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.print("entrée init");
-        if (deck != null && deck.getCards().size() != 0) {
-            deck = app.getActiveDeck();
-            studyList = deck.getCards();
-            sortByDiff(studyList);
+    }
+
+
+
+    /**
+     * Implementation of update() method for Observer interface
+     */
+    public void update(){
+        System.out.println("Entrée update " + viewState.getState());
+        if (viewState.getState() == 0) {
+            System.out.println("J'initialise Study'");
+            StudyStrategy strat = new LearningStrategy();
+            study = new Study(app.getActiveDeck().getCards(), strat, app);
+            sortByDiff(study.getStudyList());
+            buttonContainer.getChildren().clear();
+            Button answerBut = new Button();
+            if (study.getStudyList().size() != 0) {
+                System.out.println("J'affiche la première carte");
+                questionLabel.setText(study.getStudyList().get(0).getQuestion());
+                answerLabel.setText(study.getStudyList().get(0).getAnswer());
+                answerLabel.setOpacity(0);
+                answerBut.setOnAction(event -> reveal(event));
+                answerBut.setText("Afficher la réponse");
+            }
+            else {
+                double score = calcScore();
+                if (app.getActiveDeck().getBestScore() > score) {
+                    app.getActiveDeck().setBestScore(score);
+                }
+                app.getActiveDeck().setLastScore(score);
+                questionLabel.setText("Révision terminée");
+                answerLabel.setText("Félicitation Shinji! :clap:");
+                answerBut.setOnAction(event -> changeToSelecCmd());
+                answerBut.setText("Retourner à la selection des paquets");
+            }
+            buttonContainer.getChildren().add(answerBut);
             int goodNum= 0;
             int midNum = 0;
             int hardNum =0;
             for (Card card :
-                    studyList) {
+                    study.getStudyList()) {
                 if (card.getDifficulty()<1) {
                     goodNum++;
                 } else if (card.getDifficulty()<1.7) {
@@ -88,66 +123,49 @@ public class LearningViewController implements Observer, Initializable {
             goodCards.setText(Integer.toString(goodNum));
             mehCards.setText(Integer.toString(midNum));
             badCards.setText(Integer.toString(hardNum));
-            answerLabel.setText(studyList.get(0).getAnswer());
-            questionLabel.setText(studyList.get(0).getQuestion());
-            answerLabel.setOpacity(0);
-        }
-        else {
-            studyList = new ArrayList<Card>();
-        }
-    }
-
-
-
-    /**
-     * Implementation of update() method for Observer interface
-     */
-    public void update(){
-        System.out.println("entrée update");
-        if (studyList.size() == 0) {
-            System.out.println("Récup le deck");
-            studyList = app.getActiveDeck().getCards();
-        }
-        System.out.println(studyList.size());
-        buttonContainer.getChildren().clear();
-        Button answerBut = new Button();
-        if (studyList.size() != 0) {
-            System.out.println(studyList.get(0));
-            questionLabel.setText(studyList.get(0).getQuestion());
-            answerLabel.setText(studyList.get(0).getAnswer());
-            answerLabel.setOpacity(0);
-            answerBut.setOnAction(event -> reveal(event));
-            answerBut.setText("Afficher la réponse");
-        }
-        else {
-            double score = calcScore();
-            if (app.getActiveDeck().getBestScore() > score) {
-                app.getActiveDeck().setBestScore(score);
-            }
-            app.getActiveDeck().setLastScore(score);
-            questionLabel.setText("Révision terminée");
-            answerLabel.setText("Félicitation Shinji! :clap:");
-            answerBut.setOnAction(event -> changeToSelecCmd());
-            answerBut.setText("Retourner à la selection des paquets");
-        }
-        buttonContainer.getChildren().add(answerBut);
-        int goodNum= 0;
-        int midNum = 0;
-        int hardNum =0;
-        for (Card card :
-                studyList) {
-            if (card.getDifficulty()<1) {
-                goodNum++;
-            } else if (card.getDifficulty()<1.7) {
-                midNum++;
+        } else if (viewState.getState() == 1) {
+            buttonContainer.getChildren().clear();
+            Button answerBut = new Button();
+            if (study.getStudyList().size() != 0) {
+                System.out.println("J'affiche la première carte");
+                questionLabel.setText(study.getStudyList().get(0).getQuestion());
+                answerLabel.setText(study.getStudyList().get(0).getAnswer());
+                answerLabel.setOpacity(0);
+                answerBut.setOnAction(event -> reveal(event));
+                answerBut.setText("Afficher la réponse");
             }
             else {
-                hardNum++;
+                double score = calcScore();
+                if (app.getActiveDeck().getBestScore() > score) {
+                    app.getActiveDeck().setBestScore(score);
+                }
+                app.getActiveDeck().setLastScore(score);
+                questionLabel.setText("Révision terminée");
+                answerLabel.setText("Félicitation Shinji! :clap:");
+                answerBut.setOnAction(event -> changeToSelecCmd());
+                answerBut.setText("Retourner à la selection des paquets");
             }
+            buttonContainer.getChildren().add(answerBut);
+            int goodNum= 0;
+            int midNum = 0;
+            int hardNum =0;
+            for (Card card :
+                    study.getStudyList()) {
+                if (card.getDifficulty()<1) {
+                    goodNum++;
+                } else if (card.getDifficulty()<1.7) {
+                    midNum++;
+                }
+                else {
+                    hardNum++;
+                }
+            }
+            goodCards.setText(Integer.toString(goodNum));
+            mehCards.setText(Integer.toString(midNum));
+            badCards.setText(Integer.toString(hardNum));
+        } else {
+            study = null;
         }
-        goodCards.setText(Integer.toString(goodNum));
-        mehCards.setText(Integer.toString(midNum));
-        badCards.setText(Integer.toString(hardNum));
     }
 
 
@@ -189,16 +207,7 @@ public class LearningViewController implements Observer, Initializable {
     }
 
     public void nextCard(double coef) {
-        if (studyList.size() > 0) {
-            Card firstCard = studyList.get(0);
-            firstCard.setDifficulty(firstCard.getDifficulty() * coef);
-            app.getCard(firstCard.getQuestion()).setDifficulty(firstCard.getDifficulty());
-            studyList.remove(0);
-            if (firstCard.getDifficulty() >= 1) {
-                insertByDiff(studyList, firstCard);
-            }
-        }
-        System.out.println("Avant Notif");
+        study.nextCard(coef);
         app.notifyObserver();
     }
 
@@ -221,7 +230,7 @@ public class LearningViewController implements Observer, Initializable {
                 }
             }
         }
-        studyList = bufferList;
+        List = bufferList;
     }
 
     private void insertByDiff(ArrayList<Card> List, Card element) {
