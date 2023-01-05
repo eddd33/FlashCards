@@ -13,6 +13,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 
+import com.google.gson.Gson;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -229,5 +231,31 @@ public class CreateViewController implements Observer, Initializable {
         if (selectedIndex >= 0 && selectedIndex < selectedCardListView.getItems().size()) {
             app.setActiveCard(app.getActiveDeck().getCards().get(selectedIndex));
         }
+    }
+
+    @FXML
+    public void reinitialiser() {
+        app = new DeckContainer();
+        app.notifyObserver();
+    }
+
+    @FXML
+    public void sauvegarder() throws IOException {
+        Gson gson = new Gson();
+        String json = gson.toJson(app);
+        FileWriter fichier = new FileWriter("./src/main/resources/com/example/carnet/sauvegarde.json");
+        fichier.write(json);
+        fichier.close();
+    }
+    @FXML
+    public void charger() throws IOException{
+        InputStream stream = getClass().getResourceAsStream("sauvegarde.json");
+        BufferedReader fichier = new BufferedReader(new InputStreamReader(stream));
+
+        Gson gson = new Gson();
+        app = gson.fromJson(fichier.readLine(), DeckContainer.class);
+        app.notifyObserver();
+        fichier.close();
+
     }
 }
