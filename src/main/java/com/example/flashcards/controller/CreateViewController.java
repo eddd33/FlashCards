@@ -7,14 +7,9 @@ import com.example.flashcards.view.*;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.*;
 
-import com.google.gson.Gson;
-import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -66,14 +61,19 @@ public class CreateViewController implements Observer, Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         // newCardListView is the ListView of all the cards available
+        newCardListView.setStyle("-fx-selection-bar:blue;");
+        newCardListView.setOnMouseClicked(this::clickHandle);
+        newCardListView.setOnKeyPressed(this::deleteCardHandle);
         newCardListView.setOnDragDetected(this::starDnd);
 
         // selectedCardListView is the ListView of all the cards in the deck
-        selectedCardListView.setOnMouseClicked(this::clickHandle);
+        selectedCardListView.setStyle("-fx-selection-bar:green;");
+        selectedCardListView.setOnMouseClicked(this::clickSelectedHandle);
+        selectedCardListView.setOnKeyPressed(this::deleteSelectedCardHandle);
         selectedCardListView.setOnDragEntered(this::endDnD);
 
         //
-        addTagListView.setOnKeyPressed(this::supprHandle);
+        addTagListView.setOnKeyPressed(this::deleteTagHandle);
     }
 
 
@@ -85,17 +85,20 @@ public class CreateViewController implements Observer, Initializable {
 
         selectedCardListView.getItems().clear();
         newCardListView.getItems().clear();
+
         // We put cards in newCardListView except those already in the deck which go in selectedCardListView
         for (Card card : app.getCards()) {
-            String name = card.getQuestion();
-            System.out.println(app.getActiveDeck().isInDeck(card));
-            if (app.getActiveDeck().isInDeck(card)) {
+            if (! app.getActiveDeck().isInDeck(card)) {
                 // if there is no name : put a placeholder.
-                selectedCardListView.getItems().add(Objects.requireNonNullElse(name, "New Card"));
-            } else {
-                // if there is no name : put a placeholder.
-                newCardListView.getItems().add(Objects.requireNonNullElse(name, "New Card"));
+                newCardListView.getItems().add(Objects.requireNonNullElse(card.getQuestion(), "New Card"));
+                if (card.equals(app.getActiveCard())) newCardListView.getSelectionModel().selectLast();
             }
+        }
+
+        for (Card card : app.getActiveDeck().getCards()) {
+            // if there is no name : put a placeholder.
+            selectedCardListView.getItems().add(Objects.requireNonNullElse(card.getQuestion(), "New Card"));
+            if (card.equals(app.getActiveCard())) selectedCardListView.getSelectionModel().selectLast();
         }
 
         Card activeCard = app.getActiveCard();
@@ -137,8 +140,21 @@ public class CreateViewController implements Observer, Initializable {
         new ChangeSceneCommand(viewState,0).execute();
     }
 
+    @FXML
+    public void changeToEditDeckCmd() {
+        new ChangeSceneCommand(viewState,3).execute();
+    }
+
     public void newCardCmd() {
         new NewCardCommand(app).execute();
+    }
+
+    public void newCardNotInActiveDeckCmd() {
+        new NewCardNotActiveCommand(app).execute();
+    }
+
+    public void deleteCardCmd() {
+        new DeleteCardCommand(app).execute();
     }
 
     public void validateChangeCmd() {
@@ -150,7 +166,7 @@ public class CreateViewController implements Observer, Initializable {
         new ValidateInfoCardModCommand(app, question, answer, twoSided, tags).execute();
     }
 
-    public void newTagCmd(){
+    public void newTagCmd() {
         if (tagAddTextField.getText().equals("")){
             System.out.println("Veuillez entrer un tag");
         }
@@ -191,10 +207,8 @@ public class CreateViewController implements Observer, Initializable {
     public void starDnd(MouseEvent event) {
         System.out.println("Début du drag");
         Dragboard db = newCardListView.startDragAndDrop(TransferMode.ANY);
-
         ClipboardContent content = new ClipboardContent();
         content.putString(newCardListView.getSelectionModel().getSelectedItem());
-        System.out.println(newCardListView.getSelectionModel().getSelectedItem());
         db.setContent(content);
         event.consume();
     }
@@ -212,10 +226,16 @@ public class CreateViewController implements Observer, Initializable {
             }
         }
         event.consume();
-        app.notifyObserver();
+        update();
     }
 
-    public void supprHandle(KeyEvent event) {
+
+
+    /*
+     * The following methods are used to handle the KeyEvent of BackSpace being pressed.
+     */
+
+    public void deleteTagHandle(KeyEvent event) {
         if (event.getEventType() == KeyEvent.KEY_PRESSED && event.getCode() == KeyCode.BACK_SPACE) {
             int selectedIndex = addTagListView.getSelectionModel().getSelectedIndex();
             if (selectedIndex >= 0 && selectedIndex < addTagListView.getItems().size()) {
@@ -226,36 +246,44 @@ public class CreateViewController implements Observer, Initializable {
         }
     }
 
-    public void clickHandle(MouseEvent event) {
+    public void deleteSelectedCardHandle(KeyEvent event) {
+        if (event.getEventType() == KeyEvent.KEY_PRESSED && event.getCode() == KeyCode.BACK_SPACE && app.getActiveDeck().getCards().size() > 1) {
+            int selectedIndex = selectedCardListView.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0 && selectedIndex < selectedCardListView.getItems().size()) {
+                app.supprCardFromActiveDeck(app.getActiveDeck().getCards().get(selectedIndex));
+            }
+            app.setActiveCard(app.getActiveDeck().getCards().get(Math.min(selectedIndex, app.getActiveDeck().getCards().size()-1)));
+        }
+    }
+
+    public void deleteCardHandle(KeyEvent event) {
+        if (event.getEventType() == KeyEvent.KEY_PRESSED && event.getCode() == KeyCode.BACK_SPACE && app.getCards().size() > 1) {
+            int selectedIndex = newCardListView.getSelectionModel().getSelectedIndex();
+            int i = app.getCardIndex(selectedIndex);
+            if (selectedIndex >= 0 && selectedIndex < newCardListView.getItems().size()) {
+                app.supprCard(app.getCards().get(i));
+            }
+            app.setActiveCard(app.getCards().get(Math.min(i, app.getCards().size())));
+        }
+    }
+
+
+
+    /*
+     * The following methods are used to handle the MouseEvent of BackSpace being pressed.
+     */
+
+    public void clickSelectedHandle(MouseEvent event) {
         int selectedIndex = selectedCardListView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0 && selectedIndex < selectedCardListView.getItems().size()) {
             app.setActiveCard(app.getActiveDeck().getCards().get(selectedIndex));
         }
     }
 
-    @FXML
-    public void reinitialiser() {
-        app = new DeckContainer();
-        app.notifyObserver();
-    }
-
-    @FXML
-    public void sauvegarder() throws IOException {
-        Gson gson = new Gson();
-        String json = gson.toJson(app);
-        FileWriter fichier = new FileWriter("./src/main/resources/com/example/carnet/sauvegarde.json");
-        fichier.write(json);
-        fichier.close();
-    }
-    @FXML
-    public void charger() throws IOException{
-        InputStream stream = getClass().getResourceAsStream("sauvegarde.json");
-        BufferedReader fichier = new BufferedReader(new InputStreamReader(stream));
-
-        Gson gson = new Gson();
-        app = gson.fromJson(fichier.readLine(), DeckContainer.class);
-        app.notifyObserver();
-        fichier.close();
-
+    public void clickHandle(MouseEvent event) {
+        int selectedIndex = newCardListView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0 && selectedIndex < newCardListView.getItems().size()) {
+            app.setActiveCard(app.getCards().get(app.getCardIndex(selectedIndex)));
+        }
     }
 }

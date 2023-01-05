@@ -46,7 +46,7 @@ public class DeckEditViewController implements Initializable, Observer {
         this.viewState = viewState;
         this.container.addObserver(this);
         this.viewState.addObserver(this);
-        tags = container.getActiveDeck().getTagList();
+        tags = new ArrayList<>();
     }
 
 
@@ -64,10 +64,6 @@ public class DeckEditViewController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Deck deck = container.getActiveDeck();
-        deckNameTextField.setText(deck.getName());
-        deckAuthorTextField.setText(deck.getAuthor());
-        deckDescTextArea.setText( deck.getDescription());
 
         deckTagListView.setOnKeyPressed(this::handle);
 

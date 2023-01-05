@@ -12,6 +12,9 @@ public class Deck {
     private ArrayList<String> tagList;
     private ArrayList<Card> cards;
 
+    private double best_score;
+    private double last_score;
+
     public Deck(String name) {
         this.name = name;
         author = "me";
@@ -69,7 +72,13 @@ public class Deck {
         return cards.indexOf(card);
     }
 
+    public double getBestScore() {
+        return best_score;
+    }
 
+    public double getLastScore() {
+        return last_score;
+    }
 
     /*
      * Setter :
@@ -97,6 +106,14 @@ public class Deck {
         this.tagList.addAll(tagList);
     }
 
+    public void setBestScore(double score) {
+        this.best_score = score;
+    }
+
+    public void setLastScore(double score) {
+        this.last_score = score;
+    }
+
     /*
      * Add :
      * The following methods are used for adding element to list.
@@ -119,4 +136,16 @@ public class Deck {
     public void removeCard(Card card) {
         cards.remove(card);
     }
+
+    /**
+     * Compared the best score of two decks.
+     * @param comparedDeck
+     * @return boolean :
+     *      true if the calling deck's best score is higher than the comparedDeck best score.
+     *      false if it's the other way around.
+     */
+    public boolean hasHigherBestScore(Deck comparedDeck){
+        return this.getBestScore() > comparedDeck.getBestScore();
+    }
+
 }

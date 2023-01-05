@@ -24,8 +24,6 @@ public class DeckContainer implements SubjectObserver {
         listObs = new ArrayList<>();
         deckTags = new HashSet<>();
         cardTags = new HashSet<>();
-
-        newDeck();
     }
 
     /*
@@ -63,6 +61,14 @@ public class DeckContainer implements SubjectObserver {
     }
 
 
+    public void newCardNotInDeck() {
+        Card card = new Card();
+        cards.add(card);
+        setActiveCard(card);
+        notifyObserver();
+    }
+
+
 
     /**
      * Method used to remove a Card from the active deck
@@ -84,12 +90,26 @@ public class DeckContainer implements SubjectObserver {
      * The card you want to be removed from the deck.
      */
     public void supprCard(Card card) {
-        activeDeck.getCards().remove(card);
+        cards.remove(card);
         for (Deck deck : decks) {
             deck.getCards().remove(card);
         }
         notifyObserver();                                               //notifyObserver
     }
+
+
+    public void deleteCard() {
+        if (activeDeck.isInDeck(activeCard) && activeDeck.getCards().size() > 1) {
+            int index = activeDeck.getCardIndex(activeCard);
+            activeDeck.getCards().remove(activeCard);
+            activeCard = activeDeck.getCards().get(Math.min(index, activeDeck.getCards().size()-1));
+            notifyObserver();                                               //notifyObserver
+        } else if (cards.size() > 1) {
+            supprCard(activeCard);
+        }
+    }
+
+
 
     /**
      * Method used to remove a Deck from the list of deck
@@ -266,6 +286,30 @@ public class DeckContainer implements SubjectObserver {
      */
     public void addCardTag(String tag, Card card) {
         deckTags.add(tag);
+    }
+
+
+
+    /**
+     * Method used to get the index of a card in cards list.
+     *
+     * @param inputIndex
+     * The integer is the index of the element in the ListView but not the real index.
+     * We need to check the cards list and finding the corresponding element th get the real index.
+     *
+     * @return int, the real index of the card in cards list.
+     */
+    public int getCardIndex(int inputIndex) {
+        int index = 0;
+        int k = 0;
+
+        while (k <= inputIndex) {
+            if (! activeDeck.isInDeck(cards.get(index))) {
+                k++;
+            }
+            index++;
+        }
+        return index-1;
     }
 
 

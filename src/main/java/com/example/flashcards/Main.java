@@ -64,6 +64,15 @@ public class Main extends Application {
         Scene editScene = new Scene(editView);
         controller.addScene(editScene);
 
+        /*
+         * Deck stats view.
+         */
+        FXMLLoader statViewLoader = new FXMLLoader();
+        statViewLoader.setLocation(getClass().getResource("StatView.fxml"));
+        statViewLoader.setControllerFactory(iC->new StatViewController(container,state));
+        Parent statView = statViewLoader.load();
+        Scene statScene = new Scene(statView);
+        controller.addScene(statScene);
 
         stage.setTitle("TELECOM Nancy FlashCard");
         stage.setScene(selectionScene);
