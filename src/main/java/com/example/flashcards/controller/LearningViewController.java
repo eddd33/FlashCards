@@ -41,6 +41,7 @@ public class LearningViewController implements Observer, Initializable {
     public LearningViewController(DeckContainer app, ViewState viewState){
         this.app=app;
         this.viewState=viewState;
+        this.app.addObserver(this);
     }
 
 
@@ -58,22 +59,32 @@ public class LearningViewController implements Observer, Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.print("entrée init");
         if (deck != null && deck.getCards().size() != 0) {
             deck = app.getActiveDeck();
             studyList = deck.getCards();
-            answerLabel.setText(studyList.get(0).getAnswer());
-            questionLabel.setText(studyList.get(0).getQuestion());
-            answerLabel.setOpacity(0);
         }
         else {
-            buttonContainer.getChildren().clear();
-            Button answerBut = new Button();
-            questionLabel.setText("Révision terminée");
-            answerLabel.setText("Félicitation Shinji! :clap:");
-            answerBut.setOnAction(event -> changeToSelecCmd());
-            answerBut.setText("Retourner à la selection des paquets");
-            buttonContainer.getChildren().add(answerBut);
+            studyList = new ArrayList<Card>();
+            Card C1 = new Card();
+            C1.setQuestion("Question 1");
+            C1.setAnswer("Réponse 1");
+            Card C2 = new Card();
+            C2.setQuestion("Question 2");
+            C2.setAnswer("Réponse 2");
+            Card C3 = new Card();
+            C3.setQuestion("Question 3");
+            C3.setAnswer("Réponse 3");
+            deck = new Deck("Paquet test");
+            studyList.add(C1);
+            studyList.add(C2);
+            studyList.add(C3);
+            deck.getCards().addAll(studyList);
         }
+        sortByDiff(studyList);
+        answerLabel.setText(studyList.get(0).getAnswer());
+        questionLabel.setText(studyList.get(0).getQuestion());
+        answerLabel.setOpacity(0);
     }
 
 
@@ -81,7 +92,24 @@ public class LearningViewController implements Observer, Initializable {
     /**
      * Implementation of update() method for Observer interface
      */
-    public void update(){}
+    public void update(){
+        System.out.println("entrée update");
+        buttonContainer.getChildren().clear();
+        Button answerBut = new Button();
+        if (studyList.size() != 0) {
+            questionLabel.setText(studyList.get(0).getQuestion());
+            answerLabel.setText(studyList.get(0).getAnswer());
+            answerLabel.setOpacity(0);
+            answerBut.setOnAction(event -> reveal(event));
+            answerBut.setText("Afficher la réponse");
+        }
+        else {
+            questionLabel.setText("Révision terminée");
+            answerLabel.setText("Félicitation Shinji! :clap:");
+            answerBut.setOnAction(event -> changeToSelecCmd());
+            answerBut.setText("Retourner à la selection des paquets");
+        }
+        buttonContainer.getChildren().add(answerBut);}
 
 
 
@@ -101,34 +129,65 @@ public class LearningViewController implements Observer, Initializable {
             HBox buttonBox = new HBox();
             Button easyButton = new Button();
             easyButton.setText("Facile");
-            easyButton.setOnAction(event -> nextCard());
+            easyButton.setOnAction(event -> nextCard(0.9));
             Button midButton = new Button();
             midButton.setText("Moyen");
+            midButton.setOnAction(event -> nextCard(1));
             Button hardButton = new Button();
             hardButton.setText("Difficile");
-            Button lostButton = new Button();
-            lostButton.setText("Impossible");
-            buttonBox.getChildren().addAll(easyButton,midButton,hardButton,lostButton);
+            hardButton.setOnAction(event -> nextCard(1.2));
+            buttonBox.getChildren().addAll(easyButton,midButton,hardButton);
             buttonContainer.getChildren().add(buttonBox);
     }
 
-    public void nextCard() {
-        buttonContainer.getChildren().clear();
-        Button answerBut = new Button();
-        if (deck.getCards().size() != 0) {
-            questionLabel.setText(studyList.get(0).getQuestion());
-            answerLabel.setText(studyList.get(0).getAnswer());
+    public void nextCard(double coef) {
+        if (studyList.size() > 0) {
+            Card firstCard = studyList.get(0);
+            firstCard.setDifficulty(firstCard.getDifficulty() * coef);
+            //TODO appliquer aux vrais cartes
             studyList.remove(0);
-            answerLabel.setOpacity(0);
-            answerBut.setOnAction(event -> reveal(event));
-            answerBut.setText("Afficher la réponse");
+            if (firstCard.getDifficulty() >= 1) {
+                insertByDiff(studyList, firstCard);
+            }
+        }
+        System.out.println("Avant Notif");
+        app.notifyObserver();
+    }
+
+    private void sortByDiff(ArrayList<Card> List) {
+        ArrayList<Card> bufferList = new ArrayList<Card>();
+        for (Card card : List) {
+            if (bufferList.size() == 0){
+                bufferList.add(card);
+            }
+            else {
+                int i =0;
+                while (i<bufferList.size() && card.getDifficulty() <= bufferList.get(i).getDifficulty()){
+                    i++;
+                }
+                if (i == bufferList.size()) {
+                    bufferList.add(card);
+                }
+                else {
+                    bufferList.add(i,card);
+                }
+            }
+        }
+        studyList = bufferList;
+    }
+
+    private void insertByDiff(ArrayList<Card> List, Card element) {
+        int i = 0;
+        while (element.getDifficulty() < List.get(i).getDifficulty()) {
+            i ++;
+        }
+        if (i+1 >= List.size()) {
+            List.add(element);
         }
         else {
-            questionLabel.setText("Révision terminée");
-            answerLabel.setText("Félicitation Shinji! :clap:");
-            answerBut.setOnAction(event -> changeToSelecCmd());
-            answerBut.setText("Retourner à la selection des paquets");
+            List.add(i+1,element);
         }
-        buttonContainer.getChildren().add(answerBut);
     }
+
+
 }
