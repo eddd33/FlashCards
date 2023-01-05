@@ -62,8 +62,43 @@ public class DeckContainer implements SubjectObserver {
         notifyObserver();                                               //notifyObserver
     }
 
+
+
+    /**
+     * Method used to remove a Card from the active deck
+     *
+     * @param card
+     * The card you want to be removed from the deck.
+     */
+    public void supprCardFromActiveDeck(Card card) {
+        activeDeck.getCards().remove(card);
+        notifyObserver();                                               //notifyObserver
+    }
+
+
+
+    /**
+     * Method used to remove a Card from the anywhere deck
+     *
+     * @param card
+     * The card you want to be removed from the deck.
+     */
     public void supprCard(Card card) {
         activeDeck.getCards().remove(card);
+        for (Deck deck : decks) {
+            deck.getCards().remove(card);
+        }
+        notifyObserver();                                               //notifyObserver
+    }
+
+    /**
+     * Method used to remove a Deck from the list of deck
+     *
+     * @param deck
+     * The deck you want to be deleted.
+     */
+    public void supprDeck(Deck deck) {
+        decks.remove(deck);
         notifyObserver();                                               //notifyObserver
     }
 
