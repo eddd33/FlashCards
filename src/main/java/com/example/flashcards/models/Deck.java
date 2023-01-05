@@ -136,4 +136,16 @@ public class Deck {
     public void removeCard(Card card) {
         cards.remove(card);
     }
+
+    /**
+     * Compared the best score of two decks.
+     * @param comparedDeck
+     * @return boolean :
+     *      true if the calling deck's best score is higher than the comparedDeck best score.
+     *      false if it's the other way around.
+     */
+    public boolean hasHigherBestScore(Deck comparedDeck){
+        return this.getBestScore() > comparedDeck.getBestScore();
+    }
+
 }
