@@ -178,7 +178,8 @@ public class SelectionViewController implements Observer, Initializable {
     @FXML
     public void changeToCreateCmd(Deck deck) {
         app.setActiveDeck(deck);
-        new ChangeSceneCommand(viewState,3).execute();
+        app.setActiveCard(deck.getCards().get(0));
+        new ChangeSceneCommand(viewState,2).execute();
     }
 
     @FXML

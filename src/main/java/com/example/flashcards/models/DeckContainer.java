@@ -5,6 +5,7 @@ import com.example.flashcards.view.SubjectObserver;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class DeckContainer implements SubjectObserver {
@@ -42,6 +43,10 @@ public class DeckContainer implements SubjectObserver {
     public void notifyObserver() {
         for (Observer o : listObs) {
             o.update();
+        }
+        System.out.println("new notify :");
+        for (int i = 0; i < cards.size(); i++) {
+            System.out.println("liste de cartes : " + Objects.requireNonNullElse(cards.get(i).getQuestion(),"NULL"));
         }
     }
 
@@ -84,11 +89,10 @@ public class DeckContainer implements SubjectObserver {
         Deck deck = new Deck(name);
         decks.add(deck);
 
-        Card newCard = new Card();
-        deck.addCard(newCard);
-        cards.add(newCard);
-
         setActiveDeck(deck);
+
+        newCard();
+
         notifyObserver();                                               //notifyObserver
     }
 
@@ -176,6 +180,39 @@ public class DeckContainer implements SubjectObserver {
         }
     }
 
+
+    /**
+     * Method that take the change of a card an create a new one, except when one is identical.
+     *
+     * @param question String
+     * @param answer String
+     * @param twoSided boolean
+     * @param tags ArrayList<String>
+     */
+    public void changeInfoActiveCard(String question, String answer, boolean twoSided, ArrayList<String> tags) {
+        int index = activeDeck.getCardIndex(activeCard);
+        boolean test = true;
+        activeDeck.removeCard(activeCard);
+        Card changedCard = null;
+        for (Card card : cards) {
+            if (Objects.requireNonNullElse(card.getQuestion(),"").equals(question) && Objects.requireNonNullElse(card.getAnswer(),"").equals(answer) && card.getTwoSided() == twoSided && card.getTagList().equals(tags)) {
+                changedCard = card;
+                test = false;
+                break;
+            }
+        }
+        if (test) {
+            changedCard = new Card(question,answer,twoSided,tags);
+            cards.add(changedCard);
+        }
+        activeCard = changedCard;
+        activeDeck.addCard(index,changedCard);
+        System.out.println("taille du deck " + activeDeck.getCards().size());
+        for (int i = 0; i < activeDeck.getCards().size(); i++) {
+            System.out.println("liste de cartes du deck : " + activeDeck.getCards().get(i).getQuestion());
+        }
+        notifyObserver();                                               //notifyObserver
+    }
 
 
     /**

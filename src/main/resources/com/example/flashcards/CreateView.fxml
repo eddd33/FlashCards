@@ -60,7 +60,7 @@
             <MenuItem mnemonicParsing="false" text="Enregistrer" />
             <MenuItem mnemonicParsing="false" text="Open…" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#changeToSelecCmd" text="Retour au menu" />
+            <MenuItem mnemonicParsing="false" onAction="#changeToSelectCmd" text="Retour au menu" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Carte">
@@ -84,7 +84,7 @@
                      <children>
                         <VBox alignment="CENTER" minWidth="157.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#nouvelleCarte" text="+" VBox.vgrow="ALWAYS" />
+                              <Button alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#newCardCmd" text="+" VBox.vgrow="ALWAYS" />
                               <ListView fx:id="selectedCardListView" minHeight="342.0" minWidth="157.0" VBox.vgrow="ALWAYS" />
                            </children>
                         </VBox>
@@ -127,7 +127,7 @@
                                                                      <children>
                                                                         <VBox alignment="TOP_CENTER" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                            <children>
-                                                                              <CheckBox fx:id="twoSidedCheckBox" mnemonicParsing="false" onAction="#changeSide" text="Peut etre inversée" />
+                                                                              <CheckBox fx:id="twoSidedCheckBox" mnemonicParsing="false" text="Peut etre inversée" />
                                                                               <Label text="Tags">
                                                                                  <font>
                                                                                     <Font name="System Bold" size="13.0" />
@@ -166,7 +166,7 @@
                                                           </TitledPane>
                                                         </panes>
                                                       </Accordion>
-                                                      <Button mnemonicParsing="false" onAction="#change" text="Valider" />
+                                                      <Button mnemonicParsing="false" onAction="#validateChangeCmd" text="Valider" />
                                                    </children>
                                                 </VBox>
                                              </children>

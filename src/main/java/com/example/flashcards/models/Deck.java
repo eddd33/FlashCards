@@ -23,6 +23,19 @@ public class Deck {
 
 
 
+    /**
+     * Method that check if a card is the deck.
+     *
+     * @return boolean :
+     *      true if the card is in the deck.
+     *      false if not.
+     */
+    public boolean isInDeck(Card card) {
+        return cards.contains(card);
+    }
+
+
+
     /*
      * Getter :
      * The following methods are used for returning component value.
@@ -50,6 +63,10 @@ public class Deck {
 
     public Calendar getLast_try() {
         return last_try;
+    }
+
+    public int getCardIndex(Card card) {
+        return cards.indexOf(card);
     }
 
 
@@ -87,5 +104,19 @@ public class Deck {
 
     public void addCard(Card card) {
         cards.add(card);
+        // ici on peut mettre un check d'unité ?
+    }
+
+    public void addCard(int index, Card card) {
+        cards.add(index, card);
+    }
+
+    /*
+     * Remove :
+     * The following methods are used for removing element to list.
+     */
+
+    public void removeCard(Card card) {
+        cards.remove(card);
     }
 }

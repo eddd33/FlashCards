@@ -6,13 +6,60 @@ public class Card {
 
     private String question;
     private String answer;
-    private Boolean twoSided;
+    private boolean twoSided;
     private int difficulty;
     private ArrayList<String> tagList;
 
+    /**
+     * Constructor for a blank Card.
+     * Difficulty is set to 1 by default.
+     * TwoSided is set to false by default.
+     */
     public Card() {
-        tagList = new ArrayList<>();
         this.difficulty = 1;
+        twoSided = false;
+        tagList = new ArrayList<>();
+    }
+
+
+    /**
+     * Constructor to copy a Card.
+     * Difficulty is set to 1 by default.
+     *
+     * @param question
+     * String of the question
+     *
+     * @param answer
+     * String of the answer.
+     *
+     * @param twoSided
+     * Boolean : if the card can be put both way.
+     * That's mean that there is no question or answer but two thing with a relation.
+     * For example vocabulary can be put this way.
+     *
+     * @param tags
+     * ArrayList<String> list of all the tags of the card.
+     */
+    public Card(String question, String answer, boolean twoSided, ArrayList<String> tags) {
+        this.question = question;
+        this.answer = answer;
+        this.twoSided = twoSided;
+        this.difficulty = 1;
+        tagList = new ArrayList<>();
+        tagList.addAll(tags);
+    }
+
+
+
+    /**
+     * Method that create a copy of the card.
+     * For simplicity reason, it's better to have a methode that call the constructor here,
+     * so that you don't have to get each variable then call the constructor.
+     *
+     * @return Card, a copy of the card but with the difficulty reset to 1.
+     */
+    public Card copy() {
+        return new Card(question, answer, twoSided, tagList);
     }
 
 
@@ -29,7 +76,7 @@ public class Card {
         return answer;
     }
 
-    public Boolean getTwoSided() {
+    public boolean getTwoSided() {
         return twoSided;
     }
 
@@ -56,7 +103,7 @@ public class Card {
         this.answer = answer;
     }
 
-    public void setTwoSided(Boolean twoSided) {
+    public void setTwoSided(boolean twoSided) {
         this.twoSided = twoSided;
     }
 

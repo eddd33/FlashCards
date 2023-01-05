@@ -5,7 +5,6 @@ import com.example.flashcards.models.Card;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -15,31 +14,22 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CreateViewController implements Observer, Initializable {
 
     private DeckContainer app;
     private ViewState viewState;
-    private NewCardCommand newCardCommand;
-    private ModifyTwoSidedCardCommand modifyTwoSidedCardCommand;
 
-    @FXML
-    private TextField S_tag;
-    @FXML
-    private TextField tagAddTextField;
-    @FXML
-    private TextArea questionTextArea;
-    @FXML
-    private TextArea answerTextArea;
-    @FXML
-    private CheckBox twoSidedCheckBox;
-    @FXML
-    private ListView<String> selectedCardListView; //liste des decks
-    @FXML
-    private ListView<String> newCardListView; //cartes créés mais pas dans un deck
-    @FXML
-    private ListView<String> addTagListView; //liste des tags
+    @FXML private TextField S_tag;
+    @FXML private TextField tagAddTextField;
+    @FXML private TextArea questionTextArea;
+    @FXML private TextArea answerTextArea;
+    @FXML private CheckBox twoSidedCheckBox;
+    @FXML private ListView<String> selectedCardListView; // liste des decks
+    @FXML private ListView<String> newCardListView; // cartes créées, mais pas dans un deck
+    @FXML private ListView<String> addTagListView; // liste des tags
 
 
     /**
@@ -54,8 +44,6 @@ public class CreateViewController implements Observer, Initializable {
         this.viewState=viewState;
         app.addObserver(this);
         viewState.addObserver(this);
-        //this.newCardCommand = new NewCardCommand(app);
-        //newCardCommand.execute();
     }
 
 
@@ -72,12 +60,11 @@ public class CreateViewController implements Observer, Initializable {
      * the root object was not localized.
      */
     public void initialize(URL location, ResourceBundle resources) {
-        //int taille_deck = app.getActiveDeck().getCards().size();
-        this.modifyTwoSidedCardCommand = new ModifyTwoSidedCardCommand(app.getCards().get(0), false);
-        modifyTwoSidedCardCommand.execute();
-        newCardListView.getItems().add(app.getCards().get(0).getQuestion());
+
+        // newCardListView is the ListView of all the cards available
         newCardListView.setOnDragDetected(this::starDnd);
-        selectedCardListView.getItems().add(app.getCards().get(0).getQuestion());
+
+        // selectedCardListView is the ListView of all the cards in the deck
         selectedCardListView.setOnDragEntered(this::endDnD);
     }
 
@@ -86,12 +73,45 @@ public class CreateViewController implements Observer, Initializable {
     /**
      * Implementation of update() method for Observer interface
      */
-    public void update(){
-        for (Card card : app.getCards()){
-            selectedCardListView.getItems().add(card.getQuestion());
+    public void update() {
+
+        // set activeCard to the first card of the deck
+        //app.setActiveCard(app.getActiveDeck().getCards().get(0));
+
+        selectedCardListView.getItems().clear();
+        newCardListView.getItems().clear();
+        // We put cards in newCardListView except those already in the deck which go in selectedCardListView
+        for (Card card : app.getCards()) {
+            String name = card.getQuestion();
+            System.out.println(app.getActiveDeck().isInDeck(card));
+            if (app.getActiveDeck().isInDeck(card)) {
+                // if there is no name : put a placeholder.
+                selectedCardListView.getItems().add(Objects.requireNonNullElse(name, "<Question>"));
+            } else {
+                // if there is no name : put a placeholder.
+                newCardListView.getItems().add(Objects.requireNonNullElse(name, "<Question>"));
+            }
         }
-        //this.newCardCommand = new NewCardCommand(app);
-        //newCardCommand.execute();
+
+        Card activeCard = app.getActiveCard();
+        if (activeCard != null) {
+
+            // We put the question if it exists
+            if (activeCard.getQuestion() != null) {
+                questionTextArea.setText(activeCard.getQuestion());
+            }
+
+            // We put the answer if it exists
+            if (activeCard.getAnswer() != null) {
+                answerTextArea.setText(activeCard.getAnswer());
+            }
+
+            // We select or not the twoSidedCheckBox accordingly to the twoSided variable of the card.
+            // Since it's a boolean it can only be true or false and not null.
+            twoSidedCheckBox.setSelected(activeCard.getTwoSided());
+
+            // ----------> besoin d'ajouter la gestion des tags
+        }
     }
 
 
@@ -101,67 +121,21 @@ public class CreateViewController implements Observer, Initializable {
      */
 
     @FXML
-    public void changeToSelecCmd() {
-        questionTextArea.clear();
-        answerTextArea.clear();
-        twoSidedCheckBox.setSelected(false);
-        tagAddTextField.clear();
-        addTagListView.getItems().clear();
+    public void changeToSelectCmd() {
         new ChangeSceneCommand(viewState,0).execute();
-
     }
 
-
-
-    public void nouvelleCarte() {
-        //int taille_deck = app.getActiveDeck().getCards().size();
-        this.newCardCommand = new NewCardCommand(app);
-        newCardCommand.execute();
-        newCardListView.getItems().add(null);
-        questionTextArea.clear();
-        answerTextArea.clear();
-        twoSidedCheckBox.setSelected(false);
-        tagAddTextField.clear();
-        addTagListView.getItems().clear();
+    public void newCardCmd() {
+        new NewCardCommand(app).execute();
     }
 
+    public void validateChangeCmd() {
 
+        String question = questionTextArea.getText();
+        String answer = answerTextArea.getText();
+        boolean twoSided = twoSidedCheckBox.isSelected();
 
-    public void change() {
-        int nb_cartes = app.getActiveDeck().getCards().size();
-        ModifyAnswerCardCommand modifyAnswerCardCommand = new ModifyAnswerCardCommand(app.getActiveDeck().getCards().get(nb_cartes-1), answerTextArea.getText());
-        modifyAnswerCardCommand.execute();
-        ModifyQuestionCardCommand modifyQuestionCardCommand = new ModifyQuestionCardCommand(app.getActiveDeck().getCards().get(nb_cartes-1), questionTextArea.getText());
-        modifyQuestionCardCommand.execute();
-
-        System.out.println(app.getActiveDeck().getCards().get(0).getAnswer());
-        System.out.println(app.getActiveDeck().getCards().get(0).getQuestion());
-        System.out.println(app.getActiveDeck().getCards().get(0).getTwoSided());
-        System.out.println(app.getActiveDeck().getCards().get(0).getTagList());
-        System.out.println(app.getActiveDeck().getCards().get(0).getDifficulty());
-
-        //app.getActiveDeck().addCard(app.getCards().get(0));
-        ObservableList<String> items = newCardListView.getItems();
-        items.set(nb_cartes-1, app.getCards().get(nb_cartes).getQuestion());
-        //newCardListView.getItems().add(app.getActiveDeck().getCards().get(0).getQuestion());
-        //selectedCardListView.getItems().add(app.getActiveDeck().getCards().get(taille_deck-1).getQuestion());
-        System.out.println("taille du deck "+app.getCards().size());
-        for (int i = 0; i < app.getCards().size(); i++) {
-            System.out.println("liste de cartes du deck : "+app.getCards().get(i).getQuestion());
-        }
-    }
-
-
-
-    public void changeSide(){
-        if (twoSidedCheckBox.isSelected()){
-            modifyTwoSidedCardCommand = new ModifyTwoSidedCardCommand(app.getCards().get(0), true);
-            modifyTwoSidedCardCommand.execute();
-        }
-        else{
-            modifyTwoSidedCardCommand = new ModifyTwoSidedCardCommand(app.getCards().get(0), false);
-            modifyTwoSidedCardCommand.execute();
-        }
+        new ValidateInfoCardModCommand(app, question, answer, twoSided).execute();
     }
 
 
@@ -196,7 +170,6 @@ public class CreateViewController implements Observer, Initializable {
             card.getTagList().add(newTag);
             addTagListView.getItems().add(newTag);
             tagAddTextField.clear();
-            //System.out.println(card.getTagList());
         }
     }
 
