@@ -195,7 +195,7 @@ public class LearningViewController implements Observer, Initializable {
         if (studyList.size() > 0) {
             Card firstCard = studyList.get(0);
             firstCard.setDifficulty(firstCard.getDifficulty() * coef);
-            //TODO appliquer aux vrais cartes
+            app.getCard(firstCard.getQuestion()).setDifficulty(firstCard.getDifficulty());
             studyList.remove(0);
             if (firstCard.getDifficulty() >= 1) {
                 insertByDiff(studyList, firstCard);
