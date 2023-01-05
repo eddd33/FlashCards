@@ -15,13 +15,13 @@ public class ValidateInfoCardModCommand implements Command{
     private boolean twoSided;
     private ArrayList<String> tags;
 
-    public ValidateInfoCardModCommand(DeckContainer container, String question, String answer, boolean twoSided) {
+    public ValidateInfoCardModCommand(DeckContainer container, String question, String answer, boolean twoSided, ArrayList<String> tags) {
         this.container = container;
         this.question = question;
         this.answer = answer;
         this.twoSided = twoSided;
         this.tags = new ArrayList<>();
-        //this.tags.addAll(tags);
+        this.tags.addAll(tags);
     }
 
     @Override

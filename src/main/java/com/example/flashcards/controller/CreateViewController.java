@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -21,6 +22,7 @@ public class CreateViewController implements Observer, Initializable {
 
     private DeckContainer app;
     private ViewState viewState;
+    private ArrayList<String> tags;
 
     @FXML private TextField S_tag;
     @FXML private TextField tagAddTextField;
@@ -65,7 +67,11 @@ public class CreateViewController implements Observer, Initializable {
         newCardListView.setOnDragDetected(this::starDnd);
 
         // selectedCardListView is the ListView of all the cards in the deck
+        selectedCardListView.setOnMouseClicked(this::clickHandle);
         selectedCardListView.setOnDragEntered(this::endDnD);
+
+        //
+        addTagListView.setOnKeyPressed(this::supprHandle);
     }
 
 
@@ -74,9 +80,6 @@ public class CreateViewController implements Observer, Initializable {
      * Implementation of update() method for Observer interface
      */
     public void update() {
-
-        // set activeCard to the first card of the deck
-        //app.setActiveCard(app.getActiveDeck().getCards().get(0));
 
         selectedCardListView.getItems().clear();
         newCardListView.getItems().clear();
@@ -99,18 +102,25 @@ public class CreateViewController implements Observer, Initializable {
             // We put the question if it exists
             if (activeCard.getQuestion() != null) {
                 questionTextArea.setText(activeCard.getQuestion());
+            } else {
+                questionTextArea.clear();
             }
 
             // We put the answer if it exists
             if (activeCard.getAnswer() != null) {
                 answerTextArea.setText(activeCard.getAnswer());
+            } else {
+                answerTextArea.clear();
             }
 
             // We select or not the twoSidedCheckBox accordingly to the twoSided variable of the card.
             // Since it's a boolean it can only be true or false and not null.
             twoSidedCheckBox.setSelected(activeCard.getTwoSided());
 
-            // ----------> besoin d'ajouter la gestion des tags
+            // We add all the tags of the active deck in the ListView element.
+            tags = app.getActiveDeck().getTagList();
+            addTagListView.getItems().clear();
+            addTagListView.getItems().addAll(tags);
         }
     }
 
@@ -135,7 +145,19 @@ public class CreateViewController implements Observer, Initializable {
         String answer = answerTextArea.getText();
         boolean twoSided = twoSidedCheckBox.isSelected();
 
-        new ValidateInfoCardModCommand(app, question, answer, twoSided).execute();
+        new ValidateInfoCardModCommand(app, question, answer, twoSided, tags).execute();
+    }
+
+    public void newTagCmd(){
+        if (tagAddTextField.getText().equals("")){
+            System.out.println("Veuillez entrer un tag");
+        }
+        else{
+            String newTag = tagAddTextField.getText();
+            tags.add(newTag);
+            addTagListView.getItems().add(newTag);
+            tagAddTextField.clear();
+        }
     }
 
 
@@ -160,18 +182,7 @@ public class CreateViewController implements Observer, Initializable {
 
 
 
-    public void newTag(){
-        if (tagAddTextField.getText().equals("")){
-            System.out.println("Veuillez entrer un tag");
-        }
-        else{
-            String newTag = tagAddTextField.getText();
-            Card card = app.getCards().get(0);
-            card.getTagList().add(newTag);
-            addTagListView.getItems().add(newTag);
-            tagAddTextField.clear();
-        }
-    }
+
 
 
 
@@ -200,5 +211,23 @@ public class CreateViewController implements Observer, Initializable {
         }
         event.consume();
         app.notifyObserver();
+    }
+
+    public void supprHandle(KeyEvent event) {
+        if (event.getEventType() == KeyEvent.KEY_PRESSED && event.getCode() == KeyCode.BACK_SPACE) {
+            int selectedIndex = addTagListView.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0 && selectedIndex < addTagListView.getItems().size()) {
+                String toRemove = addTagListView.getSelectionModel().getSelectedItem();
+                tags.remove(toRemove);
+                update();
+            }
+        }
+    }
+
+    public void clickHandle(MouseEvent event) {
+        int selectedIndex = selectedCardListView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0 && selectedIndex < selectedCardListView.getItems().size()) {
+            app.setActiveCard(app.getActiveDeck().getCards().get(selectedIndex));
+        }
     }
 }

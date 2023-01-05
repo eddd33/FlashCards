@@ -99,10 +99,15 @@ public class DeckEditViewController implements Initializable, Observer {
      */
 
     public void ajouterTagCmd() {
-        String tag = addTagTextField.getText();
-        tags.add(tag);
-        deckTagListView.getItems().add(tag);
-        addTagTextField.clear();
+        if (addTagTextField.getText().equals("")){
+            System.out.println("Veuillez entrer un tag");
+        }
+        else {
+            String tag = addTagTextField.getText();
+            tags.add(tag);
+            deckTagListView.getItems().add(tag);
+            addTagTextField.clear();
+        }
     }
 
     public void validateCmd() {
