@@ -7,7 +7,7 @@ public class Card {
     private String question;
     private String answer;
     private boolean twoSided;
-    private int difficulty;
+    private double difficulty;
     private ArrayList<String> tagList;
 
     /**
@@ -80,7 +80,7 @@ public class Card {
         return twoSided;
     }
 
-    public int getDifficulty() {
+    public double getDifficulty() {
         return difficulty;
     }
 
