@@ -190,6 +190,11 @@ public class SelectionViewController implements Observer, Initializable {
     }
 
     @FXML
+    public void changeToStatCmd() {
+        new ChangeSceneCommand(viewState,4).execute();
+    }
+
+    @FXML
     public void duplicateDeckCmd(Deck deck) {
         new DuplicateDeckCommand(app,viewState,deck).execute();
     }

@@ -53,6 +53,7 @@
           <items>
             <MenuItem mnemonicParsing="false" onAction="#newDeckCmd" text="Créer" />
             <MenuItem mnemonicParsing="false" text="Ouvrir" />
+              <MenuItem mnemonicParsing="false" text="Stats" onAction="#changeToStatCmd"/>
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Quitter l'application" onAction="#exitCmd" />
           </items>

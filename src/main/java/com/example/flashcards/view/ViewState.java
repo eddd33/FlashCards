@@ -58,6 +58,7 @@ public class ViewState implements SubjectObserver {
      *      1 -> LearningView
      *      2 -> CreateView
      *      3 -> DeckEditView
+     *      4 -> StatView
      */
     public void changeScene(int state){
         controller.changeScene(state);

@@ -1,13 +1,21 @@
 package com.example.flashcards.controller;
 
+import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.Observer;
+import com.example.flashcards.view.ViewState;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class StatViewController implements Observer, Initializable {
-    public StatViewController() {
+
+    private DeckContainer app;
+    private ViewState viewState;
+    public StatViewController(DeckContainer app, ViewState viewState) {
+        this.app = app;
+        this.viewState = viewState;
+        this.app.addObserver(this);
     }
 
     @Override
