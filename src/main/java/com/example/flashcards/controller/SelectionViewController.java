@@ -97,7 +97,7 @@ public class SelectionViewController implements Observer, Initializable {
 
             // settings du bouton Modifier qui envoie sur la page de gestion du deck.
             modify.setText("Modifier");
-            modify.setOnAction(event -> changeToLearnCmd(d));
+            modify.setOnAction(event -> changeToCreateCmd(d));
 
             // settings du bouton Dupliquer qui duplique le deck et envoie sur la page de gestion de la copie.
             bikini.setText("Dupliquer");

@@ -53,7 +53,6 @@
           <items>
             <MenuItem mnemonicParsing="false" onAction="#newDeckCmd" text="Créer" />
             <MenuItem mnemonicParsing="false" text="Ouvrir" />
-                  <MenuItem mnemonicParsing="false" text="Dupliquer" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Quitter l'application" onAction="#exitCmd" />
           </items>
@@ -76,54 +75,6 @@
             <ScrollPane prefHeight="373.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
                   <VBox fx:id="deckList" spacing="5.0">
-                     <children>
-                        <HBox VBox.vgrow="ALWAYS">
-                           <children>
-                              <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding>
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Button>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="480.0" text="Vous trouverez ci-joint la decription du dit Deck dans l'optique de bien en cerner le contenu afin de réviser vos partiels dans les meilleurs conditions" wrapText="true" HBox.hgrow="ALWAYS">
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets left="5.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox layoutX="10.0" layoutY="10.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: grey;" text="Voici le titre du Deck" textAlignment="CENTER" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding>
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Button>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="480.0" text="Vous trouverez ci-joint la decription du dit Deck dans l'optique de bien en cerner le contenu afin de réviser vos partiels dans les meilleurs conditions" wrapText="true" HBox.hgrow="ALWAYS">
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets left="5.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </children>
                   </VBox>
                </content>
             </ScrollPane>
