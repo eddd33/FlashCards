@@ -92,9 +92,11 @@ public class CreateViewController implements Observer, Initializable {
             if (app.getActiveDeck().isInDeck(card)) {
                 // if there is no name : put a placeholder.
                 selectedCardListView.getItems().add(Objects.requireNonNullElse(name, "New Card"));
+                if (card.equals(app.getActiveCard())) selectedCardListView.getSelectionModel().selectLast();
             } else {
                 // if there is no name : put a placeholder.
                 newCardListView.getItems().add(Objects.requireNonNullElse(name, "New Card"));
+                if (card.equals(app.getActiveCard())) newCardListView.getSelectionModel().selectLast();
             }
         }
 
@@ -150,7 +152,7 @@ public class CreateViewController implements Observer, Initializable {
         new ValidateInfoCardModCommand(app, question, answer, twoSided, tags).execute();
     }
 
-    public void newTagCmd(){
+    public void newTagCmd() {
         if (tagAddTextField.getText().equals("")){
             System.out.println("Veuillez entrer un tag");
         }
@@ -208,7 +210,9 @@ public class CreateViewController implements Observer, Initializable {
             String cardName = db.getString();
             Card draggedCard = app.getCard(cardName);
             if (draggedCard.getQuestion() != null) {
-                app.getActiveDeck().addCard(draggedCard);
+                app.getActiveDeck().addCard(0,draggedCard);
+                //selectedCardListView.getSelectionModel().select(0);
+                for (Card c : app.getCards()) System.out.println(c.getQuestion());
             }
         }
         event.consume();
@@ -233,20 +237,23 @@ public class CreateViewController implements Observer, Initializable {
     }
 
     public void deleteSelectedCardHandle(KeyEvent event) {
-        if (event.getEventType() == KeyEvent.KEY_PRESSED && event.getCode() == KeyCode.BACK_SPACE) {
+        if (event.getEventType() == KeyEvent.KEY_PRESSED && event.getCode() == KeyCode.BACK_SPACE && app.getActiveDeck().getCards().size() > 1) {
             int selectedIndex = selectedCardListView.getSelectionModel().getSelectedIndex();
             if (selectedIndex >= 0 && selectedIndex < selectedCardListView.getItems().size()) {
                 app.supprCardFromActiveDeck(app.getActiveDeck().getCards().get(selectedIndex));
             }
+            app.setActiveCard(app.getActiveDeck().getCards().get(Math.min(selectedIndex, app.getActiveDeck().getCards().size()-1)));
         }
     }
 
     public void deleteCardHandle(KeyEvent event) {
-        if (event.getEventType() == KeyEvent.KEY_PRESSED && event.getCode() == KeyCode.BACK_SPACE) {
+        if (event.getEventType() == KeyEvent.KEY_PRESSED && event.getCode() == KeyCode.BACK_SPACE && app.getCards().size() > 1) {
             int selectedIndex = newCardListView.getSelectionModel().getSelectedIndex();
+            int i = app.getCardIndex(selectedIndex);
             if (selectedIndex >= 0 && selectedIndex < newCardListView.getItems().size()) {
-                app.supprCard(app.getCards().get(selectedIndex));
+                app.supprCard(app.getCards().get(i));
             }
+            app.setActiveCard(app.getCards().get(Math.min(i, app.getCards().size())));
         }
     }
 
@@ -258,17 +265,16 @@ public class CreateViewController implements Observer, Initializable {
 
     public void clickSelectedHandle(MouseEvent event) {
         int selectedIndex = selectedCardListView.getSelectionModel().getSelectedIndex();
+        System.out.println(selectedIndex);
         if (selectedIndex >= 0 && selectedIndex < selectedCardListView.getItems().size()) {
             app.setActiveCard(app.getActiveDeck().getCards().get(selectedIndex));
         }
-        selectedCardListView.getSelectionModel().select(selectedIndex);
     }
 
     public void clickHandle(MouseEvent event) {
         int selectedIndex = newCardListView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0 && selectedIndex < newCardListView.getItems().size()) {
-            app.setActiveCard(app.getCards().get(selectedIndex));
+            app.setActiveCard(app.getCards().get(app.getCardIndex(selectedIndex)));
         }
-        newCardListView.getSelectionModel().select(selectedIndex);
     }
 }

@@ -82,7 +82,7 @@ public class DeckContainer implements SubjectObserver {
      * The card you want to be removed from the deck.
      */
     public void supprCard(Card card) {
-        activeDeck.getCards().remove(card);
+        cards.remove(card);
         for (Deck deck : decks) {
             deck.getCards().remove(card);
         }
@@ -264,6 +264,30 @@ public class DeckContainer implements SubjectObserver {
      */
     public void addCardTag(String tag, Card card) {
         deckTags.add(tag);
+    }
+
+
+
+    /**
+     * Method used to get the index of a card in cards list.
+     *
+     * @param inputIndex
+     * The integer is the index of the element in the ListView but not the real index.
+     * We need to check the cards list and finding the corresponding element th get the real index.
+     *
+     * @return int, the real index of the card in cards list.
+     */
+    public int getCardIndex(int inputIndex) {
+        int index = 0;
+        int k = 0;
+
+        while (k <= inputIndex) {
+            if (! activeDeck.isInDeck(cards.get(index))) {
+                k++;
+            }
+            index++;
+        }
+        return index-1;
     }
 
 
