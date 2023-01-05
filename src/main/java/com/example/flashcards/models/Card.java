@@ -107,7 +107,7 @@ public class Card {
         this.twoSided = twoSided;
     }
 
-    public void setDifficulty(int difficulty) {
+    public void setDifficulty(double difficulty) {
         this.difficulty = difficulty;
     }
 
