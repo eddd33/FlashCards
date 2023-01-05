@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,6 +30,10 @@ public class LearningViewController implements Observer, Initializable {
     @FXML private Label answerLabel;
     @FXML private Label questionLabel;
     @FXML private AnchorPane buttonContainer;
+
+    @FXML private Text goodCards;
+    @FXML private Text mehCards;
+    @FXML private Text badCards;
 
 
     /**
@@ -82,6 +87,23 @@ public class LearningViewController implements Observer, Initializable {
             deck.getCards().addAll(studyList);
         }
         sortByDiff(studyList);
+        int goodNum= 0;
+        int midNum = 0;
+        int hardNum =0;
+        for (Card card :
+                studyList) {
+            if (card.getDifficulty()<1) {
+                goodNum++;
+            } else if (card.getDifficulty()<1.7) {
+                midNum++;
+            }
+            else {
+                hardNum++;
+            }
+        }
+        goodCards.setText(Integer.toString(goodNum));
+        mehCards.setText(Integer.toString(midNum));
+        badCards.setText(Integer.toString(hardNum));
         answerLabel.setText(studyList.get(0).getAnswer());
         questionLabel.setText(studyList.get(0).getQuestion());
         answerLabel.setOpacity(0);
@@ -109,7 +131,25 @@ public class LearningViewController implements Observer, Initializable {
             answerBut.setOnAction(event -> changeToSelecCmd());
             answerBut.setText("Retourner à la selection des paquets");
         }
-        buttonContainer.getChildren().add(answerBut);}
+        buttonContainer.getChildren().add(answerBut);
+        int goodNum= 0;
+        int midNum = 0;
+        int hardNum =0;
+        for (Card card :
+                studyList) {
+            if (card.getDifficulty()<1) {
+                goodNum++;
+            } else if (card.getDifficulty()<1.7) {
+                midNum++;
+            }
+            else {
+                hardNum++;
+            }
+        }
+        goodCards.setText(Integer.toString(goodNum));
+        mehCards.setText(Integer.toString(midNum));
+        badCards.setText(Integer.toString(hardNum));
+    }
 
 
 
@@ -178,7 +218,7 @@ public class LearningViewController implements Observer, Initializable {
 
     private void insertByDiff(ArrayList<Card> List, Card element) {
         int i = 0;
-        while (element.getDifficulty() < List.get(i).getDifficulty()) {
+        while (i < List.size() && element.getDifficulty() < List.get(i).getDifficulty()) {
             i ++;
         }
         if (i+1 >= List.size()) {
