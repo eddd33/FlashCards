@@ -57,6 +57,8 @@
       <menus>
         <Menu mnemonicParsing="false" text="Deck">
           <items>
+            <MenuItem mnemonicParsing="false" text="Modifier" onAction="#changeToEditDeckCmd" />
+            <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Enregistrer" />
             <MenuItem mnemonicParsing="false" text="Open…" />
             <SeparatorMenuItem mnemonicParsing="false" />
@@ -65,9 +67,9 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Carte">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#newCardCmd" text="Nouvelle" />
+            <MenuItem mnemonicParsing="false" onAction="#newCardNotInActiveDeckCmd" text="Nouvelle" />
                   <MenuItem mnemonicParsing="false" onAction="#newCardCmd" text="Nouvelle dans le deck" />
-            <MenuItem mnemonicParsing="false" text="Supprimer" />
+            <MenuItem mnemonicParsing="false" text="Supprimer" onAction="#deleteCardCmd" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Page">

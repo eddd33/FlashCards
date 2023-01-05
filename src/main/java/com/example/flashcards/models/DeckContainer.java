@@ -61,6 +61,14 @@ public class DeckContainer implements SubjectObserver {
     }
 
 
+    public void newCardNotInDeck() {
+        Card card = new Card();
+        cards.add(card);
+        setActiveCard(card);
+        notifyObserver();
+    }
+
+
 
     /**
      * Method used to remove a Card from the active deck
@@ -88,6 +96,20 @@ public class DeckContainer implements SubjectObserver {
         }
         notifyObserver();                                               //notifyObserver
     }
+
+
+    public void deleteCard() {
+        if (activeDeck.isInDeck(activeCard) && activeDeck.getCards().size() > 1) {
+            int index = activeDeck.getCardIndex(activeCard);
+            activeDeck.getCards().remove(activeCard);
+            activeCard = activeDeck.getCards().get(Math.min(index, activeDeck.getCards().size()-1));
+            notifyObserver();                                               //notifyObserver
+        } else if (cards.size() > 1) {
+            supprCard(activeCard);
+        }
+    }
+
+
 
     /**
      * Method used to remove a Deck from the list of deck

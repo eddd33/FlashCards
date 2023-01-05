@@ -88,16 +88,17 @@ public class CreateViewController implements Observer, Initializable {
 
         // We put cards in newCardListView except those already in the deck which go in selectedCardListView
         for (Card card : app.getCards()) {
-            String name = card.getQuestion();
-            if (app.getActiveDeck().isInDeck(card)) {
+            if (! app.getActiveDeck().isInDeck(card)) {
                 // if there is no name : put a placeholder.
-                selectedCardListView.getItems().add(Objects.requireNonNullElse(name, "New Card"));
-                if (card.equals(app.getActiveCard())) selectedCardListView.getSelectionModel().selectLast();
-            } else {
-                // if there is no name : put a placeholder.
-                newCardListView.getItems().add(Objects.requireNonNullElse(name, "New Card"));
+                newCardListView.getItems().add(Objects.requireNonNullElse(card.getQuestion(), "New Card"));
                 if (card.equals(app.getActiveCard())) newCardListView.getSelectionModel().selectLast();
             }
+        }
+
+        for (Card card : app.getActiveDeck().getCards()) {
+            // if there is no name : put a placeholder.
+            selectedCardListView.getItems().add(Objects.requireNonNullElse(card.getQuestion(), "New Card"));
+            if (card.equals(app.getActiveCard())) selectedCardListView.getSelectionModel().selectLast();
         }
 
         Card activeCard = app.getActiveCard();
@@ -139,8 +140,21 @@ public class CreateViewController implements Observer, Initializable {
         new ChangeSceneCommand(viewState,0).execute();
     }
 
+    @FXML
+    public void changeToEditDeckCmd() {
+        new ChangeSceneCommand(viewState,3).execute();
+    }
+
     public void newCardCmd() {
         new NewCardCommand(app).execute();
+    }
+
+    public void newCardNotInActiveDeckCmd() {
+        new NewCardNotActiveCommand(app).execute();
+    }
+
+    public void deleteCardCmd() {
+        new DeleteCardCommand(app).execute();
     }
 
     public void validateChangeCmd() {
@@ -193,10 +207,8 @@ public class CreateViewController implements Observer, Initializable {
     public void starDnd(MouseEvent event) {
         System.out.println("Début du drag");
         Dragboard db = newCardListView.startDragAndDrop(TransferMode.ANY);
-
         ClipboardContent content = new ClipboardContent();
         content.putString(newCardListView.getSelectionModel().getSelectedItem());
-        System.out.println(newCardListView.getSelectionModel().getSelectedItem());
         db.setContent(content);
         event.consume();
     }
@@ -210,13 +222,11 @@ public class CreateViewController implements Observer, Initializable {
             String cardName = db.getString();
             Card draggedCard = app.getCard(cardName);
             if (draggedCard.getQuestion() != null) {
-                app.getActiveDeck().addCard(0,draggedCard);
-                //selectedCardListView.getSelectionModel().select(0);
-                for (Card c : app.getCards()) System.out.println(c.getQuestion());
+                app.getActiveDeck().addCard(draggedCard);
             }
         }
         event.consume();
-        app.notifyObserver();
+        update();
     }
 
 
@@ -265,7 +275,6 @@ public class CreateViewController implements Observer, Initializable {
 
     public void clickSelectedHandle(MouseEvent event) {
         int selectedIndex = selectedCardListView.getSelectionModel().getSelectedIndex();
-        System.out.println(selectedIndex);
         if (selectedIndex >= 0 && selectedIndex < selectedCardListView.getItems().size()) {
             app.setActiveCard(app.getActiveDeck().getCards().get(selectedIndex));
         }
