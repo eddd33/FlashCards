@@ -24,8 +24,6 @@ public class DeckContainer implements SubjectObserver {
         listObs = new ArrayList<>();
         deckTags = new HashSet<>();
         cardTags = new HashSet<>();
-
-        newDeck();
     }
 
     /*

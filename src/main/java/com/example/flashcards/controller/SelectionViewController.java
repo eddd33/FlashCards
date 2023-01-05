@@ -1,9 +1,6 @@
 package com.example.flashcards.controller;
 
-import com.example.flashcards.command.ChangeSceneCommand;
-import com.example.flashcards.command.DuplicateDeckCommand;
-import com.example.flashcards.command.ExitCommand;
-import com.example.flashcards.command.NewDeckCommand;
+import com.example.flashcards.command.*;
 import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
@@ -79,6 +76,7 @@ public class SelectionViewController implements Observer, Initializable {
             Button title = new Button();
             Button modify = new Button();
             Button bikini = new Button();
+            Button delete = new Button();
             Label description = new Label();
 
             // settings du titre.
@@ -103,8 +101,12 @@ public class SelectionViewController implements Observer, Initializable {
             bikini.setText("Dupliquer");
             bikini.setOnAction(event -> duplicateDeckCmd(d));
 
+            // settings du bouton Supprimer qui supprime le deck.
+            delete.setText("Supprimer");
+            delete.setOnAction(event -> deleteDeckCmd(d));
+
             // Ajout de tous les éléments à la HBox, puis à la VBox global.
-            newBox.getChildren().addAll(title,description,modify,bikini);
+            newBox.getChildren().addAll(title,description,modify,bikini,delete);
             deckList.getChildren().add(newBox);
         }
     }
@@ -123,6 +125,7 @@ public class SelectionViewController implements Observer, Initializable {
             Button title = new Button();
             Button modify = new Button();
             Button bikini = new Button();
+            Button delete = new Button();
             Label description = new Label();
 
             // settings du titre.
@@ -147,8 +150,12 @@ public class SelectionViewController implements Observer, Initializable {
             bikini.setText("Dupliquer");
             bikini.setOnAction(event -> duplicateDeckCmd(d));
 
+            // settings du bouton Supprimer qui supprime le deck.
+            delete.setText("Supprimer");
+            delete.setOnAction(event -> deleteDeckCmd(d));
+
             // Ajout de tous les éléments à la HBox, puis à la VBox global.
-            newBox.getChildren().addAll(title, description, modify, bikini);
+            newBox.getChildren().addAll(title, description, modify, bikini, delete);
             deckList.getChildren().add(newBox);
         }
     }
@@ -185,6 +192,11 @@ public class SelectionViewController implements Observer, Initializable {
     @FXML
     public void duplicateDeckCmd(Deck deck) {
         new DuplicateDeckCommand(app,viewState,deck).execute();
+    }
+
+    @FXML
+    public void deleteDeckCmd(Deck deck) {
+        new DeleteDeckCommand(app,deck).execute();
     }
 
 
