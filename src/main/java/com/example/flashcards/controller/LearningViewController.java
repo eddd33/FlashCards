@@ -104,12 +104,15 @@ public class LearningViewController implements Observer, Initializable {
      */
     public void update(){
         System.out.println("entrée update");
-        if (studyList == null) {
+        if (studyList.size() == 0) {
+            System.out.println("Récup le deck");
             studyList = app.getActiveDeck().getCards();
         }
+        System.out.println(studyList.size());
         buttonContainer.getChildren().clear();
         Button answerBut = new Button();
         if (studyList.size() != 0) {
+            System.out.println(studyList.get(0));
             questionLabel.setText(studyList.get(0).getQuestion());
             answerLabel.setText(studyList.get(0).getAnswer());
             answerLabel.setOpacity(0);
