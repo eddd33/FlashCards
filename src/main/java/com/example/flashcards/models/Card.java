@@ -19,6 +19,8 @@ public class Card {
         this.difficulty = 1;
         twoSided = false;
         tagList = new ArrayList<>();
+        question="";
+        answer="";
     }
 
 

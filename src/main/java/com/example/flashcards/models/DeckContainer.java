@@ -366,4 +366,11 @@ public class DeckContainer implements SubjectObserver {
         this.activeCard = activeCard;
         notifyObserver();                                               //notifyObserver
     }
+    public void setDecks(ArrayList<Deck> decks) {
+        this.decks = decks;
+    }
+    public void setCards(ArrayList<Card> cards) {
+        this.cards = cards;
+
+    }
 }

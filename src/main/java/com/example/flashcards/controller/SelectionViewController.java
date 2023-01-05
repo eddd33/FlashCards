@@ -4,7 +4,10 @@ import com.example.flashcards.command.*;
 import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
+import com.example.flashcards.saveDeckContainerProcedure;
+import com.example.flashcards.loadDeckContainerProcedure;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -108,6 +111,27 @@ public class SelectionViewController implements Observer, Initializable {
             // Ajout de tous les éléments à la HBox, puis à la VBox global.
             newBox.getChildren().addAll(title,description,modify,bikini,delete);
             deckList.getChildren().add(newBox);
+        }
+    }
+
+    @FXML
+    public void saveProcedure() {
+        try {
+            new saveDeckContainerProcedure(app).save();
+        }
+        catch (IOException Exception) {
+            throw new RuntimeException(Exception);
+        }
+    }
+    @FXML
+    public void loadProcedure() {
+        try {
+            new loadDeckContainerProcedure(app).load();
+            deckListTag = app.getDecks();
+            update();
+        }
+        catch (IOException Exception) {
+            throw new RuntimeException(Exception);
         }
     }
 

@@ -1,27 +1,30 @@
 package com.example.flashcards;
 
 import com.example.flashcards.models.*;
-import com.google.gson.Gson;
+import org.json.JSONArray;
 
-import java.io.*;
-
+import java.io.FileWriter;
+import java.io.IOException;
 public class saveDeckContainerProcedure {
 
     private DeckContainer deckContainer;
-    private String fileName;
 
 
-    public saveDeckContainerProcedure(DeckContainer deckContainer, String fileName){
+    public saveDeckContainerProcedure(DeckContainer deckContainer){
         this.deckContainer=deckContainer;
-        this.fileName=fileName;
     }
 
 
     public void save() throws IOException {
-        Gson gson = new Gson();
-        String json = gson.toJson(deckContainer);
-        FileWriter fichier = new FileWriter(fileName);
-        fichier.write(json);
-        fichier.close();
+        JSONArray array = new JSONArray();
+        array.put(deckContainer.getDecks());
+        array.put(deckContainer.getCards());
+        String jsonString = array.toString();
+        try (FileWriter writer = new FileWriter("./src/main/resources/com/example/flashcards/save.json")) {
+            writer.write(jsonString);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

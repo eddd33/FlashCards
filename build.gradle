@@ -38,7 +38,11 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation 'com.google.code.gson:gson:2.8.6'
-
+    implementation 'org.openjfx:javafx-base:11.0.2'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: '11'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: '11'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: '11'
+    implementation 'org.json:json:20211205'
 }
 
 test {

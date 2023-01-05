@@ -20,11 +20,14 @@ public class Deck {
         this.name = name;
         author = "me";
         description = "Description";
-         Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         last_try = dateFormat.format(calendar.getTime());
         tagList = new ArrayList<>();
         cards = new ArrayList<>();
+        cards.add(new Card());
+        best_score=0;
+        last_score=0;
     }
 
 
