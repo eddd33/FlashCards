@@ -19,7 +19,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class LearningViewController implements Observer, Initializable {
@@ -100,6 +102,10 @@ public class LearningViewController implements Observer, Initializable {
                     app.getActiveDeck().setBestScore(score);
                 }
                 app.getActiveDeck().setLastScore(score);
+                Date date = new Date();
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String aujourdhui = formatter.format(date);
+                app.getActiveDeck().setLast_try(aujourdhui);
                 questionLabel.setText("Révision terminée");
                 answerLabel.setText("Félicitation Shinji! :clap:");
                 answerBut.setOnAction(event -> changeToSelecCmd());
