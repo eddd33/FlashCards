@@ -7,14 +7,9 @@ import com.example.flashcards.view.*;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.*;
 
-import com.google.gson.Gson;
-import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -66,14 +61,19 @@ public class CreateViewController implements Observer, Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         // newCardListView is the ListView of all the cards available
+        newCardListView.setStyle("-fx-selection-bar:blue;");
+        newCardListView.setOnMouseClicked(this::clickHandle);
+        newCardListView.setOnKeyPressed(this::deleteCardHandle);
         newCardListView.setOnDragDetected(this::starDnd);
 
         // selectedCardListView is the ListView of all the cards in the deck
-        selectedCardListView.setOnMouseClicked(this::clickHandle);
+        selectedCardListView.setStyle("-fx-selection-bar:green;");
+        selectedCardListView.setOnMouseClicked(this::clickSelectedHandle);
+        selectedCardListView.setOnKeyPressed(this::deleteSelectedCardHandle);
         selectedCardListView.setOnDragEntered(this::endDnD);
 
         //
-        addTagListView.setOnKeyPressed(this::supprHandle);
+        addTagListView.setOnKeyPressed(this::deleteTagHandle);
     }
 
 
@@ -85,10 +85,10 @@ public class CreateViewController implements Observer, Initializable {
 
         selectedCardListView.getItems().clear();
         newCardListView.getItems().clear();
+
         // We put cards in newCardListView except those already in the deck which go in selectedCardListView
         for (Card card : app.getCards()) {
             String name = card.getQuestion();
-            System.out.println(app.getActiveDeck().isInDeck(card));
             if (app.getActiveDeck().isInDeck(card)) {
                 // if there is no name : put a placeholder.
                 selectedCardListView.getItems().add(Objects.requireNonNullElse(name, "New Card"));
@@ -215,7 +215,13 @@ public class CreateViewController implements Observer, Initializable {
         app.notifyObserver();
     }
 
-    public void supprHandle(KeyEvent event) {
+
+
+    /*
+     * The following methods are used to handle the KeyEvent of BackSpace being pressed.
+     */
+
+    public void deleteTagHandle(KeyEvent event) {
         if (event.getEventType() == KeyEvent.KEY_PRESSED && event.getCode() == KeyCode.BACK_SPACE) {
             int selectedIndex = addTagListView.getSelectionModel().getSelectedIndex();
             if (selectedIndex >= 0 && selectedIndex < addTagListView.getItems().size()) {
@@ -226,36 +232,43 @@ public class CreateViewController implements Observer, Initializable {
         }
     }
 
-    public void clickHandle(MouseEvent event) {
+    public void deleteSelectedCardHandle(KeyEvent event) {
+        if (event.getEventType() == KeyEvent.KEY_PRESSED && event.getCode() == KeyCode.BACK_SPACE) {
+            int selectedIndex = selectedCardListView.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0 && selectedIndex < selectedCardListView.getItems().size()) {
+                app.supprCardFromActiveDeck(app.getActiveDeck().getCards().get(selectedIndex));
+            }
+        }
+    }
+
+    public void deleteCardHandle(KeyEvent event) {
+        if (event.getEventType() == KeyEvent.KEY_PRESSED && event.getCode() == KeyCode.BACK_SPACE) {
+            int selectedIndex = newCardListView.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0 && selectedIndex < newCardListView.getItems().size()) {
+                app.supprCard(app.getCards().get(selectedIndex));
+            }
+        }
+    }
+
+
+
+    /*
+     * The following methods are used to handle the MouseEvent of BackSpace being pressed.
+     */
+
+    public void clickSelectedHandle(MouseEvent event) {
         int selectedIndex = selectedCardListView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0 && selectedIndex < selectedCardListView.getItems().size()) {
             app.setActiveCard(app.getActiveDeck().getCards().get(selectedIndex));
         }
+        selectedCardListView.getSelectionModel().select(selectedIndex);
     }
 
-    @FXML
-    public void reinitialiser() {
-        app = new DeckContainer();
-        app.notifyObserver();
-    }
-
-    @FXML
-    public void sauvegarder() throws IOException {
-        Gson gson = new Gson();
-        String json = gson.toJson(app);
-        FileWriter fichier = new FileWriter("./src/main/resources/com/example/carnet/sauvegarde.json");
-        fichier.write(json);
-        fichier.close();
-    }
-    @FXML
-    public void charger() throws IOException{
-        InputStream stream = getClass().getResourceAsStream("sauvegarde.json");
-        BufferedReader fichier = new BufferedReader(new InputStreamReader(stream));
-
-        Gson gson = new Gson();
-        app = gson.fromJson(fichier.readLine(), DeckContainer.class);
-        app.notifyObserver();
-        fichier.close();
-
+    public void clickHandle(MouseEvent event) {
+        int selectedIndex = newCardListView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0 && selectedIndex < newCardListView.getItems().size()) {
+            app.setActiveCard(app.getCards().get(selectedIndex));
+        }
+        newCardListView.getSelectionModel().select(selectedIndex);
     }
 }
