@@ -26,6 +26,8 @@ public class LearningViewController implements Observer, Initializable {
     private Deck deck;
     private ArrayList<Card> studyList;
 
+    private double current_score;
+
     @FXML private Button affiche_reponse;
     @FXML private Label answerLabel;
     @FXML private Label questionLabel;
@@ -169,13 +171,22 @@ public class LearningViewController implements Observer, Initializable {
             HBox buttonBox = new HBox();
             Button easyButton = new Button();
             easyButton.setText("Facile");
-            easyButton.setOnAction(event -> nextCard(0.9));
+            easyButton.setOnAction(event -> {
+                nextCard(0.9);
+                current_score = current_score +1;
+            });
             Button midButton = new Button();
             midButton.setText("Moyen");
-            midButton.setOnAction(event -> nextCard(1));
+            midButton.setOnAction(event -> {
+                    nextCard(1);
+                    current_score = current_score + 2;
+            });
             Button hardButton = new Button();
             hardButton.setText("Difficile");
-            hardButton.setOnAction(event -> nextCard(1.2));
+            hardButton.setOnAction(event -> {
+                nextCard(1.2);
+                current_score = current_score + 3;
+            });
             buttonBox.getChildren().addAll(easyButton,midButton,hardButton);
             buttonContainer.getChildren().add(buttonBox);
     }
