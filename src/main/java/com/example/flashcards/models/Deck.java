@@ -67,6 +67,10 @@ public class Deck {
         return cards;
     }
 
+    public int getNbCards() {
+        return cards.size();
+    }
+
     public String getLast_try() {
         return last_try;
     }

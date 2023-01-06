@@ -6,6 +6,8 @@ import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.Observer;
 import com.example.flashcards.view.ViewState;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -14,10 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class StatViewController implements Observer, Initializable {
 
@@ -166,7 +165,10 @@ public class StatViewController implements Observer, Initializable {
                             Label lastT = (Label) children.get(index + 3);
                             lastT.setText(deck.getLast_try());
                         }
-
+                        if (children.get(index + 4) instanceof Label) {
+                            Label numb = (Label) children.get(index + 4);
+                            numb.setText(String.valueOf(deck.getNbCards()));
+                        }
                         break;
                     }
                 }
@@ -178,28 +180,203 @@ public class StatViewController implements Observer, Initializable {
         //trier les decks par ordre alphabétique
         ArrayList<Deck> decks = app.getDecks();
         ArrayList<Deck> sorted = new ArrayList<>();
-        ArrayList<String> names = new ArrayList<>();
+        //ArrayList<String> names = new ArrayList<>();
         for (Deck deck : decks){
             if (sorted.size()==0){
                 sorted.add(deck);
-                names.add(deck.getName());
+                //names.add(deck.getName());
             }
             else{
                 for (int i=0; i<sorted.size(); i++){
                     if (deck.getName().compareTo(sorted.get(i).getName())<0){
                         sorted.add(i,deck);
-                        names.add(i,deck.getName());
+                        //names.add(i,deck.getName());
                         break;
                     }
                     else if (i==sorted.size()-1){
                         sorted.add(deck);
-                        names.add(deck.getName());
+                        //names.add(deck.getName());
                         break;
                     }
                 }
             }
         }
-        System.out.println(names);
+        //System.out.println(names);
+
+        for (Deck deck : sorted){
+            for (Node n : tableau.getChildren()){
+                int indexDeck = sorted.indexOf(deck);
+
+                if (n instanceof Label l){
+                    int rang = GridPane.getRowIndex(n);
+                    int colonne = GridPane.getColumnIndex(n);
+
+                    if(rang == indexDeck+1 && colonne == 0){
+                        l.setText(deck.getName());
+                    }
+                    if(rang == indexDeck+1 && colonne == 1){
+                        l.setText(Double.toString(deck.getBestScore()));
+                    }
+                    if(rang == indexDeck+1 && colonne == 2){
+                        l.setText(Double.toString(deck.getLastScore()));
+                    }
+                    if(rang == indexDeck+1 && colonne == 3){
+                        l.setText(deck.getLast_try());
+                    }
+                    if(rang == indexDeck+1 && colonne == 4){
+                        l.setText(Integer.toString(deck.getCards().size()));
+                    }
+                }
+            }
+        }
+    }
+
+    public void sortByBestScore(){
+        //ArrayList<Deck> decks = app.getDecks();
+        ObservableList<Deck> sorted = FXCollections.observableArrayList(app.getDecks());
+        sorted.sort(Comparator.comparing(Deck::getBestScore));
+        //ArrayList<Deck> sorted = new ArrayList<>();
+        //ArrayList<String> names = new ArrayList<>();
+
+        //System.out.println(names);
+
+        for (Deck deck : sorted){
+            for (Node n : tableau.getChildren()){
+                int indexDeck = sorted.indexOf(deck);
+
+                if (n instanceof Label l){
+                    int rang = GridPane.getRowIndex(n);
+                    int colonne = GridPane.getColumnIndex(n);
+
+                    if(rang == indexDeck+1 && colonne == 0){
+                        l.setText(deck.getName());
+                    }
+                    if(rang == indexDeck+1 && colonne == 1){
+                        l.setText(Double.toString(deck.getBestScore()));
+                    }
+                    if(rang == indexDeck+1 && colonne == 2){
+                        l.setText(Double.toString(deck.getLastScore()));
+                    }
+                    if(rang == indexDeck+1 && colonne == 3){
+                        l.setText(deck.getLast_try());
+                    }
+                    if(rang == indexDeck+1 && colonne == 4){
+                        l.setText(Integer.toString(deck.getCards().size()));
+                    }
+                }
+            }
+        }
+    }
+
+    public void sortByLastScore(){
+        //ArrayList<Deck> decks = app.getDecks();
+        ObservableList<Deck> sorted = FXCollections.observableArrayList(app.getDecks());
+        sorted.sort(Comparator.comparing(Deck::getLastScore));
+        //ArrayList<Deck> sorted = new ArrayList<>();
+        //ArrayList<String> names = new ArrayList<>();
+
+        //System.out.println(names);
+
+        for (Deck deck : sorted){
+            for (Node n : tableau.getChildren()){
+                int indexDeck = sorted.indexOf(deck);
+
+                if (n instanceof Label l){
+                    int rang = GridPane.getRowIndex(n);
+                    int colonne = GridPane.getColumnIndex(n);
+
+                    if(rang == indexDeck+1 && colonne == 0){
+                        l.setText(deck.getName());
+                    }
+                    if(rang == indexDeck+1 && colonne == 1){
+                        l.setText(Double.toString(deck.getBestScore()));
+                    }
+                    if(rang == indexDeck+1 && colonne == 2){
+                        l.setText(Double.toString(deck.getLastScore()));
+                    }
+                    if(rang == indexDeck+1 && colonne == 3){
+                        l.setText(deck.getLast_try());
+                    }
+                    if(rang == indexDeck+1 && colonne == 4){
+                        l.setText(Integer.toString(deck.getCards().size()));
+                    }
+                }
+            }
+        }
+    }
+
+    public void sortByLastTry(){
+        //ArrayList<Deck> decks = app.getDecks();
+        ObservableList<Deck> sorted = FXCollections.observableArrayList(app.getDecks());
+        sorted.sort(Comparator.comparing(Deck::getLast_try));
+        //ArrayList<Deck> sorted = new ArrayList<>();
+        //ArrayList<String> names = new ArrayList<>();
+
+        //System.out.println(names);
+
+        for (Deck deck : sorted){
+            for (Node n : tableau.getChildren()){
+                int indexDeck = sorted.indexOf(deck);
+
+                if (n instanceof Label l){
+                    int rang = GridPane.getRowIndex(n);
+                    int colonne = GridPane.getColumnIndex(n);
+
+                    if(rang == indexDeck+1 && colonne == 0){
+                        l.setText(deck.getName());
+                    }
+                    if(rang == indexDeck+1 && colonne == 1){
+                        l.setText(Double.toString(deck.getBestScore()));
+                    }
+                    if(rang == indexDeck+1 && colonne == 2){
+                        l.setText(Double.toString(deck.getLastScore()));
+                    }
+                    if(rang == indexDeck+1 && colonne == 3){
+                        l.setText(deck.getLast_try());
+                    }
+                    if(rang == indexDeck+1 && colonne == 4){
+                        l.setText(Integer.toString(deck.getCards().size()));
+                    }
+                }
+            }
+        }
+    }
+
+    public void sortByNbCards(){
+        //ArrayList<Deck> decks = app.getDecks();
+        ObservableList<Deck> sorted = FXCollections.observableArrayList(app.getDecks());
+        sorted.sort(Comparator.comparing(Deck::getNbCards));
+        //ArrayList<Deck> sorted = new ArrayList<>();
+        //ArrayList<String> names = new ArrayList<>();
+
+        //System.out.println(names);
+
+        for (Deck deck : sorted){
+            for (Node n : tableau.getChildren()){
+                int indexDeck = sorted.indexOf(deck);
+
+                if (n instanceof Label l){
+                    int rang = GridPane.getRowIndex(n);
+                    int colonne = GridPane.getColumnIndex(n);
+
+                    if(rang == indexDeck+1 && colonne == 0){
+                        l.setText(deck.getName());
+                    }
+                    if(rang == indexDeck+1 && colonne == 1){
+                        l.setText(Double.toString(deck.getBestScore()));
+                    }
+                    if(rang == indexDeck+1 && colonne == 2){
+                        l.setText(Double.toString(deck.getLastScore()));
+                    }
+                    if(rang == indexDeck+1 && colonne == 3){
+                        l.setText(deck.getLast_try());
+                    }
+                    if(rang == indexDeck+1 && colonne == 4){
+                        l.setText(Integer.toString(deck.getCards().size()));
+                    }
+                }
+            }
+        }
     }
 
     @FXML
