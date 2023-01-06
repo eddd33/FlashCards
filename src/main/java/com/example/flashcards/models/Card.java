@@ -113,7 +113,10 @@ public class Card {
         this.difficulty = difficulty;
     }
 
-
+    public void setTagList(ArrayList<String> tagList) {
+        this.tagList.clear();
+        this.tagList.addAll(tagList);
+    }
 
     /*
      * Add :

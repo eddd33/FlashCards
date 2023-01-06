@@ -20,6 +20,7 @@ public class CreateViewController implements Observer, Initializable {
     private DeckContainer app;
     private ViewState viewState;
     private ArrayList<String> tags;
+    private ArrayList<Card> taggedCards;
 
     @FXML private TextField S_tag;
     @FXML private TextField tagAddTextField;
@@ -43,6 +44,8 @@ public class CreateViewController implements Observer, Initializable {
         this.viewState=viewState;
         app.addObserver(this);
         viewState.addObserver(this);
+        tags = new ArrayList<>();
+        taggedCards = new ArrayList<>();
     }
 
 
@@ -73,6 +76,8 @@ public class CreateViewController implements Observer, Initializable {
         selectedCardListView.setOnDragEntered(this::endDnD);
 
         //
+        tagAddTextField.setOnAction(event -> newTagCmd());
+        S_tag.setOnAction(event -> searchByTag());
         addTagListView.setOnKeyPressed(this::deleteTagHandle);
     }
 
@@ -86,9 +91,17 @@ public class CreateViewController implements Observer, Initializable {
         selectedCardListView.getItems().clear();
         newCardListView.getItems().clear();
 
+        // search by tag
+        taggedCards.clear();
+        taggedCards.addAll(app.getCards());
+        String search = S_tag.getText();
+        if (! search.isEmpty()) {
+            taggedCards.removeIf(card -> !card.getTagList().contains(search));
+        }
+
         // We put cards in newCardListView except those already in the deck which go in selectedCardListView
-        for (Card card : app.getCards()) {
-            if (! app.getActiveDeck().isInDeck(card)) {
+        for (Card card : taggedCards) {
+            if (!app.getActiveDeck().isInDeck(card)) {
                 // if there is no name : put a placeholder.
                 newCardListView.getItems().add(Objects.requireNonNullElse(card.getQuestion(), "New Card"));
                 if (card.equals(app.getActiveCard())) newCardListView.getSelectionModel().selectLast();
@@ -123,7 +136,8 @@ public class CreateViewController implements Observer, Initializable {
             twoSidedCheckBox.setSelected(activeCard.getTwoSided());
 
             // We add all the tags of the active deck in the ListView element.
-            tags = app.getActiveDeck().getTagList();
+            tags.clear();
+            tags.addAll(app.getActiveCard().getTagList());
             addTagListView.getItems().clear();
             addTagListView.getItems().addAll(tags);
         }
@@ -174,7 +188,7 @@ public class CreateViewController implements Observer, Initializable {
         else{
             String newTag = tagAddTextField.getText();
             tags.add(newTag);
-            addTagListView.getItems().add(newTag);
+            new SetTagListToCardCommand(app, tags).execute();
             tagAddTextField.clear();
         }
     }
@@ -182,7 +196,8 @@ public class CreateViewController implements Observer, Initializable {
 
 
     public void searchByTag(){
-        String searchTag = S_tag.getText();
+        update();
+        /*String searchTag = S_tag.getText();
         boolean isFound = false;
         ListView<Card> result = new ListView<>();
         for (Card card : app.getCards()) {
@@ -196,7 +211,7 @@ public class CreateViewController implements Observer, Initializable {
             if (!isFound) {
                 System.out.println("Card not found");
             }
-        }
+        }*/
     }
 
 
@@ -242,7 +257,7 @@ public class CreateViewController implements Observer, Initializable {
             if (selectedIndex >= 0 && selectedIndex < addTagListView.getItems().size()) {
                 String toRemove = addTagListView.getSelectionModel().getSelectedItem();
                 tags.remove(toRemove);
-                update();
+                new SetTagListToCardCommand(app, tags);
             }
         }
     }
@@ -259,12 +274,10 @@ public class CreateViewController implements Observer, Initializable {
 
     public void deleteCardHandle(KeyEvent event) {
         if (event.getEventType() == KeyEvent.KEY_PRESSED && event.getCode() == KeyCode.BACK_SPACE && app.getCards().size() > 1) {
-            int selectedIndex = newCardListView.getSelectionModel().getSelectedIndex();
-            int i = app.getCardIndex(selectedIndex);
-            if (selectedIndex >= 0 && selectedIndex < newCardListView.getItems().size()) {
-                app.supprCard(app.getCards().get(i));
-            }
-            app.setActiveCard(app.getCards().get(Math.min(i, app.getCards().size())));
+            String selectedName = newCardListView.getSelectionModel().getSelectedItem();
+            int i = app.getCardIndex(selectedName);
+            app.supprCard(app.getCards().get(i));
+            app.setActiveCard(app.getCards().get(Math.min(i, app.getCards().size()-1)));
         }
     }
 
@@ -282,9 +295,7 @@ public class CreateViewController implements Observer, Initializable {
     }
 
     public void clickHandle(MouseEvent event) {
-        int selectedIndex = newCardListView.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0 && selectedIndex < newCardListView.getItems().size()) {
-            app.setActiveCard(app.getCards().get(app.getCardIndex(selectedIndex)));
-        }
+        String selectedName = newCardListView.getSelectionModel().getSelectedItem();
+        app.setActiveCard(app.getCards().get(app.getCardIndex(selectedName)));
     }
 }

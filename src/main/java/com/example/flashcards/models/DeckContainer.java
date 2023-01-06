@@ -171,8 +171,8 @@ public class DeckContainer implements SubjectObserver {
         deck.getCards().add(card);
         cards.add(card);
         decks.add(deck);
-
         setActiveDeck(deck);
+        setActiveCard(card);
         notifyObserver();                                               //notifyObserver
     }
 
@@ -329,23 +329,22 @@ public class DeckContainer implements SubjectObserver {
     /**
      * Method used to get the index of a card in cards list.
      *
-     * @param inputIndex
-     * The integer is the index of the element in the ListView but not the real index.
-     * We need to check the cards list and finding the corresponding element th get the real index.
+     * @param inputName
+     * The name of the card
      *
-     * @return int, the real index of the card in cards list.
+     * @return int, the index of the card in cards list.
      */
-    public int getCardIndex(int inputIndex) {
-        int index = 0;
-        int k = 0;
-
-        while (k <= inputIndex) {
-            if (! activeDeck.isInDeck(cards.get(index))) {
-                k++;
-            }
-            index++;
+    public int getCardIndex(String inputName) {
+        for (Card card : cards) {
+            if (card.getQuestion().equals(inputName)) return cards.indexOf(card);
         }
-        return index-1;
+        return -1;
+    }
+
+
+    public void setActiveDeckTagList(ArrayList<String> tags) {
+        activeCard.setTagList(tags);
+        notifyObserver();
     }
 
 
