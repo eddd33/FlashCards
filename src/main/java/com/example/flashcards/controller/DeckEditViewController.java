@@ -110,6 +110,7 @@ public class DeckEditViewController implements Initializable, Observer {
         String name = deckNameTextField.getText();
         String auth = deckAuthorTextField.getText();
         String desc = deckDescTextArea.getText();
+        viewState.changeName("FlashMcCards : " + name);
         new ValidateInfoDeckModCommand(container,viewState,name,auth,desc,tags).execute();
     }
 

@@ -42,4 +42,13 @@ public class SceneController{
     public void changeScene(int i) {
         stage.setScene(scenes.get(i));
     }
+
+    /**
+     * Method is used to change the application name
+     *
+     * @param name is the new name
+     */
+    public void changename(String name) {
+        stage.setTitle(name);
+    }
 }

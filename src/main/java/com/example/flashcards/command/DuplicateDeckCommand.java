@@ -20,6 +20,7 @@ public class DuplicateDeckCommand implements Command{
 
     public void execute(){
         deckContainer.dupDeck(deck);
+        viewState.changeName("FlashMcCards : " + deckContainer.getActiveDeck().getName());
         viewState.changeScene(2);
     }
 }

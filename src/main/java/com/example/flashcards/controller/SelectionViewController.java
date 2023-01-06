@@ -293,6 +293,7 @@ public class SelectionViewController implements Observer, Initializable {
     public void changeToCreateCmd(Deck deck) {
         app.setActiveDeck(deck);
         app.setActiveCard(deck.getCards().get(0));
+        viewState.changeName("FlashMcCards : " + deck.getName());
         new ChangeSceneCommand(viewState,2).execute();
     }
 

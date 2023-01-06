@@ -64,4 +64,15 @@ public class ViewState implements SubjectObserver {
         controller.changeScene(state);
         this.state=state;
     }
+
+
+    /**
+     * Method is used to change the names
+     *
+     * @param name
+     * the new name
+     */
+    public void changeName(String name) {
+        controller.changename(name);
+    }
 }

@@ -60,9 +60,6 @@
           <items>
             <MenuItem mnemonicParsing="false" onAction="#changeToEditDeckCmd" text="Modifier" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Enregistrer" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#changeToSelectCmd" text="Retour au menu" />
           </items>
         </Menu>
@@ -77,11 +74,6 @@
                         <KeyCodeCombination alt="DOWN" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
             <MenuItem mnemonicParsing="false" onAction="#deleteCardCmd" text="Supprimer" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Page">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Retour à la sélection des decks" />
           </items>
         </Menu>
       </menus>

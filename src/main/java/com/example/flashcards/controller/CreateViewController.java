@@ -137,6 +137,7 @@ public class CreateViewController implements Observer, Initializable {
 
     @FXML
     public void changeToSelectCmd() {
+        viewState.changeName("FlashMcCards");
         new ChangeSceneCommand(viewState,0).execute();
     }
 

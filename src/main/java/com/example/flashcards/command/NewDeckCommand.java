@@ -18,6 +18,7 @@ public class NewDeckCommand implements Command{
 
     public void execute(){
         deckContainer.newDeck();
+        viewState.changeName("FlashMcCards : " + deckContainer.getActiveDeck().getName());
         viewState.changeScene(2);
     }
 }
