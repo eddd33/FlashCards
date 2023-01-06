@@ -49,61 +49,6 @@ public class StatViewController implements Observer, Initializable {
         if (app.getActiveDeck().getCards().size()==1){
             newLine();
         }
-        for(Deck deck : app.getDecks()) {
-            String name = deck.getName();
-
-
-
-            for (Node n : tableau.getChildren()) {
-
-                if (n instanceof Label l) {
-                    //int rang = GridPane.getRowIndex(l);
-                    if (l.getText().equals(name)) {
-
-                        List<Node> children = tableau.getChildren();
-                        int index = children.indexOf(l);
-                        if (children.get(index + 1) instanceof Label) {
-                            Label bestS = (Label) children.get(index + 1);
-                            double d = deck.getBestScore();
-                            bestS.setText(Double.toString(d));
-                        }
-                        if (children.get(index + 2) instanceof Label) {
-                            Label lastS = (Label) children.get(index + 2);
-                            double d = deck.getLastScore();
-                            lastS.setText(Double.toString(d));
-                        }
-                        if (children.get(index + 3) instanceof Label) {
-                            Label lastT = (Label) children.get(index + 3);
-                            lastT.setText(deck.getLast_try());
-                        }
-                        if (children.get(index + 4) instanceof Label) {
-                            Label numb = (Label) children.get(index + 4);
-                            numb.setText(String.valueOf(deck.getNbCards()));
-                        }
-                        break;
-                    }
-                }
-            }
-
-        }
-        if(tableau.getChildren().size()/5 != app.getDecks().size()){
-            while (tableau.getChildren().size()/5 != app.getDecks().size()){
-                for (Deck deck : app.getDecks()){
-                    String name = deck.getName();
-                    Label labelnom = new Label(name);
-                    Label labelBestScore = new Label(Double.toString(deck.getBestScore()));
-                    Label labelLastScore = new Label(Double.toString(deck.getLastScore()));
-                    Label labelLastTime = new Label(deck.getLast_try());
-                    Label tailleDeck = new Label(String.valueOf(deck.getCards().size()));
-                    int nbDecks = tableau.getChildren().size()/5;
-                    tableau.add(labelnom,0,nbDecks);
-                    tableau.add(labelBestScore,1,nbDecks);
-                    tableau.add(labelLastScore,2,nbDecks);
-                    tableau.add(labelLastTime,3,nbDecks);
-                    tableau.add(tailleDeck,4,nbDecks);
-                }
-            }
-        }
         numberOfDecks.setText("Nombre de decks : "+app.getDecks().size());
         best.setText("Deck le mieux réussi : "+cherche_best());
         worst.setText("Deck le moins réussi : "+cherche_worst());
