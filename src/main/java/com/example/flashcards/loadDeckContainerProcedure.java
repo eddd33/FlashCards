@@ -78,7 +78,7 @@ public class loadDeckContainerProcedure {
                 }
                 deck.setTagList(tagsDeck);
                 deck.setAuthor(author);
-                deck.setAuthor(description);
+                deck.setDescription(description);
                 deck.setLast_try(last_try);
                 deck.setBestScore(best_score);
                 deck.setLastScore(last_score);
