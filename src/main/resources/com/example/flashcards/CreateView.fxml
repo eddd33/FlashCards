@@ -65,11 +65,11 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Carte">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#newCardNotInActiveDeckCmd" text="Nouvelle">
+            <MenuItem mnemonicParsing="false" onAction="#newCardNotInActiveDeckCmd" text="Nouvelle carte">
                      <accelerator>
                         <KeyCodeCombination alt="DOWN" code="N" control="UP" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#newCardCmd" text="Nouvelle dans le deck">
+                  <MenuItem mnemonicParsing="false" onAction="#newCardCmd" text="Nouvelle carte dans le deck">
                      <accelerator>s
                         <KeyCodeCombination alt="DOWN" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
