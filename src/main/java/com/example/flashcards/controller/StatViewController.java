@@ -25,6 +25,10 @@ public class StatViewController implements Observer, Initializable {
 
     @FXML private GridPane tableau;
 
+    @FXML private Label numberOfDecks;
+    @FXML private Label best;
+    @FXML private Label worst;
+
 
     public StatViewController(DeckContainer app, ViewState viewState) {
         this.app = app;
@@ -45,8 +49,35 @@ public class StatViewController implements Observer, Initializable {
         if (app.getActiveDeck().getCards().size()==1){
             newLine();
         }
+        numberOfDecks.setText("Nombre de decks : "+app.getDecks().size());
+        best.setText("Deck le mieux réussi : "+cherche_best());
+        worst.setText("Deck le moins réussi : "+cherche_worst());
+    }
 
-        System.out.println("update");
+    public String cherche_best(){
+        List<Deck> decks = app.getDecks();
+        double best = 99999;
+        String best_deck = "";
+        for (Deck deck : decks){
+            if (deck.getBestScore()<best){
+                best = deck.getBestScore();
+                best_deck = deck.getName();
+            }
+        }
+        return best_deck;
+    }
+
+    public String cherche_worst(){
+        List<Deck> decks = app.getDecks();
+        double worst = 0;
+        String worst_deck = "";
+        for (Deck deck : decks){
+            if (deck.getBestScore()>worst){
+                worst = deck.getBestScore();
+                worst_deck = deck.getName();
+            }
+        }
+        return worst_deck;
     }
 
     public void newLine(){
@@ -64,40 +95,47 @@ public class StatViewController implements Observer, Initializable {
         Label labelBestScore = new Label("None");
         Label labelLastScore = new Label("None");
         Label labelLastTime = new Label("None");
+        Label tailleDeck = new Label(String.valueOf(deck.getCards().size()));
         int nbDecks = app.getDecks().size();
+        System.out.println("nbdecks "+nbDecks);
         tableau.add(labelnom,0,nbDecks);
         tableau.add(labelBestScore,1,nbDecks);
         tableau.add(labelLastScore,2,nbDecks);
         tableau.add(labelLastTime,3,nbDecks);
+        tableau.add(tailleDeck,4,nbDecks);
     }
 
     public void actualize(){
-        String name = app.getActiveDeck().getName();
-        for (Node n : tableau.getChildren()) {
+        //String name = app.getActiveDeck().getName();
+        for(Deck deck : app.getDecks()) {
+            String name = deck.getName();
 
-            if (n instanceof Label l) {
-                //int rang = GridPane.getRowIndex(l);
-                if (l.getText().equals(name)) {
-                    System.out.println("deck déjà présent");
+            for (Node n : tableau.getChildren()) {
 
-                    List<Node> children = tableau.getChildren();
-                    int index = children.indexOf(l);
-                    if (children.get(index + 1) instanceof Label) {
-                        Label bestS = (Label) children.get(index + 1);
-                        double d = app.getActiveDeck().getBestScore();
-                        bestS.setText(Double.toString(d));
-                    }
-                    if (children.get(index + 2) instanceof Label) {
-                        Label lastS = (Label) children.get(index + 2);
-                        double d = app.getActiveDeck().getLastScore();
-                        lastS.setText(Double.toString(d));
-                    }
-                    if (children.get(index + 3) instanceof Label) {
-                        Label lastT = (Label) children.get(index + 3);
-                        lastT.setText(app.getActiveDeck().getLast_try());
-                    }
+                if (n instanceof Label l) {
+                    //int rang = GridPane.getRowIndex(l);
+                    if (l.getText().equals(name)) {
+                        System.out.println("deck déjà présent");
 
-                    break;
+                        List<Node> children = tableau.getChildren();
+                        int index = children.indexOf(l);
+                        if (children.get(index + 1) instanceof Label) {
+                            Label bestS = (Label) children.get(index + 1);
+                            double d = deck.getBestScore();
+                            bestS.setText(Double.toString(d));
+                        }
+                        if (children.get(index + 2) instanceof Label) {
+                            Label lastS = (Label) children.get(index + 2);
+                            double d = deck.getLastScore();
+                            lastS.setText(Double.toString(d));
+                        }
+                        if (children.get(index + 3) instanceof Label) {
+                            Label lastT = (Label) children.get(index + 3);
+                            lastT.setText(deck.getLast_try());
+                        }
+
+                        break;
+                    }
                 }
             }
         }
