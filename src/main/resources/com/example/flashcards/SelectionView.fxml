@@ -48,12 +48,11 @@
       <menus>
         <Menu mnemonicParsing="false" text="Deck">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#newDeckCmd" text="Créer" />
-            <MenuItem mnemonicParsing="false" text="Ouvrir" />
-              <MenuItem mnemonicParsing="false" onAction="#saveProcedure" text="sauvegarder" />
-              <MenuItem mnemonicParsing="false" onAction="#loadProcedure" text="charger" />
-              <MenuItem mnemonicParsing="false" onAction="#changeToStatCmd" text="Stats" />
-              <MenuItem mnemonicParsing="false" onAction="#importProcedure" text="Importer un deck" />
+            <MenuItem mnemonicParsing="false" onAction="#newDeckCmd" text="Créer un deck" />
+              <MenuItem mnemonicParsing="false" onAction="#saveProcedure" text="Sauvegarder tout les decks" />
+              <MenuItem mnemonicParsing="false" onAction="#loadProcedure" text="Charger tout les decks" />
+              <MenuItem mnemonicParsing="false" onAction="#changeToStatCmd" text="Statistiques" />
+              <MenuItem mnemonicParsing="false" onAction="#importProcedure" text="Télécharger un deck" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#exitCmd" text="Quitter l'application" />
           </items>
@@ -66,11 +65,6 @@
                   <RadioMenuItem fx:id="Reptap" mnemonicParsing="false" onAction="#switchTypeIn" text="Avec réponse tappée" />
               </items>
             </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Au secours AIDEZ MOI JE MEURS" />
-          </items>
-        </Menu>
       </menus>
     </MenuBar>
       <AnchorPane>
