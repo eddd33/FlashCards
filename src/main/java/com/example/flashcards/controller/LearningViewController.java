@@ -91,6 +91,7 @@ public class LearningViewController implements Observer, Initializable {
             StudyStrategy strat = initStrategy(app.getLearningStrategy());
             study = new Study(new ArrayList<>(app.getActiveDeck().getCards()), strat, app);
             sortByDiff(study.getStudyList());
+            current_score = 0;
         }
         if (viewState.getState() <= 1) {
             buttonContainer.getChildren().clear();
