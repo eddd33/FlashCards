@@ -87,8 +87,10 @@ public class LearningViewController implements Observer, Initializable {
         if (viewState.getState() == 0) {
             System.out.println("J'initialise Study'");
             StudyStrategy strat = initStrategy(app.getLearningStrategy());
-            study = new Study(app.getActiveDeck().getCards(), strat, app);
+            study = new Study(new ArrayList<>(app.getActiveDeck().getCards()), strat, app);
             sortByDiff(study.getStudyList());
+        }
+        if (viewState.getState() <= 1) {
             buttonContainer.getChildren().clear();
             Button answerBut = new Button();
             if (study.getStudyList().size() != 0) {
@@ -115,61 +117,6 @@ public class LearningViewController implements Observer, Initializable {
                     app.getActiveDeck().setBestScore(score);
                 }
                 app.getActiveDeck().setLastScore(score);
-                questionLabel.setText("Révision terminée");
-                answerLabel.setText("Félicitation Shinji! :clap:");
-                answerBut.setOnAction(event -> changeToSelecCmd());
-                answerBut.setText("Retourner à la selection des paquets");
-                buttonContainer.getChildren().add(answerBut);
-            }
-            int goodNum= 0;
-            int midNum = 0;
-            int hardNum =0;
-            for (Card card :
-                    study.getStudyList()) {
-                if (card.getDifficulty()<1) {
-                    goodNum++;
-                } else if (card.getDifficulty()<1.7) {
-                    midNum++;
-                }
-                else {
-                    hardNum++;
-                }
-            }
-            goodCards.setText(Integer.toString(goodNum));
-            mehCards.setText(Integer.toString(midNum));
-            badCards.setText(Integer.toString(hardNum));
-        } else if (viewState.getState() == 1) {
-            buttonContainer.getChildren().clear();
-            Button answerBut = new Button();
-            if (study.getStudyList().size() != 0) {
-                System.out.println("J'affiche la première carte");
-                questionLabel.setText(study.getStudyList().get(0).getQuestion());
-                answerLabel.setText(study.getStudyList().get(0).getAnswer());
-                answerLabel.setOpacity(0);if (study.getStrategy() instanceof TimedStrategy) {
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    reveal();
-                } else {
-                    answerBut.setOnAction(event -> reveal());
-                    answerBut.setText("Afficher la réponse");
-                    buttonContainer.getChildren().add(answerBut);
-                }
-            }
-            else {
-                double score = calcScore();
-                if (app.getActiveDeck().getBestScore() > score) {
-                    app.getActiveDeck().setBestScore(score);
-                }
-                app.getActiveDeck().setLastScore(score);
-                //set Last Try
-                Date date = new Date();
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                String aujourdhui = formatter.format(date);
-                app.getActiveDeck().setLast_try(aujourdhui);
-
                 questionLabel.setText("Révision terminée");
                 answerLabel.setText("Félicitation Shinji! :clap:");
                 answerBut.setOnAction(event -> changeToSelecCmd());
