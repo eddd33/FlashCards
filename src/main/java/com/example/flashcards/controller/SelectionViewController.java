@@ -9,15 +9,14 @@ import com.example.flashcards.loadDeckContainerProcedure;
 import com.example.flashcards.importDeckProcedure;
 import com.example.flashcards.exportDeckProcedure;
 import java.io.IOException;
+
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -34,6 +33,11 @@ public class SelectionViewController implements Observer, Initializable {
     @FXML private ArrayList<Deck> deckListTag; //liste des tags
     @FXML private VBox deckList;
     @FXML private HBox buttonContainer;
+
+    @FXML private RadioMenuItem Aleat;
+    @FXML private RadioMenuItem Repet;
+    @FXML private RadioMenuItem Tempslim;
+    @FXML private RadioMenuItem Reptap;
 
 
     /**
@@ -65,6 +69,12 @@ public class SelectionViewController implements Observer, Initializable {
      * the root object was not localized.
      */
     public void initialize(URL location, ResourceBundle resources) {
+
+        ToggleGroup group = new ToggleGroup();
+        Aleat.setToggleGroup(group);
+        Repet.setToggleGroup(group);
+        Tempslim.setToggleGroup(group);
+        Reptap.setToggleGroup(group);
 
         // creation du bouton pour effectuer la demande de recherche.
         Button byTagButton = new Button();

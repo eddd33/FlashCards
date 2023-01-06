@@ -41,6 +41,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.RadioMenuItem?>
 <VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flashcards.controller.SelectionViewController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
@@ -59,10 +60,10 @@
         </Menu>
             <Menu mnemonicParsing="false" text="Méthode de révision">
               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#switchDumb" text="Aléatoire" />
-                  <MenuItem mnemonicParsing="false" onAction="#switchLearning" text="Avec répétition" />
-                  <MenuItem mnemonicParsing="false" onAction="#switchTimed" text="Avec temps limité" />
-                  <MenuItem mnemonicParsing="false" onAction="#switchTypeIn" text="Avec réponse tappée" />
+                  <RadioMenuItem fx:id="Aleat" mnemonicParsing="false" onAction="#switchDumb" text="Aléatoire" />
+                  <RadioMenuItem fx:id="Repet" mnemonicParsing="false" onAction="#switchLearning" text="Avec répétition" />
+                  <RadioMenuItem fx:id="Tempslim" mnemonicParsing="false" onAction="#switchTimed" text="Avec temps limité" />
+                  <RadioMenuItem fx:id="Reptap" mnemonicParsing="false" onAction="#switchTypeIn" text="Avec réponse tappée" />
               </items>
             </Menu>
         <Menu mnemonicParsing="false" text="Help">
