@@ -142,12 +142,13 @@ public class StatViewController implements Observer, Initializable {
         for(Deck deck : app.getDecks()) {
             String name = deck.getName();
 
+
+
             for (Node n : tableau.getChildren()) {
 
                 if (n instanceof Label l) {
                     //int rang = GridPane.getRowIndex(l);
                     if (l.getText().equals(name)) {
-                        System.out.println("deck déjà présent");
 
                         List<Node> children = tableau.getChildren();
                         int index = children.indexOf(l);
@@ -173,7 +174,27 @@ public class StatViewController implements Observer, Initializable {
                     }
                 }
             }
+
         }
+        if(tableau.getChildren().size()/5 != app.getDecks().size()){
+            while (tableau.getChildren().size()/5 != app.getDecks().size()){
+                for (Deck deck : app.getDecks()){
+                    String name = deck.getName();
+                    Label labelnom = new Label(name);
+                    Label labelBestScore = new Label(Double.toString(deck.getBestScore()));
+                    Label labelLastScore = new Label(Double.toString(deck.getLastScore()));
+                    Label labelLastTime = new Label(deck.getLast_try());
+                    Label tailleDeck = new Label(String.valueOf(deck.getCards().size()));
+                    int nbDecks = tableau.getChildren().size()/5;
+                    tableau.add(labelnom,0,nbDecks);
+                    tableau.add(labelBestScore,1,nbDecks);
+                    tableau.add(labelLastScore,2,nbDecks);
+                    tableau.add(labelLastTime,3,nbDecks);
+                    tableau.add(tailleDeck,4,nbDecks);
+                }
+            }
+        }
+
     }
 
     public void sortByName(){
@@ -211,19 +232,19 @@ public class StatViewController implements Observer, Initializable {
                     int rang = GridPane.getRowIndex(n);
                     int colonne = GridPane.getColumnIndex(n);
 
-                    if(rang == indexDeck+1 && colonne == 0){
+                    if(rang == indexDeck && colonne == 0){
                         l.setText(deck.getName());
                     }
-                    if(rang == indexDeck+1 && colonne == 1){
+                    if(rang == indexDeck && colonne == 1){
                         l.setText(Double.toString(deck.getBestScore()));
                     }
-                    if(rang == indexDeck+1 && colonne == 2){
+                    if(rang == indexDeck && colonne == 2){
                         l.setText(Double.toString(deck.getLastScore()));
                     }
-                    if(rang == indexDeck+1 && colonne == 3){
+                    if(rang == indexDeck && colonne == 3){
                         l.setText(deck.getLast_try());
                     }
-                    if(rang == indexDeck+1 && colonne == 4){
+                    if(rang == indexDeck && colonne == 4){
                         l.setText(Integer.toString(deck.getCards().size()));
                     }
                 }
@@ -248,19 +269,19 @@ public class StatViewController implements Observer, Initializable {
                     int rang = GridPane.getRowIndex(n);
                     int colonne = GridPane.getColumnIndex(n);
 
-                    if(rang == indexDeck+1 && colonne == 0){
+                    if(rang == indexDeck && colonne == 0){
                         l.setText(deck.getName());
                     }
-                    if(rang == indexDeck+1 && colonne == 1){
+                    if(rang == indexDeck && colonne == 1){
                         l.setText(Double.toString(deck.getBestScore()));
                     }
-                    if(rang == indexDeck+1 && colonne == 2){
+                    if(rang == indexDeck && colonne == 2){
                         l.setText(Double.toString(deck.getLastScore()));
                     }
-                    if(rang == indexDeck+1 && colonne == 3){
+                    if(rang == indexDeck && colonne == 3){
                         l.setText(deck.getLast_try());
                     }
-                    if(rang == indexDeck+1 && colonne == 4){
+                    if(rang == indexDeck && colonne == 4){
                         l.setText(Integer.toString(deck.getCards().size()));
                     }
                 }
@@ -285,19 +306,19 @@ public class StatViewController implements Observer, Initializable {
                     int rang = GridPane.getRowIndex(n);
                     int colonne = GridPane.getColumnIndex(n);
 
-                    if(rang == indexDeck+1 && colonne == 0){
+                    if(rang == indexDeck && colonne == 0){
                         l.setText(deck.getName());
                     }
-                    if(rang == indexDeck+1 && colonne == 1){
+                    if(rang == indexDeck && colonne == 1){
                         l.setText(Double.toString(deck.getBestScore()));
                     }
-                    if(rang == indexDeck+1 && colonne == 2){
+                    if(rang == indexDeck && colonne == 2){
                         l.setText(Double.toString(deck.getLastScore()));
                     }
-                    if(rang == indexDeck+1 && colonne == 3){
+                    if(rang == indexDeck && colonne == 3){
                         l.setText(deck.getLast_try());
                     }
-                    if(rang == indexDeck+1 && colonne == 4){
+                    if(rang == indexDeck && colonne == 4){
                         l.setText(Integer.toString(deck.getCards().size()));
                     }
                 }
@@ -322,19 +343,19 @@ public class StatViewController implements Observer, Initializable {
                     int rang = GridPane.getRowIndex(n);
                     int colonne = GridPane.getColumnIndex(n);
 
-                    if(rang == indexDeck+1 && colonne == 0){
+                    if(rang == indexDeck && colonne == 0){
                         l.setText(deck.getName());
                     }
-                    if(rang == indexDeck+1 && colonne == 1){
+                    if(rang == indexDeck && colonne == 1){
                         l.setText(Double.toString(deck.getBestScore()));
                     }
-                    if(rang == indexDeck+1 && colonne == 2){
+                    if(rang == indexDeck && colonne == 2){
                         l.setText(Double.toString(deck.getLastScore()));
                     }
-                    if(rang == indexDeck+1 && colonne == 3){
+                    if(rang == indexDeck && colonne == 3){
                         l.setText(deck.getLast_try());
                     }
-                    if(rang == indexDeck+1 && colonne == 4){
+                    if(rang == indexDeck && colonne == 4){
                         l.setText(Integer.toString(deck.getCards().size()));
                     }
                 }
@@ -359,19 +380,19 @@ public class StatViewController implements Observer, Initializable {
                     int rang = GridPane.getRowIndex(n);
                     int colonne = GridPane.getColumnIndex(n);
 
-                    if(rang == indexDeck+1 && colonne == 0){
+                    if(rang == indexDeck && colonne == 0){
                         l.setText(deck.getName());
                     }
-                    if(rang == indexDeck+1 && colonne == 1){
+                    if(rang == indexDeck && colonne == 1){
                         l.setText(Double.toString(deck.getBestScore()));
                     }
-                    if(rang == indexDeck+1 && colonne == 2){
+                    if(rang == indexDeck && colonne == 2){
                         l.setText(Double.toString(deck.getLastScore()));
                     }
-                    if(rang == indexDeck+1 && colonne == 3){
+                    if(rang == indexDeck && colonne == 3){
                         l.setText(deck.getLast_try());
                     }
-                    if(rang == indexDeck+1 && colonne == 4){
+                    if(rang == indexDeck && colonne == 4){
                         l.setText(Integer.toString(deck.getCards().size()));
                     }
                 }
