@@ -54,6 +54,7 @@ public class DeckContainer implements SubjectObserver {
     public void newCard() {
         if (activeDeck != null) {
             Card card = new Card();
+            card.setAnswer(createUniqueNameCards());
             cards.add(card);
             activeDeck.addCard(card);
             setActiveCard(card);
@@ -64,12 +65,44 @@ public class DeckContainer implements SubjectObserver {
 
     public void newCardNotInDeck() {
         Card card = new Card();
+        card.setQuestion(createUniqueNameCards());
         cards.add(card);
         setActiveCard(card);
         notifyObserver();
     }
 
 
+    public String createUniqueNameCards() {
+        boolean testExist = false;
+        String name = "New Card";
+        for (Card card : cards) {
+            if (card.getQuestion().equals(name)) {
+                testExist = true;
+                break;
+            }
+        }
+        if (testExist) {
+            return recCreateUniqueNameCard(name,1);
+        } else {
+            return name;
+        }
+    }
+
+    private String recCreateUniqueNameCard(String name, int i) {
+        String newName = name + " " + i;
+        boolean testExist = false;
+        for (Card card : cards) {
+            if (card.getQuestion().equals(newName)) {
+                testExist = true;
+                break;
+            }
+        }
+        if (testExist) {
+            return recCreateUniqueNameCard(name,i+1);
+        } else {
+            return newName;
+        }
+    }
 
     /**
      * Method used to remove a Card from the active deck
@@ -134,6 +167,7 @@ public class DeckContainer implements SubjectObserver {
         String name = getUniqueName("New deck");
         Deck deck = new Deck(name);
         Card card = new Card();
+        card.setQuestion(createUniqueNameCards());
         deck.getCards().add(card);
         cards.add(card);
         decks.add(deck);
