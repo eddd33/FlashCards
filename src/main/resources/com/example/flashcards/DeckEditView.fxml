@@ -53,14 +53,9 @@
       <menus>
         <Menu mnemonicParsing="false" text="Deck">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#validateCmd" text="Valider" />
+            <MenuItem mnemonicParsing="false" onAction="#validateCmd" text="Valider les modifications" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#exitApplicationCmd" text="Quitter l'application" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
           </items>
         </Menu>
       </menus>

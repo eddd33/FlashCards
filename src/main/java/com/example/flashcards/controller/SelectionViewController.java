@@ -76,6 +76,8 @@ public class SelectionViewController implements Observer, Initializable {
         Tempslim.setToggleGroup(group);
         Reptap.setToggleGroup(group);
 
+        Aleat.setSelected(true);
+
         // creation du bouton pour effectuer la demande de recherche.
         Button byTagButton = new Button();
         byTagButton.setText("Recherche");
