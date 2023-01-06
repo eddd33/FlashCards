@@ -1,6 +1,13 @@
 # FlashMcCards
 
+###Installation
+
+Il suffit d'installer le fichier flashcards.jar dont le commit est lié au tag RELEASE_FINAL.
+
 ## Lancer l'application
+
+Nous n'avons pas réussi à exécuter notre archive .jar sur Windows.
+Nous avons seulement réussi à le faire avec la commande java -jar flashcards.jar sur Linux.
 
 ## Utilisation de l'application
 
