@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class Main extends Application {
     @Override
@@ -76,6 +77,14 @@ public class Main extends Application {
         Parent statView = statViewLoader.load();
         Scene statScene = new Scene(statView);
         controller.addScene(statScene);
+
+        URL fileName = getClass().getResource("images/FlashMcCards.jpg");
+        if (fileName != null) {
+            Image icon = new Image(fileName.toString());
+            stage.getIcons().add(icon);
+        }
+
+
         stage.setTitle("FlashMcCards");
         stage.setScene(selectionScene);
         stage.show();
