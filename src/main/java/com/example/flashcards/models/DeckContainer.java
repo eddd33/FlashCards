@@ -133,11 +133,12 @@ public class DeckContainer implements SubjectObserver {
     public void newDeck() {
         String name = getUniqueName("New deck");
         Deck deck = new Deck(name);
+        Card card = new Card();
+        deck.getCards().add(card);
+        cards.add(card);
         decks.add(deck);
 
         setActiveDeck(deck);
-        newCard();
-
         notifyObserver();                                               //notifyObserver
     }
 

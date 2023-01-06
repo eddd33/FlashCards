@@ -23,7 +23,6 @@ public class Deck {
         last_try = "Never";
         tagList = new ArrayList<>();
         cards = new ArrayList<>();
-        cards.add(new Card());
         best_score=0;
         last_score=0;
     }
