@@ -14,6 +14,7 @@ public class DeckContainer implements SubjectObserver {
     private ArrayList<Observer> listObs;
     private Deck activeDeck;
     private Card activeCard;
+    private int learningStrategy;
     private Set<String> deckTags;
     private Set<String> cardTags;
 
@@ -352,6 +353,9 @@ public class DeckContainer implements SubjectObserver {
         return new Card();
     }
 
+    public int getLearningStrategy() {
+        return learningStrategy;
+    }
     /*
      * Setter :
      * The following methods are used for setting component value.
@@ -371,6 +375,9 @@ public class DeckContainer implements SubjectObserver {
     }
     public void setCards(ArrayList<Card> cards) {
         this.cards = cards;
-
     }
+    public void setLearningStrategy(int i ) {
+        this.learningStrategy = i;
+    }
+
 }

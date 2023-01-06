@@ -32,9 +32,6 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -43,7 +40,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flashcards.controller.SelectionViewController">
   <children>
@@ -53,13 +49,20 @@
           <items>
             <MenuItem mnemonicParsing="false" onAction="#newDeckCmd" text="Créer" />
             <MenuItem mnemonicParsing="false" text="Ouvrir" />
-              <MenuItem mnemonicParsing="false" text="sauvegarder" onAction="#saveProcedure" />
-              <MenuItem mnemonicParsing="false" text="charger" onAction="#loadProcedure" />
-              <MenuItem mnemonicParsing="false" text="Stats" onAction="#changeToStatCmd"/>
+              <MenuItem mnemonicParsing="false" onAction="#saveProcedure" text="sauvegarder" />
+              <MenuItem mnemonicParsing="false" onAction="#loadProcedure" text="charger" />
+              <MenuItem mnemonicParsing="false" onAction="#changeToStatCmd" text="Stats" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quitter l'application" onAction="#exitCmd" />
+            <MenuItem mnemonicParsing="false" onAction="#exitCmd" text="Quitter l'application" />
           </items>
         </Menu>
+            <Menu mnemonicParsing="false" text="Méthode de révision">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#switchDumb" text="Aléatoire" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchLearning" text="Avec répétition" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchTimed" text="Avec temps limité" />
+              </items>
+            </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
             <MenuItem mnemonicParsing="false" text="Au secours AIDEZ MOI JE MEURS" />

@@ -8,6 +8,8 @@ import com.example.flashcards.saveDeckContainerProcedure;
 import com.example.flashcards.loadDeckContainerProcedure;
 
 import java.io.IOException;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -282,5 +284,22 @@ public class SelectionViewController implements Observer, Initializable {
         buttonContainer.getChildren().addAll(byTagButton,tag);
 
         update();
+    }
+
+    @FXML
+    public void switchDumb() {
+        switchStrat(0);
+    }
+    @FXML
+    public void switchLearning() {
+        switchStrat(1);
+    }
+    @FXML
+    public void switchTimed() {
+        switchStrat(2);
+    }
+
+    public void switchStrat(int learningStrat) {
+        app.setLearningStrategy(learningStrat);
     }
 }
