@@ -12,6 +12,7 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -153,6 +154,10 @@ public class SelectionViewController implements Observer, Initializable {
             Button bikini = new Button();
             Button delete = new Button();
             Label description = new Label();
+            double butWidth = 140;
+
+            // settings de la ligne
+            newBox.setSpacing(10);
 
             // settings du titre.
             title.setPrefSize(150.0, 100.0);
@@ -164,24 +169,34 @@ public class SelectionViewController implements Observer, Initializable {
             title.setOnAction(event -> changeToLearnCmd(d));
 
             // settings de la description.
-            description.setPrefSize(480.0, 100.0);
+            description.setPrefHeight( 100.0);
+            description.setMinWidth(250.0);
+            description.setMaxWidth(400.0);
             description.setWrapText(true);
             description.setText(d.getDescription());
+
+            // Boite à boutons
+            VBox editButtons = new VBox();
+            editButtons.setAlignment(Pos.CENTER);
 
             // settings du bouton Modifier qui envoie sur la page de gestion du deck.
             modify.setText("Modifier");
             modify.setOnAction(event -> changeToCreateCmd(d));
+            modify.setPrefWidth(butWidth);
 
             // settings du bouton Dupliquer qui duplique le deck et envoie sur la page de gestion de la copie.
             bikini.setText("Dupliquer");
             bikini.setOnAction(event -> duplicateDeckCmd(d));
+            bikini.setPrefWidth(butWidth);
 
             // settings du bouton Supprimer qui supprime le deck.
             delete.setText("Supprimer");
             delete.setOnAction(event -> deleteDeckCmd(d));
+            delete.setPrefWidth(butWidth);
 
+            editButtons.getChildren().addAll(modify,bikini,delete);
             // Ajout de tous les éléments à la HBox, puis à la VBox global.
-            newBox.getChildren().addAll(title, description, modify, bikini, delete);
+            newBox.getChildren().addAll(title, description, editButtons);
             deckList.getChildren().add(newBox);
         }
     }
