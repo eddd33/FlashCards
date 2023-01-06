@@ -54,7 +54,7 @@ public class DeckContainer implements SubjectObserver {
     public void newCard() {
         if (activeDeck != null) {
             Card card = new Card();
-            card.setAnswer(createUniqueNameCards());
+            card.setQuestion(createUniqueNameCards());
             cards.add(card);
             activeDeck.addCard(card);
             setActiveCard(card);
@@ -68,7 +68,7 @@ public class DeckContainer implements SubjectObserver {
         card.setQuestion(createUniqueNameCards());
         cards.add(card);
         setActiveCard(card);
-        notifyObserver();
+        notifyObserver();                                               //notifyObserver
     }
 
 
