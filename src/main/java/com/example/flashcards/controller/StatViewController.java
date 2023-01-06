@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -97,7 +98,39 @@ public class StatViewController implements Observer, Initializable {
         Label labelLastTime = new Label("None");
         Label tailleDeck = new Label(String.valueOf(deck.getCards().size()));
         int nbDecks = app.getDecks().size();
-        System.out.println("nbdecks "+nbDecks);
+        for (Node node : tableau.getChildren()) {
+            if (node instanceof Label) {
+                // Récupération des coordonnées du Label
+                int rowIndex = GridPane.getRowIndex(node);
+                int columnIndex = GridPane.getColumnIndex(node);
+                if (rowIndex == nbDecks && columnIndex == 0) {
+                    if (node instanceof Label l) {
+                        l.setText("");
+                    }
+                }
+                if (rowIndex == nbDecks && columnIndex == 1) {
+                    if (node instanceof Label l && l.getText().equals("None")) {
+                        l.setText("");
+                    }
+                }
+                if (rowIndex == nbDecks && columnIndex == 2) {
+                    if (node instanceof Label l && l.getText().equals("None")) {
+                        l.setText("");
+                    }
+                }
+                if (rowIndex == nbDecks && columnIndex == 3) {
+                    if (node instanceof Label l && l.getText().equals("None")) {
+                        l.setText("");
+                    }
+                }
+                if (rowIndex == nbDecks && columnIndex == 4) {
+                    if (node instanceof Label l) {
+                        l.setText("");
+                    }
+                }
+            }
+        }
+
         tableau.add(labelnom,0,nbDecks);
         tableau.add(labelBestScore,1,nbDecks);
         tableau.add(labelLastScore,2,nbDecks);
@@ -139,6 +172,34 @@ public class StatViewController implements Observer, Initializable {
                 }
             }
         }
+    }
+
+    public void sortByName(){
+        //trier les decks par ordre alphabétique
+        ArrayList<Deck> decks = app.getDecks();
+        ArrayList<Deck> sorted = new ArrayList<>();
+        ArrayList<String> names = new ArrayList<>();
+        for (Deck deck : decks){
+            if (sorted.size()==0){
+                sorted.add(deck);
+                names.add(deck.getName());
+            }
+            else{
+                for (int i=0; i<sorted.size(); i++){
+                    if (deck.getName().compareTo(sorted.get(i).getName())<0){
+                        sorted.add(i,deck);
+                        names.add(i,deck.getName());
+                        break;
+                    }
+                    else if (i==sorted.size()-1){
+                        sorted.add(deck);
+                        names.add(deck.getName());
+                        break;
+                    }
+                }
+            }
+        }
+        System.out.println(names);
     }
 
     @FXML
