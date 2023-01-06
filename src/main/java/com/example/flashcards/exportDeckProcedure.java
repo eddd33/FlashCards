@@ -15,8 +15,13 @@ public class exportDeckProcedure {
     public void exportDeck() throws IOException {
         Gson gson = new Gson();
         String json = gson.toJson(deck);
-        FileWriter fichier = new FileWriter(fileName);
-        fichier.write(json);
-        fichier.close();
+        try {
+            FileWriter fichier = new FileWriter(fileName);
+            fichier.write(json);
+            fichier.close();
+        }
+        catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 }

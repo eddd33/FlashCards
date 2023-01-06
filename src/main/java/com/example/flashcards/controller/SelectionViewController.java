@@ -6,9 +6,11 @@ import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.view.*;
 import com.example.flashcards.saveDeckContainerProcedure;
 import com.example.flashcards.loadDeckContainerProcedure;
-
+import com.example.flashcards.importDeckProcedure;
+import com.example.flashcards.exportDeckProcedure;
 import java.io.IOException;
-
+import javafx.stage.FileChooser;
+import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,7 +25,7 @@ import javafx.scene.text.TextAlignment;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
+import javafx.stage.Stage;
 public class SelectionViewController implements Observer, Initializable {
 
     private DeckContainer app;
@@ -83,6 +85,7 @@ public class SelectionViewController implements Observer, Initializable {
             Button modify = new Button();
             Button bikini = new Button();
             Button delete = new Button();
+            Button export = new Button();
             Label description = new Label();
 
             // settings du titre.
@@ -111,12 +114,30 @@ public class SelectionViewController implements Observer, Initializable {
             delete.setText("Supprimer");
             delete.setOnAction(event -> deleteDeckCmd(d));
 
+            export.setText("Exporter");
+            export.setOnAction(event -> exportProcedure(d));
+
             // Ajout de tous les éléments à la HBox, puis à la VBox global.
             newBox.getChildren().addAll(title,description,modify,bikini,delete);
             deckList.getChildren().add(newBox);
         }
     }
-
+    public void exportProcedure (Deck deck) {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Ouvrir un fichier");
+            Stage stage = new Stage();
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("fichier json", "*.json"));
+            File file = fileChooser.showOpenDialog(stage);
+            String fileName = file.getAbsolutePath();
+            System.out.println(fileName);
+            new exportDeckProcedure(deck, fileName).exportDeck();
+        }
+        catch (IOException Exception) {
+            throw new RuntimeException(Exception);
+        }
+    }
     @FXML
     public void saveProcedure() {
         try {
@@ -153,6 +174,7 @@ public class SelectionViewController implements Observer, Initializable {
             Button modify = new Button();
             Button bikini = new Button();
             Button delete = new Button();
+            Button export = new Button();
             Label description = new Label();
             double butWidth = 140;
 
@@ -194,7 +216,12 @@ public class SelectionViewController implements Observer, Initializable {
             delete.setOnAction(event -> deleteDeckCmd(d));
             delete.setPrefWidth(butWidth);
 
-            editButtons.getChildren().addAll(modify,bikini,delete);
+            // settings du bouton Supprimer qui supprime le deck.
+            export.setText("Exporter");
+            export.setOnAction(event -> exportProcedure(d));
+            export.setPrefWidth(butWidth);
+
+            editButtons.getChildren().addAll(modify,bikini,delete,export);
             // Ajout de tous les éléments à la HBox, puis à la VBox global.
             newBox.getChildren().addAll(title, description, editButtons);
             deckList.getChildren().add(newBox);
