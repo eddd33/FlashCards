@@ -12,6 +12,7 @@ import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.models.Study;
 import com.example.flashcards.view.*;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -99,12 +101,11 @@ public class LearningViewController implements Observer, Initializable {
                 answerLabel.setText(study.getStudyList().get(0).getAnswer());
                 answerLabel.setOpacity(0);
                 if (study.getStrategy() instanceof TimedStrategy) {
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    reveal();
+                    PauseTransition pause = new PauseTransition(Duration.seconds(5));
+                    pause.setOnFinished(event -> {
+                        reveal();
+                    });
+                    pause.play();
                 } else {
                     answerBut.setOnAction(event -> reveal());
                     answerBut.setText("Afficher la réponse");
