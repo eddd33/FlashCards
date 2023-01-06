@@ -46,7 +46,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flashcards.controller.LearningViewController">
+<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flashcards.controller.LearningViewController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -73,12 +73,24 @@
                <children>
                   <TextFlow fx:id="remainingCards" prefHeight="16.0" prefWidth="654.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de cartes du paquet : " />
-                        <Text fx:id="goodCards" fill="#2bbf4d" strokeType="OUTSIDE" strokeWidth="0.0" text="12" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de cartes du paquet : ">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Text>
+                        <Text fx:id="goodCards" fill="#2bbf4d" strokeType="OUTSIDE" strokeWidth="0.0" text="12">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Text>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" | " />
-                        <Text fx:id="mehCards" fill="#ebcd23" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
+                        <Text fx:id="mehCards" fill="#ffa003" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Text>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" | " />
-                        <Text fx:id="badCards" fill="#e42b2b" strokeType="OUTSIDE" strokeWidth="0.0" text="8" />
+                        <Text fx:id="badCards" fill="#e32b47" strokeType="OUTSIDE" strokeWidth="0.0" text="8">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Text>
                      </children>
                      <VBox.margin>
                         <Insets />
@@ -92,7 +104,7 @@
                                 <items>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
-                                          <Label fx:id="questionLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="C'est ici que se trouve la question HIHIHHIHI" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <Label fx:id="questionLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="C'est ici que se trouve la question HIHIHHIHI" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font>
@@ -104,7 +116,7 @@
                                     </AnchorPane>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
-                                          <Label fx:id="answerLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="C'est ici que se trouve la réponse hohohoho" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <Label fx:id="answerLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="C'est ici que se trouve la réponse hohohoho" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font>
@@ -120,7 +132,7 @@
                         </AnchorPane>
                       <AnchorPane fx:id="buttonContainer" maxHeight="50.0" minHeight="50.0" minWidth="160.0" style="-fx-background-color: grey;">
                            <children>
-                              <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#reveal" prefHeight="47.0" prefWidth="638.0" style="-fx-background-color: grey; -fx-border-color: transparent;" text="Afficher la réponse" textFill="WHITE">
+                              <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#reveal" prefHeight="47.0" prefWidth="638.0" style="-fx-background-color: grey; -fx-border-color: transparent;" text="Afficher la réponse" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>

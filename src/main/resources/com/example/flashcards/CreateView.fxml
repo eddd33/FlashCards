@@ -51,13 +51,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flashcards.controller.CreateViewController">
+<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flashcards.controller.CreateViewController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="Deck">
           <items>
-            <MenuItem mnemonicParsing="false" text="Modifier" onAction="#changeToEditDeckCmd" />
+            <MenuItem mnemonicParsing="false" onAction="#changeToEditDeckCmd" text="Modifier" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Enregistrer" />
             <MenuItem mnemonicParsing="false" text="Open…" />
@@ -69,7 +69,7 @@
           <items>
             <MenuItem mnemonicParsing="false" onAction="#newCardNotInActiveDeckCmd" text="Nouvelle" />
                   <MenuItem mnemonicParsing="false" onAction="#newCardCmd" text="Nouvelle dans le deck" />
-            <MenuItem mnemonicParsing="false" text="Supprimer" onAction="#deleteCardCmd" />
+            <MenuItem mnemonicParsing="false" onAction="#deleteCardCmd" text="Supprimer" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Page">
@@ -94,9 +94,9 @@
                           <items>
                             <AnchorPane maxHeight="30.0" minHeight="30.0" minWidth="160.0">
                                  <children>
-                                    <HBox layoutX="189.0" layoutY="2.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <HBox alignment="CENTER_RIGHT" layoutX="189.0" layoutY="2.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <TextField fx:id="S_tag" promptText="Rechercher un tag" HBox.hgrow="ALWAYS">
+                                          <TextField fx:id="S_tag" alignment="CENTER_RIGHT" maxWidth="280.0" promptText="Rechercher un tag" HBox.hgrow="ALWAYS">
                                              <HBox.margin>
                                                 <Insets top="1.0" />
                                              </HBox.margin>
@@ -104,7 +104,7 @@
                                           <Button mnemonicParsing="false" onAction="#searchByTag" text="Rechercher" HBox.hgrow="ALWAYS" />
                                        </children>
                                        <padding>
-                                          <Insets left="5.0" right="5.0" top="2.0" />
+                                          <Insets left="5.0" right="5.0" />
                                        </padding>
                                     </HBox>
                                  </children>
@@ -125,11 +125,17 @@
                                                                      <children>
                                                                         <VBox alignment="TOP_CENTER" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                            <children>
-                                                                              <CheckBox fx:id="twoSidedCheckBox" mnemonicParsing="false" text="Peut etre inversée" />
+                                                                              <CheckBox fx:id="twoSidedCheckBox" mnemonicParsing="false" text="Peut etre inversée">
+                                                                                 <VBox.margin>
+                                                                                    <Insets top="10.0" />
+                                                                                 </VBox.margin></CheckBox>
                                                                               <Label text="Tags">
                                                                                  <font>
                                                                                     <Font name="System Bold" size="13.0" />
                                                                                  </font>
+                                                                                 <VBox.margin>
+                                                                                    <Insets top="20.0" />
+                                                                                 </VBox.margin>
                                                                               </Label>
                                                                               <HBox spacing="5.0">
                                                                                  <children>
@@ -137,7 +143,7 @@
                                                                                     <Button fx:id="tagAddButton" mnemonicParsing="false" onAction="#newTagCmd" text="Ajouter" />
                                                                                  </children>
                                                                               </HBox>
-                                                                              <ListView fx:id="addTagListView" prefHeight="138.0" prefWidth="242.0" />
+                                                                              <ListView fx:id="addTagListView" prefWidth="242.0" />
                                                                            </children>
                                                                         </VBox>
                                                                      </children>
@@ -148,7 +154,7 @@
                                                             <content>
                                                               <AnchorPane minHeight="180.0" minWidth="200.0">
                                                                      <children>
-                                                                        <TextArea fx:id="questionTextArea" minHeight="200.0" minWidth="310.0" promptText="Entrer la question ici" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                                        <TextArea fx:id="questionTextArea" minHeight="200.0" minWidth="310.0" promptText="Entrer la question ici" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                                      </children>
                                                                   </AnchorPane>
                                                             </content>
@@ -157,14 +163,17 @@
                                                             <content>
                                                               <AnchorPane minHeight="180.0" minWidth="200.0">
                                                                      <children>
-                                                                        <TextArea fx:id="answerTextArea" minHeight="200.0" minWidth="310.0" promptText="Entrer la réponse ici" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                                        <TextArea fx:id="answerTextArea" minHeight="200.0" minWidth="310.0" promptText="Entrer la réponse ici" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                                      </children>
                                                                   </AnchorPane>
                                                             </content>
                                                           </TitledPane>
                                                         </panes>
                                                       </Accordion>
-                                                      <Button mnemonicParsing="false" onAction="#validateChangeCmd" text="Valider" />
+                                                      <Button mnemonicParsing="false" onAction="#validateChangeCmd" text="Valider">
+                                                         <VBox.margin>
+                                                            <Insets bottom="10.0" />
+                                                         </VBox.margin></Button>
                                                    </children>
                                                 </VBox>
                                              </children>
