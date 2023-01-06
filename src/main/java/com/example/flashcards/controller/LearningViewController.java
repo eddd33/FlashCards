@@ -2,10 +2,7 @@ package com.example.flashcards.controller;
 
 import com.example.flashcards.command.ChangeSceneCommand;
 import com.example.flashcards.controller.StatViewController;
-import com.example.flashcards.controller.studystrategy.DumbStrategy;
-import com.example.flashcards.controller.studystrategy.LearningStrategy;
-import com.example.flashcards.controller.studystrategy.StudyStrategy;
-import com.example.flashcards.controller.studystrategy.TimedStrategy;
+import com.example.flashcards.controller.studystrategy.*;
 import com.example.flashcards.models.Card;
 import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
@@ -14,10 +11,14 @@ import com.example.flashcards.view.*;
 
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -121,6 +122,29 @@ public class LearningViewController implements Observer, Initializable {
                         reveal();
                     });
                     pause.play();
+                } else if (study.getStrategy() instanceof TypeInStrategy) {
+                    TextField typeIn = new TextField();
+                    typeIn.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                        @Override
+                        public void handle(KeyEvent event) {
+                            if (event.getCode() == KeyCode.ENTER) {
+                                String userAnswer = typeIn.getText();
+                                HBox buttonBox = new HBox();
+                                Label bravoLabel = new Label();
+                                Button next = new Button();
+                                if (userAnswer.equals(study.getStudyList().get(0).getAnswer())) {
+                                    bravoLabel.setText("Bonne réponse");
+                                    next.setOnAction(e -> nextCard(0.9));
+                                }
+                                else {
+                                    bravoLabel.setText("Mauvaise réponse");
+                                    next.setOnAction(e -> nextCard(1.2));
+                                }
+                                buttonBox.getChildren().addAll(bravoLabel,next);
+                                buttonContainer.getChildren().add(buttonBox);
+                            }
+                        }
+                    });
                 } else {
                     answerBut.setOnAction(event -> reveal());
                     answerBut.setText("Afficher la réponse");
@@ -263,6 +287,8 @@ public class LearningViewController implements Observer, Initializable {
                 return new LearningStrategy();
             case 2:
                 return new TimedStrategy();
+            case 3:
+                return new TypeInStrategy();
             default:
                 return new LearningStrategy();
         }
