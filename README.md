@@ -1,6 +1,6 @@
 # FlashMcCards
 
-###Installation
+## Installation
 
 Il suffit d'installer le fichier flashcards.jar dont le commit est lié au tag RELEASE_FINAL.
 
