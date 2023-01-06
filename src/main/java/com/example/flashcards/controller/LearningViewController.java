@@ -2,6 +2,7 @@ package com.example.flashcards.controller;
 
 import com.example.flashcards.ImageGetter;
 import com.example.flashcards.command.ChangeSceneCommand;
+import com.example.flashcards.command.ExitCommand;
 import com.example.flashcards.controller.StatViewController;
 import com.example.flashcards.controller.studystrategy.*;
 import com.example.flashcards.models.Card;
@@ -214,6 +215,10 @@ public class LearningViewController implements Observer, Initializable {
     /*
      * Implementation of different methods for the pattern Command
      */
+    @FXML
+    public void exitCmd() {
+        new ExitCommand().execute();
+    }
 
     @FXML
     public void changeToSelecCmd() {

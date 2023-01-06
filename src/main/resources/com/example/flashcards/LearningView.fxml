@@ -52,12 +52,12 @@
       <menus>
         <Menu mnemonicParsing="false" text="Révision">
           <items>
-            <MenuItem mnemonicParsing="false" text="Stopper la révision" />
+            <MenuItem mnemonicParsing="false" text="Stopper la révision" onAction="#changeToSelecCmd" />
             <MenuItem mnemonicParsing="false" text="Cacher la réponse" />
             <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Définir la durée maximale entre deux révisions" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#changeToSelecCmd" text="Quitter l'application" />
+            <MenuItem mnemonicParsing="false" onAction="#exitCmd" text="Quitter l'application" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
