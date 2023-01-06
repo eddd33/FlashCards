@@ -22,7 +22,7 @@ public class StatViewController implements Observer, Initializable {
     private DeckContainer app;
     private ViewState viewState;
 
-    @FXML private GridPane tableau;
+    @FXML private static GridPane tableau;
 
     public StatViewController(DeckContainer app, ViewState viewState) {
         this.app = app;
@@ -48,7 +48,9 @@ public class StatViewController implements Observer, Initializable {
         //la condition ci-dessous est fausse
         //la condition doit etre si lastTry != null
         //ensuite le pb est que update n'est pas éxécuté quand on achève une révision et donc lorsque le score est calculé
-        if (app.getActiveDeck().getCards().size()==3) {
+
+        if (app.getActiveDeck().getLast_try()!="Never") {
+
             Deck deck = app.getActiveDeck();
             String name = deck.getName();
             Label labelnom = new Label(name);
@@ -84,12 +86,28 @@ public class StatViewController implements Observer, Initializable {
         }
         Label labelBestScore = new Label("0");
         Label labelLastScore = new Label("0");
-        Label labelLastTime = new Label("0");
+        Label labelLastTime = new Label("Never");
         int nbDecks = app.getDecks().size();
         tableau.add(labelnom,0,nbDecks);
         tableau.add(labelBestScore,1,nbDecks);
         tableau.add(labelLastScore,2,nbDecks);
         tableau.add(labelLastTime,3,nbDecks);
+    }
+
+    public static void actualize(String bestS, String lastS, String lastT, int nbDecks, String name){
+        for (Node n : tableau.getChildren()) {
+            if (n instanceof Label l) {
+                if (l.getText().equals(name)) {
+                    System.out.println("deck déjà présent");
+                    int rang = tableau.getRowIndex(l);
+                    Label nextLabel1 = (Label) tableau.getChildren().get(rang + 1);
+                    Label nextLabel2 = (Label) tableau.getChildren().get(rang + 2);
+                    Label nextLabel3 = (Label) tableau.getChildren().get(rang + 3);
+
+                    return;
+                }
+            }
+        }
     }
 
     @FXML
