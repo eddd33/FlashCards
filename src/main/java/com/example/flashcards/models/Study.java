@@ -20,6 +20,11 @@ public class Study {
     public ArrayList<Card> getStudyList() {
         return studyList;
     }
+
+    public StudyStrategy getStrategy() {
+        return strategy;
+    }
+
     public DeckContainer getApp() {
         return app;
     }

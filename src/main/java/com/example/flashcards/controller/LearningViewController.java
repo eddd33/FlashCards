@@ -2,8 +2,10 @@ package com.example.flashcards.controller;
 
 import com.example.flashcards.command.ChangeSceneCommand;
 import com.example.flashcards.controller.StatViewController;
+import com.example.flashcards.controller.studystrategy.DumbStrategy;
 import com.example.flashcards.controller.studystrategy.LearningStrategy;
 import com.example.flashcards.controller.studystrategy.StudyStrategy;
+import com.example.flashcards.controller.studystrategy.TimedStrategy;
 import com.example.flashcards.models.Card;
 import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
@@ -84,7 +86,7 @@ public class LearningViewController implements Observer, Initializable {
         System.out.println("Entrée update " + viewState.getState());
         if (viewState.getState() == 0) {
             System.out.println("J'initialise Study'");
-            StudyStrategy strat = new LearningStrategy();
+            StudyStrategy strat = initStrategy(app.getLearningStrategy());
             study = new Study(app.getActiveDeck().getCards(), strat, app);
             sortByDiff(study.getStudyList());
             buttonContainer.getChildren().clear();
@@ -94,8 +96,18 @@ public class LearningViewController implements Observer, Initializable {
                 questionLabel.setText(study.getStudyList().get(0).getQuestion());
                 answerLabel.setText(study.getStudyList().get(0).getAnswer());
                 answerLabel.setOpacity(0);
-                answerBut.setOnAction(event -> reveal(event));
-                answerBut.setText("Afficher la réponse");
+                if (study.getStrategy() instanceof TimedStrategy) {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    reveal();
+                } else {
+                    answerBut.setOnAction(event -> reveal());
+                    answerBut.setText("Afficher la réponse");
+                    buttonContainer.getChildren().add(answerBut);
+                }
             }
             else {
                 double score = calcScore();
@@ -107,8 +119,8 @@ public class LearningViewController implements Observer, Initializable {
                 answerLabel.setText("Félicitation Shinji! :clap:");
                 answerBut.setOnAction(event -> changeToSelecCmd());
                 answerBut.setText("Retourner à la selection des paquets");
+                buttonContainer.getChildren().add(answerBut);
             }
-            buttonContainer.getChildren().add(answerBut);
             int goodNum= 0;
             int midNum = 0;
             int hardNum =0;
@@ -133,9 +145,18 @@ public class LearningViewController implements Observer, Initializable {
                 System.out.println("J'affiche la première carte");
                 questionLabel.setText(study.getStudyList().get(0).getQuestion());
                 answerLabel.setText(study.getStudyList().get(0).getAnswer());
-                answerLabel.setOpacity(0);
-                answerBut.setOnAction(event -> reveal(event));
-                answerBut.setText("Afficher la réponse");
+                answerLabel.setOpacity(0);if (study.getStrategy() instanceof TimedStrategy) {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    reveal();
+                } else {
+                    answerBut.setOnAction(event -> reveal());
+                    answerBut.setText("Afficher la réponse");
+                    buttonContainer.getChildren().add(answerBut);
+                }
             }
             else {
                 double score = calcScore();
@@ -162,8 +183,8 @@ public class LearningViewController implements Observer, Initializable {
                 answerLabel.setText("Félicitation Shinji! :clap:");
                 answerBut.setOnAction(event -> changeToSelecCmd());
                 answerBut.setText("Retourner à la selection des paquets");
+                buttonContainer.getChildren().add(answerBut);
             }
-            buttonContainer.getChildren().add(answerBut);
             int goodNum= 0;
             int midNum = 0;
             int hardNum =0;
@@ -198,7 +219,7 @@ public class LearningViewController implements Observer, Initializable {
     }
 
     @FXML
-    public void reveal(ActionEvent e) {
+    public void reveal() {
             answerLabel.setOpacity(1);
             buttonContainer.getChildren().clear();
             HBox buttonBox = new HBox();
@@ -269,5 +290,16 @@ public class LearningViewController implements Observer, Initializable {
         return current_score/cardNum;
     }
 
-
+    private StudyStrategy initStrategy(int learningStrategy) {
+        switch (learningStrategy) {
+            case 0:
+                return new DumbStrategy();
+            case 1:
+                return new LearningStrategy();
+            case 2:
+                return new TimedStrategy();
+            default:
+                return new LearningStrategy();
+        }
+    }
 }
