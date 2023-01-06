@@ -57,7 +57,7 @@
                   <MenuItem mnemonicParsing="false" text="Par dernier score" />
                   <MenuItem mnemonicParsing="false" text="Par dernier essai" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Retourn au menu" onAction="#changeToSelecCmd"/>
+            <MenuItem mnemonicParsing="false" onAction="#changeToSelecCmd" text="Retourn au menu" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
@@ -69,7 +69,7 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="339.0" prefWidth="640.0" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <GridPane alignment="CENTER" gridLinesVisible="true" maxHeight="70.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" VBox.vgrow="ALWAYS">
                     <columnConstraints>
@@ -91,7 +91,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </GridPane>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                  <ScrollPane fitToHeight="true" fitToWidth="true" prefWidth="174.0" VBox.vgrow="ALWAYS">
                     <content>
                       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
                            <children>
@@ -109,7 +109,10 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding>
                                  <children>
-
+                                    <Label fx:id="nomDeck" text="Label" />
+                                    <Label fx:id="meilleurScore" text="Label" GridPane.columnIndex="1" />
+                                    <Label fx:id="dernierScore" text="Label" GridPane.columnIndex="2" />
+                                    <Label fx:id="dernierEssai" text="Label" GridPane.columnIndex="3" />
                                  </children>
                               </GridPane>
                            </children>
@@ -118,6 +121,7 @@
                   </ScrollPane>
                </children>
             </VBox>
+            <Button layoutX="228.0" layoutY="347.0" mnemonicParsing="false" onAction="#actualize" text="Actualiser les statistiques" />
          </children>
     </AnchorPane>
   </children>

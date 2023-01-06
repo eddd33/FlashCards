@@ -22,7 +22,8 @@ public class StatViewController implements Observer, Initializable {
     private DeckContainer app;
     private ViewState viewState;
 
-    @FXML private static GridPane tableau;
+    @FXML private GridPane tableau;
+
 
     public StatViewController(DeckContainer app, ViewState viewState) {
         this.app = app;
@@ -43,32 +44,7 @@ public class StatViewController implements Observer, Initializable {
         if (app.getActiveDeck().getCards().size()==1){
             newLine();
         }
-        System.out.println(app.getActiveDeck().getName());
-        System.out.println(app.getActiveDeck().getLast_try());
-        //la condition ci-dessous est fausse
-        //la condition doit etre si lastTry != null
-        //ensuite le pb est que update n'est pas éxécuté quand on achève une révision et donc lorsque le score est calculé
 
-        if (app.getActiveDeck().getLast_try()!="Never") {
-
-            Deck deck = app.getActiveDeck();
-            String name = deck.getName();
-            Label labelnom = new Label(name);
-            double Bscore = deck.getBestScore();
-            Label labelBestScore = new Label(String.valueOf(Bscore));
-            double Lscore = deck.getLastScore();
-            Label labelLastScore = new Label(String.valueOf(Lscore));
-            System.out.println(" Lscore : " + Lscore);
-            String lastTry = deck.getLast_try();
-            Label labelLastTime = new Label(lastTry);
-            int nbDecks = app.getDecks().size();
-            //ensuite ici les labels ne doivent pas être ajoutés
-            //on doit simplement modifier les labels existants sur la bonne ligne
-            tableau.add(labelnom,0,nbDecks);
-            tableau.add(labelBestScore,1,nbDecks);
-            tableau.add(labelLastScore,2,nbDecks);
-            tableau.add(labelLastTime,3,nbDecks);
-        }
         System.out.println("update");
     }
 
@@ -94,17 +70,21 @@ public class StatViewController implements Observer, Initializable {
         tableau.add(labelLastTime,3,nbDecks);
     }
 
-    public static void actualize(String bestS, String lastS, String lastT, int nbDecks, String name){
+    public void actualize(){
+        String name = app.getActiveDeck().getName();
         for (Node n : tableau.getChildren()) {
+
             if (n instanceof Label l) {
+                int rang = GridPane.getRowIndex(l);
                 if (l.getText().equals(name)) {
                     System.out.println("deck déjà présent");
-                    int rang = tableau.getRowIndex(l);
+
+                    System.out.println(rang);
                     Label nextLabel1 = (Label) tableau.getChildren().get(rang + 1);
                     Label nextLabel2 = (Label) tableau.getChildren().get(rang + 2);
                     Label nextLabel3 = (Label) tableau.getChildren().get(rang + 3);
 
-                    return;
+                    break;
                 }
             }
         }
