@@ -1,5 +1,6 @@
 package com.example.flashcards.controller;
 
+import com.example.flashcards.ImageGetter;
 import com.example.flashcards.command.ChangeSceneCommand;
 import com.example.flashcards.controller.StatViewController;
 import com.example.flashcards.controller.studystrategy.*;
@@ -8,6 +9,7 @@ import com.example.flashcards.models.Deck;
 import com.example.flashcards.models.DeckContainer;
 import com.example.flashcards.models.Study;
 import com.example.flashcards.view.*;
+import javafx.scene.image.Image;
 
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
@@ -23,6 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -172,7 +175,14 @@ public class LearningViewController implements Observer, Initializable {
                 System.out.println("Score : " + score);
 
                 questionLabel.setText("Révision terminée");
-                answerLabel.setText("Félicitation Shinji! :clap:");
+                answerLabel.setText("");
+                URL imageFile=new ImageGetter().getImage();
+                Image image = new Image(imageFile.toString());
+                ImageView cardj = new ImageView();
+                cardj.setImage(image);
+                cardj.setFitHeight(500);
+                cardj.setFitWidth(500);
+                answerLabel.setGraphic(cardj);
                 answerBut.setOnAction(event -> changeToSelecCmd());
                 answerBut.setText("Retourner à la selection des paquets");
                 buttonContainer.getChildren().add(answerBut);
