@@ -169,15 +169,6 @@ public class LearningViewController implements Observer, Initializable {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String aujourdhui = formatter.format(date);
                 app.getActiveDeck().setLast_try(aujourdhui);
-                //get best score
-                double Bscore = app.getActiveDeck().getBestScore();
-                String bestScore = Double.toString(Bscore);
-                //get last score
-                double Lscore = app.getActiveDeck().getLastScore();
-                String lastScore = Double.toString(Lscore);
-
-                //actualise les stats
-                StatViewController.actualize(bestScore, lastScore, aujourdhui, app.getDecks().size(), app.getActiveDeck().getName());
 
                 questionLabel.setText("Révision terminée");
                 answerLabel.setText("Félicitation Shinji! :clap:");
