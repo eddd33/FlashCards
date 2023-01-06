@@ -1,0 +1,418 @@
+@startuml
+skinparam backgroundcolor White
+
+
+class Main{
++ void start()
++ void start(Stage stage) throws IOException
+}
+
+package procedure #F1948A {}
+package view #BB8FCE {}
+package model #85C1E9 {}
+package controller #74C6B6 {}
+package util #82E0AA {}
+package command #F8C471 {}
+package strategy #E59866 {}
+
+
+
+
+' Procedure :
+
+class procedure.saveDeckContainerProcedure{
++ saveDeckContainerProcedure(DeckContainer deckContainer)
++ void save() throws IOException
+}
+
+class procedure.loadDeckContainerProcedure{
++ loadDeckContainerProcedure(DeckContainer app)
++ void load() throws IOException
+}
+
+procedure.saveDeckContainerProcedure -down-- "1" model.DeckContainer
+procedure.loadDeckContainerProcedure -down-- "1" model.DeckContainer
+
+
+
+
+
+
+' View :
+
+interface view.Observer {
++ void update()
+}
+
+interface view.SubjectObserver{
++ void addObserver(Observer o)
++ void notifyObserver()
+}
+
+class view.ViewState implements view.SubjectObserver{
+- int state
++ ViewState(SceneController controller)
++ int getState()
++ void changeScene(Int)
+}
+
+view.Observer "*" -right-- "1" view.SubjectObserver
+
+
+
+
+
+class model.DeckContainer implements view.SubjectObserver {
+- int learningStrategy;
+- Set<String> deckTags;
+- Set<String> cardTags;
+
++ DeckContainer()
++ void newCard()
++ void newCardNotInDeck()
++ String createUniqueNameCards()
+- String recCreateUniqueNameCard(String name, int i)
++ void supprCardFromActiveDeck(Card card)
++ void supprCard(Card card)
++ void deleteCard()
++ void supprDeck(Deck deck)
++ void newDeck()
++ void dupDeck(Deck deck)
++ String getUniqueName(String name)
+- String recGetUniqueName(String name, int i)
++ void changeInfoActiveCard(String question, String answer, boolean twoSided, ArrayList<String> tags)
++ boolean activeDeckIsEmpty()
++ void addDeckTag(String tag)
++ void addCardTag(String tag, Card card)
++ int getCardIndex(int inputIndex)
++ ArrayList<Deck> getDecks()
++ ArrayList<Card> getCards()
++ Deck getActiveDeck()
++ Card getActiveCard()
++ int getLearningStrategy()
++ void setActiveDeck(Deck activeDeck)
++ void setDecks(ArrayList<Deck> decks)
++ void setCards(ArrayList<Card> cards)
++ void setLearningStrategy(int i)
+}
+
+class model.Deck {
+- String name;
+- String author;
+- String description;
+- String last_try;
+- ArrayList<String> tagList;
+- double best_score;
+- double last_score;
+
++ Deck(String name)
++ boolean isInDeck(Card card)
++ String getName()
++ String getAuthor()
++ String getDescritpion()
++ ArrayList<String> getTagList()
++ ArrayList<Card> getCards()
++ String getLast_try()
++ int getCardIndex(Card card)
++ double getBestScore()
++ double getLastScore()
++ void setLast_try(String last_try)
++ void setName(String name)
++ void setauthor(String author)
++ void setDescription(String descritpion)
++ void addTag(String tag)
++ void addCard(Card card)
++ void setTagList(ArrayList<String> tagList)
++ void setBestScore(double score)
++ void setLastScore(double score)
++ void addCard(Card card)
++ void addCard(int index, Card card)
++ void removeCard(Card card)
++ boolean hasHigherBestScore(Deck comparedDeck)
+}
+
+class model.Card {
+- String question;
+- String answer;
+- boolean twoSided;
+- double difficulty;
+- ArrayList<String> tagList;
+
++ Card()
++ Card(String question, String answer, boolean twoSided, ArrayList<String> tags)
++ Card copy()
++ String getQuestion()
++ String getAnswer()
++ boolean getTwoSided
++ double getDifficulty()
++ ArrayList<String> getTagList()
++ void setQuestion(String question)
++ void setAnswer(String answer)
++ void setTwoSided(boolean twoSided)
++ void setDifficulty(double difficulty)
++ void addTag(String tag)
+}
+
+class model.Study {
++ Study(ArrayList<Card> studyList, StudyStrategy strategy, DeckContainer app)
++ ArrayList<Card> getStudyList()
++ StudyStrategy getStrategy()
++ DeckContainer getApp()
++ void nextCard(double coef)
++ void insertByDiff(ArrayList<Card> List, Card element)
+}
+
+model.DeckContainer -down-- "1,*" model.Deck
+model.DeckContainer -down-- "1,*" model.Card
+model.DeckContainer "1" -down-- model.Study
+model.Deck -down-- "*" model.Card
+model.Study -down-- "*" model.Card
+model.Study -left-- "1" strategy.Strategy
+
+
+
+
+
+
+
+
+
+class controller.CreateViewController implements view.Observer, util.Initializable{
+- ArrayList<String> tags
+- TextField S_tag
+- TextField tagAddTextField
+- TextArea questionTextArea
+- TextArea answerTextArea
+- CheckBox twoSidedCheckBox
+- ListView<String> selectedCardListView
+- ListView<String> newCardListView
+- ListView<String> addTagListView
+
++ CreateViewController(DeckContainer app, ViewState viewState)
++ void changeToSelecCmd()
++ void changeToEditDeckCmd()
++ void newCardCmd()
++ void newCardNotInActiveDeckCmd()
++ void deleteCardCmd()
++ void validateChangeCmd()
++ void newTagCmd()
++ void searchByTag()
++ void starDnd(MouseEvent event)
++ void endDnD(DragEvent event)
++ void deleteTagHandle(KeyEvent event)
++ void deleteSelectedCardHandle(KeyEvent event)
++ void deleteCardHandle(KeyEvent event)
++ void clickSelectedHandle(MouseEvent event)
++ void clickHandle(MouseEvent event)
+}
+
+class controller.LearningViewController implements view.Observer, util.Initializable{
+- double current_score;
+- Button affiche_reponse;
+- Label answerLabel;
+- Label questionLabel;
+- AnchorPane buttonContainer;
+- Text goodCards;
+- Text mehCards;
+- Text badCards;
+
++ LearningViewController(DeckContainer app, ViewState viewState)
++ void changeToSelecCmd()
++ void reveal()
++ void nextCard(double coef)
+- void sortByDiff(ArrayList<Card> List)
+- void insertByDiff(ArrayList<Card> List, Card element)
+- double calcScore()
+- StudyStrategy initStrategy(int learningStrategy)
+}
+
+class controller.SelectionViewController implements view.Observer, util.Initializable{
+- VBox deckList
+- HBox buttonContainer
+
++ SelectionViewController(DeckContainer app,ViewState viewState)
++ void saveProcedure()
++ void loadProcedure()
++ void exitCmd()
++ void newDeckCmd()
++ void changeToLearnCmd(Deck deck)
++ void changeToCreateCmd(Deck deck)
++ void changeToStatCmd()
++ void duplicateDeckCmd(Deck deck)
++ void deleteDeckCmd(Deck deck)
++ void searchByTag(String tag)
++ void withoutTag()
++ void changeToLearnCmd(Deck deck)
++ void switchDumb()
++ void switchLearning()
++ void switchTimed()
++ void switchStrat(int learningStrat)
+}
+
+class controller.DeckEditViewController implements view.Observer, util.Initializable {
+- ArrayList<String> tags
+- TextField deckNameTextField
+- TextField deckAuthorTextField
+- TextArea deckDescTextArea
+- TextField addTagTextField
+- ListView<String> deckTagListView
++ DeckEditViewController(DeckContainer container, ViewState viewState)
++ void ajouterTagCmd()
++ void validateCmd()
++ void exitApplicationCmd()
++ void handle(KeyEvent event)
+}
+
+class controller.SceneController{
+- Stage stage
+- ArrayList<Scene> scenes
++ SceneController(Stage stage)
++ void addScene(Scene scene)
++ void changeScene(int i)
+}
+
+class controller.StatViewController implements view.Observer, util.Initializable{
+- GridPane tableau
+
++ void newLine()
++ void actualize()
++ void changeToSelecCmd()
+}
+
+controller.LearningViewController -- "1" model.Deck
+controller.LearningViewController -- "1" model.Study
+controller.SelectionViewController -- "1" model.Deck
+controller.SceneController -up-- "1" util.Stage
+controller.SceneController -up-- "*" util.Scene
+
+
+
+
+
+
+
+class util.Stage
+
+class util.Scene
+
+interface util.Initializable {
++ void initialize(URL location, ResourceBundle resources)
+}
+
+
+
+
+
+
+interface strategy.Strategy {
++ void nextCard(double coef, Study study)
+}
+
+class strategy.DumbStrategy implements strategy.Strategy {
++ DumbStrategy()
+}
+
+class strategy.LearningStrategy implements strategy.Strategy {
++ LearningStrategy()
+}
+
+class strategy.TimedStrategy implements strategy.Strategy {
++ TimedStrategy()
+}
+
+
+
+
+
+
+interface command.Command {
++ void execute()
+}
+
+
+class command.ChangeSceneCommand implements command.Command{
+- int i
+- ViewState viewState
++ ChangeSceneCommand(ViewState viewState, int i)
+}
+
+class command.DeleteCardCommand implements command.Command{
+- DeckContainer container
++ DeleteCardCommand(DeckContainer container)
+}
+
+
+class command.DeleteDeckCommand implements command.Command{
+- DeckContainer deckContainer
++ DeleteDeckCommand(DeckContainer container, Deck deck)
+}
+
+class command.DuplicateDeckCommand implements command.Command{
+- Deck deck
+- DeckContainer deckContainer
+- ViewState viewState
++ DuplicateDeckCommand(DeckContainer deckContainer, ViewState viewState, Deck deck)
+}
+
+class command.ExitCommand implements command.Command{
++ ExitCommand()
+}
+
+class command.ModifyAnswerCardCommand implements command.Command{
+- Card card
+- String answer
++ ModifyAnswerCardCommand(Card card, String answer)
+}
+
+class command.ModifyCardCommand implements command.Command{
+- String question
+- String answer
+- Boolean twoSided
+- int difficulty
+- Card card
++ ModifyCardCommand(Card card, String question,String answer, Boolean twoSided,int difficulty)
+}
+
+class command.ModifyQuestionCardCommand implements command.Command{
+- Card  card
+- String question
++ ModifyQuestionCardCommand(Card card, String question)
+}
+
+class command.ModifyTwoSidedCardCommand implements command.Command{
+- Card card
+- Boolean twoSided
++ ModifyTwoSidedCardCommand(Card card, Boolean twoSided)
+}
+
+class command.NewCardCommand implements command.Command{
+- DeckContainer deckContainer
++ NewCardCommand(DeckContainer deckContainer)
+}
+
+class command.NewDeckCommand implements command.Command{
+- DeckContainer deckContainer
+- ViewState viewState
++ NewCardNotActiveCommand(DeckContainer container)
+}
+
+class command.ValidateInfoDeckModCommand implements command.Command{
+- DeckContainer deckContainer
+- ViewState viewState
+- String name
+- String author
+- String description
++ NewDeckCommand(DeckContainer deckContainer,ViewState viewState)
+}
+
+class command.ValidateInfoCardModCommand implements command.Command{
+- DeckContainer container;
+- String question;
+- String answer;
+- boolean twoSided;
+- ArrayList<String> tags
++ ValidateInfoCardModCommand(DeckContainer container, String question, String answer, boolean twoSided, ArrayList<String> tags)
+}
+
+
+@enduml
