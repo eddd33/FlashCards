@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 
 import java.net.URL;
 import java.util.Calendar;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class StatViewController implements Observer, Initializable {
@@ -60,9 +61,9 @@ public class StatViewController implements Observer, Initializable {
                 }
             }
         }
-        Label labelBestScore = new Label("0");
-        Label labelLastScore = new Label("0");
-        Label labelLastTime = new Label("Never");
+        Label labelBestScore = new Label("None");
+        Label labelLastScore = new Label("None");
+        Label labelLastTime = new Label("None");
         int nbDecks = app.getDecks().size();
         tableau.add(labelnom,0,nbDecks);
         tableau.add(labelBestScore,1,nbDecks);
@@ -75,14 +76,26 @@ public class StatViewController implements Observer, Initializable {
         for (Node n : tableau.getChildren()) {
 
             if (n instanceof Label l) {
-                int rang = GridPane.getRowIndex(l);
+                //int rang = GridPane.getRowIndex(l);
                 if (l.getText().equals(name)) {
                     System.out.println("deck déjà présent");
 
-                    System.out.println(rang);
-                    Label nextLabel1 = (Label) tableau.getChildren().get(rang + 1);
-                    Label nextLabel2 = (Label) tableau.getChildren().get(rang + 2);
-                    Label nextLabel3 = (Label) tableau.getChildren().get(rang + 3);
+                    List<Node> children = tableau.getChildren();
+                    int index = children.indexOf(l);
+                    if (children.get(index + 1) instanceof Label) {
+                        Label bestS = (Label) children.get(index + 1);
+                        double d = app.getActiveDeck().getBestScore();
+                        bestS.setText(Double.toString(d));
+                    }
+                    if (children.get(index + 2) instanceof Label) {
+                        Label lastS = (Label) children.get(index + 2);
+                        double d = app.getActiveDeck().getLastScore();
+                        lastS.setText(Double.toString(d));
+                    }
+                    if (children.get(index + 3) instanceof Label) {
+                        Label lastT = (Label) children.get(index + 3);
+                        lastT.setText(app.getActiveDeck().getLast_try());
+                    }
 
                     break;
                 }

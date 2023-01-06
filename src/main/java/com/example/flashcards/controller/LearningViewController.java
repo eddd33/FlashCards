@@ -117,6 +117,15 @@ public class LearningViewController implements Observer, Initializable {
                     app.getActiveDeck().setBestScore(score);
                 }
                 app.getActiveDeck().setLastScore(score);
+
+                Date date = new Date();
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String aujourdhui = formatter.format(date);
+                app.getActiveDeck().setLast_try(aujourdhui);
+
+
+                System.out.println("Score : " + score);
+
                 questionLabel.setText("Révision terminée");
                 answerLabel.setText("Félicitation Shinji! :clap:");
                 answerBut.setOnAction(event -> changeToSelecCmd());
@@ -164,20 +173,21 @@ public class LearningViewController implements Observer, Initializable {
             Button easyButton = new Button();
             easyButton.setText("Facile");
             easyButton.setOnAction(event -> {
-                nextCard(0.9);
                 current_score = current_score +1;
+                nextCard(0.9);
+                System.out.println("Score courant: " + current_score);
             });
             Button midButton = new Button();
             midButton.setText("Moyen");
             midButton.setOnAction(event -> {
-                    nextCard(1);
                     current_score = current_score + 2;
+                    nextCard(1);
             });
             Button hardButton = new Button();
             hardButton.setText("Difficile");
             hardButton.setOnAction(event -> {
-                nextCard(1.2);
                 current_score = current_score + 3;
+                nextCard(1.2);
             });
             buttonBox.getChildren().addAll(easyButton,midButton,hardButton);
             buttonContainer.getChildren().add(buttonBox);
@@ -225,6 +235,7 @@ public class LearningViewController implements Observer, Initializable {
 
     private double calcScore() {
         int cardNum = app.getActiveDeck().getCards().size();
+        System.out.println("Nombre de cartes : " + cardNum);
         return current_score/cardNum;
     }
 
