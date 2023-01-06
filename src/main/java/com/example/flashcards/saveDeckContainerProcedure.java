@@ -8,10 +8,11 @@ import java.io.IOException;
 public class saveDeckContainerProcedure {
 
     private DeckContainer deckContainer;
+    public String fileName;
 
-
-    public saveDeckContainerProcedure(DeckContainer deckContainer){
+    public saveDeckContainerProcedure(DeckContainer deckContainer,String fileName){
         this.deckContainer=deckContainer;
+        this.fileName=fileName;
     }
 
 
@@ -20,7 +21,7 @@ public class saveDeckContainerProcedure {
         array.put(deckContainer.getDecks());
         array.put(deckContainer.getCards());
         String jsonString = array.toString();
-        try (FileWriter writer = new FileWriter("./src/main/resources/com/example/flashcards/save.json")) {
+        try (FileWriter writer = new FileWriter(fileName)) {
             writer.write(jsonString);
         }
         catch (IOException e) {

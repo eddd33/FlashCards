@@ -10,15 +10,17 @@ import java.io.*;
 import java.util.ArrayList;
 public class loadDeckContainerProcedure {
     public DeckContainer app;
+    public String fileName;
 
-    public loadDeckContainerProcedure(DeckContainer app){
+    public loadDeckContainerProcedure(DeckContainer app,String fileName){
         this.app=app;
+        this.fileName=fileName;
     }
     public void load() throws IOException {
         StringBuffer sb = new StringBuffer();
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader("./src/main/resources/com/example/flashcards/save.json"));
+            br = new BufferedReader(new FileReader(fileName));
             String temp;
             while ((temp = br.readLine()) != null)
                 sb.append(temp);

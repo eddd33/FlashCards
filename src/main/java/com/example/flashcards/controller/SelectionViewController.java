@@ -141,7 +141,14 @@ public class SelectionViewController implements Observer, Initializable {
     @FXML
     public void saveProcedure() {
         try {
-            new saveDeckContainerProcedure(app).save();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Ouvrir un fichier");
+            Stage stage = new Stage();
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("fichier json", "*.json"));
+            File file = fileChooser.showOpenDialog(stage);
+            String fileName = file.getAbsolutePath();
+            new saveDeckContainerProcedure(app,fileName).save();
         }
         catch (IOException Exception) {
             throw new RuntimeException(Exception);
@@ -150,7 +157,14 @@ public class SelectionViewController implements Observer, Initializable {
     @FXML
     public void loadProcedure() {
         try {
-            new loadDeckContainerProcedure(app).load();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Ouvrir un fichier");
+            Stage stage = new Stage();
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("fichier json", "*.json"));
+            File file = fileChooser.showOpenDialog(stage);
+            String fileName = file.getAbsolutePath();
+            new loadDeckContainerProcedure(app,fileName).load();
             deckListTag = app.getDecks();
             update();
         }
