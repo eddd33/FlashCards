@@ -62,6 +62,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#switchDumb" text="Aléatoire" />
                   <MenuItem mnemonicParsing="false" onAction="#switchLearning" text="Avec répétition" />
                   <MenuItem mnemonicParsing="false" onAction="#switchTimed" text="Avec temps limité" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchTypeIn" text="Avec réponse tappée" />
               </items>
             </Menu>
         <Menu mnemonicParsing="false" text="Help">

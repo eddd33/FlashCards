@@ -355,6 +355,8 @@ public class SelectionViewController implements Observer, Initializable {
     public void switchTimed() {
         switchStrat(2);
     }
+    @FXML
+    public void switchTypeIn(){switchStrat(3);}
 
     public void switchStrat(int learningStrat) {
         app.setLearningStrategy(learningStrat);

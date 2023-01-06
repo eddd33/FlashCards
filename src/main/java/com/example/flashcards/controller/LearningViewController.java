@@ -124,14 +124,19 @@ public class LearningViewController implements Observer, Initializable {
                     pause.play();
                 } else if (study.getStrategy() instanceof TypeInStrategy) {
                     TextField typeIn = new TextField();
+                    buttonContainer.getChildren().add(typeIn);
                     typeIn.setOnKeyPressed(new EventHandler<KeyEvent>() {
                         @Override
                         public void handle(KeyEvent event) {
                             if (event.getCode() == KeyCode.ENTER) {
                                 String userAnswer = typeIn.getText();
+                                buttonContainer.getChildren().clear();
                                 HBox buttonBox = new HBox();
+                                buttonBox.setSpacing(10);
                                 Label bravoLabel = new Label();
+                                bravoLabel.setStyle("-fx-text-fill: white;");
                                 Button next = new Button();
+                                next.setText("Prochaine carte");
                                 if (userAnswer.equals(study.getStudyList().get(0).getAnswer())) {
                                     bravoLabel.setText("Bonne réponse");
                                     next.setOnAction(e -> nextCard(0.9));
