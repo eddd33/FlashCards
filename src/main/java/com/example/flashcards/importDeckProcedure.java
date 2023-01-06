@@ -29,6 +29,8 @@ public class importDeckProcedure {
             for (Card cardList : deckContainer.getCards()){
                 if (card.getQuestion().equals(cardList.getQuestion())){
                     dedans=true;
+                    deck.removeCard(card);
+                    deck.addCard(cardList);
                 }
             }
             if (!dedans){
@@ -37,6 +39,5 @@ public class importDeckProcedure {
         }
         deckContainer.getDecks().add(deck);
         fichier.close();
-
     }
 }
