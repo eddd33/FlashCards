@@ -222,6 +222,9 @@ public class LearningViewController implements Observer, Initializable {
 
     @FXML
     public void changeToSelecCmd() {
+        if(answerLabel.getGraphic() != null) {
+            answerLabel.setGraphic(null);
+        }
         new ChangeSceneCommand(viewState,0).execute();
     }
 
