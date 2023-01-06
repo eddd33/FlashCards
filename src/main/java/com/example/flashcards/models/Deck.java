@@ -20,9 +20,7 @@ public class Deck {
         this.name = name;
         author = "me";
         description = "Description";
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        last_try = dateFormat.format(calendar.getTime());
+        last_try = "Never";
         tagList = new ArrayList<>();
         cards = new ArrayList<>();
         cards.add(new Card());

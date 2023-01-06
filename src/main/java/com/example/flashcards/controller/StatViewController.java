@@ -44,11 +44,11 @@ public class StatViewController implements Observer, Initializable {
             newLine();
         }
         System.out.println(app.getActiveDeck().getName());
+        System.out.println(app.getActiveDeck().getLast_try());
         //la condition ci-dessous est fausse
         //la condition doit etre si lastTry != null
         //ensuite le pb est que update n'est pas éxécuté quand on achève une révision et donc lorsque le score est calculé
         if (app.getActiveDeck().getCards().size()==3) {
-            System.out.println("siiiiiiiiiiii");
             Deck deck = app.getActiveDeck();
             String name = deck.getName();
             Label labelnom = new Label(name);

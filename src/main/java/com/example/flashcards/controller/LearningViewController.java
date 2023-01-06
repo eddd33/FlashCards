@@ -102,10 +102,10 @@ public class LearningViewController implements Observer, Initializable {
                     app.getActiveDeck().setBestScore(score);
                 }
                 app.getActiveDeck().setLastScore(score);
-                Date date = new Date();
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                String aujourdhui = formatter.format(date);
-                app.getActiveDeck().setLast_try(aujourdhui);
+                //Date date = new Date();
+                //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                //String aujourdhui = formatter.format(date);
+                //app.getActiveDeck().setLast_try(aujourdhui);
                 questionLabel.setText("Révision terminée");
                 answerLabel.setText("Félicitation Shinji! :clap:");
                 answerBut.setOnAction(event -> changeToSelecCmd());
@@ -146,6 +146,10 @@ public class LearningViewController implements Observer, Initializable {
                     app.getActiveDeck().setBestScore(score);
                 }
                 app.getActiveDeck().setLastScore(score);
+                Date date = new Date();
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String aujourdhui = formatter.format(date);
+                app.getActiveDeck().setLast_try(aujourdhui);
                 questionLabel.setText("Révision terminée");
                 answerLabel.setText("Félicitation Shinji! :clap:");
                 answerBut.setOnAction(event -> changeToSelecCmd());
