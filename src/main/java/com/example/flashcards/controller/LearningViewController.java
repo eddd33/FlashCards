@@ -27,6 +27,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class LearningViewController implements Observer, Initializable {
@@ -98,8 +99,21 @@ public class LearningViewController implements Observer, Initializable {
             Button answerBut = new Button();
             if (study.getStudyList().size() != 0) {
                 System.out.println("J'affiche la première carte");
-                questionLabel.setText(study.getStudyList().get(0).getQuestion());
-                answerLabel.setText(study.getStudyList().get(0).getAnswer());
+                if (study.getStudyList().get(0).getTwoSided()) {
+                    double randomNumber = Math.random();
+                    if (randomNumber>0.5) {
+                        questionLabel.setText(study.getStudyList().get(0).getQuestion());
+                        answerLabel.setText(study.getStudyList().get(0).getAnswer());
+                    }
+                    else {
+                        answerLabel.setText(study.getStudyList().get(0).getQuestion());
+                        questionLabel.setText(study.getStudyList().get(0).getAnswer());
+                    }
+                }
+                else {
+                    questionLabel.setText(study.getStudyList().get(0).getQuestion());
+                    answerLabel.setText(study.getStudyList().get(0).getAnswer());
+                }
                 answerLabel.setOpacity(0);
                 if (study.getStrategy() instanceof TimedStrategy) {
                     PauseTransition pause = new PauseTransition(Duration.seconds(5));
