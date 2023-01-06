@@ -18,11 +18,11 @@ public class importDeckProcedure {
     }
 
     public void charger() throws IOException{
-        InputStream stream = Main.class.getResourceAsStream(fileName);
-        BufferedReader fichier = new BufferedReader(new InputStreamReader(stream));
+        BufferedReader fichier = new BufferedReader(new FileReader(fileName));
 
         Gson gson = new Gson();
         Deck deck = gson.fromJson(fichier.readLine(), Deck.class);
+        deck.setName(deckContainer.getUniqueName(deck.getName()));
         Boolean dedans;
         for (Card card : deck.getCards()){
             dedans=false;

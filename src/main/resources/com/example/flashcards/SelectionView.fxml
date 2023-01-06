@@ -52,6 +52,7 @@
               <MenuItem mnemonicParsing="false" onAction="#saveProcedure" text="sauvegarder" />
               <MenuItem mnemonicParsing="false" onAction="#loadProcedure" text="charger" />
               <MenuItem mnemonicParsing="false" onAction="#changeToStatCmd" text="Stats" />
+              <MenuItem mnemonicParsing="false" onAction="#importProcedure" text="Importer un deck" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#exitCmd" text="Quitter l'application" />
           </items>

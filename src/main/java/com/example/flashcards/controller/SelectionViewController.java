@@ -131,8 +131,8 @@ public class SelectionViewController implements Observer, Initializable {
                     new FileChooser.ExtensionFilter("fichier json", "*.json"));
             File file = fileChooser.showOpenDialog(stage);
             String fileName = file.getAbsolutePath();
-            System.out.println(fileName);
             new exportDeckProcedure(deck, fileName).exportDeck();
+            update();
         }
         catch (IOException Exception) {
             throw new RuntimeException(Exception);
@@ -158,7 +158,22 @@ public class SelectionViewController implements Observer, Initializable {
             throw new RuntimeException(Exception);
         }
     }
-
+    public void importProcedure(){
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Ouvrir un fichier");
+            Stage stage = new Stage();
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("fichier json", "*.json"));
+            File file = fileChooser.showOpenDialog(stage);
+            String fileName = file.getAbsolutePath();
+            new importDeckProcedure(fileName, app).charger();
+            update();
+        }
+        catch (IOException Exception) {
+            throw new RuntimeException(Exception);
+        }
+    }
 
 
     /**
