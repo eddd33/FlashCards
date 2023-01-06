@@ -52,17 +52,13 @@
       <menus>
         <Menu mnemonicParsing="false" text="Classement">
           <items>
-            <MenuItem mnemonicParsing="false" text="Par nom" />
-            <MenuItem mnemonicParsing="false" text="Par meilleur score" />
-                  <MenuItem mnemonicParsing="false" text="Par dernier score" />
-                  <MenuItem mnemonicParsing="false" text="Par dernier essai" />
+            <MenuItem mnemonicParsing="false" text="Trri par nom" onAction="#sortByName"/>
+            <MenuItem mnemonicParsing="false" text="Tri par meilleur score" onAction="#sortByBestScore"/>
+                  <MenuItem mnemonicParsing="false" text="Tri par dernier score" onAction="#sortByLastScore"/>
+                  <MenuItem mnemonicParsing="false" text="Tri par date de dernier essai" onAction="#sortByLastTry"/>
+              <MenuItem mnemonicParsing="false" text="Tri par nombre de cartes" onAction="#sortByNbCards"/>
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#changeToSelecCmd" text="Retourn au menu" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
           </items>
         </Menu>
       </menus>
