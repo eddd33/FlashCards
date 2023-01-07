@@ -47,4 +47,6 @@ Pendant l'apprentissage, le nombre de cartes restantes pour la session est affic
 
 En faisant des révisions, un score est attribué à chaque carte révisée. Le score augmente plus si la carte est moins bien sût. Le score du deck est normalisé sur le nombre de cartes. Ce score normalisé permet de quantifier la bonne connaissance de chaque deck.
 
-Dans la page 
+## Vidéo de présentation
+
+Lien : https://youtu.be/scX2KxC59-k
